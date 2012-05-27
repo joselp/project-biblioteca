@@ -11,8 +11,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        project-biblioteca.cpp
+    mainwindow.cpp
 
-HEADERS  += project-biblioteca.h
+HEADERS  += \
+    mainwindow.h
 
 FORMS    += mainwindow.ui
