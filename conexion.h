@@ -1,8 +1,8 @@
 #ifndef CONEXION_H
 #define CONEXION_H
 
-#include<usuario.h>
-#include<QMessageBox>
+
+#include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
@@ -20,7 +20,7 @@ bool crearConexion(){
 
     if (!db.open())
     {
-        //QDebug()<<"Error Al abrir la base de datos";
+        QDebug()<<"Error Al abrir la base de datos";
         return false;
     }
     return true;
