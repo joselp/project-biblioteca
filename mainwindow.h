@@ -16,12 +16,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private:
+    void initGUI();
+
 private slots:
 
     void slotNewUser();
 
-public:
+private:
     Ui::MainWindow *ui;
+
+    Usuarios *user;
+
 };
 
 #endif // MAINWINDOW_H

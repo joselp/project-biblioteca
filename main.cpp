@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "project-biblioteca.h"
+#include "mainwindow.h"
 #include "conexion.h"
 
 int main(int argc, char *argv[])

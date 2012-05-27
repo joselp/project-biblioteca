@@ -7,8 +7,11 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QTableView>
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include<QSqlDatabase>
+#include<QSqlQuery>
+#include<QMessageBox>
+#include<QDebug>
+#include<QValidator>
 
 namespace Us {
     class Usuarios;
@@ -25,14 +28,14 @@ public:
     ~Usuarios();
 
 public slots:
-          void nuevoUser();
-          void aceptar();
-          void buscarUsuario();
-          void btnBuscar();
-          void editarUsuario();
-          void eliminarUsuario();
-          void btnEliminar();
-          void cancelar();
+    void nuevoUser();
+    void aceptar();
+    void buscarUsuario();
+    void btnBuscar();
+    void editarUsuario();
+    void eliminarUsuario();
+    void btnEliminar();
+    void cancelar();
 
 
 public:

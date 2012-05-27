@@ -1,19 +1,13 @@
 #include "usuario.h"
-#include<QSqlDatabase>
-#include<QSqlQuery>
-#include<QMessageBox>
-#include<QDebug>
-#include<QValidator>
 
-Usuarios::Usuarios(QWidget *a){
-
+Usuarios::Usuarios(QWidget *a)
+{
 
     inicializar(a);
-
-
 }
 
-void Usuarios::nuevoUser(){
+void Usuarios::nuevoUser()
+{
 
     lbApellido->setVisible(true);
     lbApellido->setGeometry(QRect(QPoint(480,140),QSize(71,21)));
@@ -54,7 +48,8 @@ void Usuarios::nuevoUser(){
 
 }
 
-void Usuarios::aceptar(){
+void Usuarios::aceptar()
+{
 
     QString aux;
 
@@ -68,23 +63,25 @@ void Usuarios::aceptar(){
     }
 
     else{
-    QSqlQuery sql;
-    sql.exec("INSERT INTO personas values('"+leCedula->text()+"','"+leNombre->text()+"','"+leApellido->text()+"','"+aux+"')");
+        QSqlQuery sql;
+        sql.exec("INSERT INTO personas values('"+leCedula->text()+"','"+leNombre->text()+"','"+leApellido->text()+"','"+aux+"')");
 
 
-    limpiar();
+        limpiar();
 
     }
 
 }
 
-void Usuarios::cancelar(){
+void Usuarios::cancelar()
+{
 
     limpiar();
 
 }
 
-void Usuarios::editarUsuario(){
+void Usuarios::editarUsuario()
+{
 
 
 
@@ -92,7 +89,8 @@ void Usuarios::editarUsuario(){
 
 }
 
-void Usuarios::eliminarUsuario(){
+void Usuarios::eliminarUsuario()
+{
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
@@ -114,7 +112,8 @@ void Usuarios::eliminarUsuario(){
 
 }
 
-void Usuarios::buscarUsuario(){
+void Usuarios::buscarUsuario()
+{
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
@@ -142,7 +141,8 @@ void Usuarios::buscarUsuario(){
 
 }
 
-void Usuarios::btnBuscar(){
+void Usuarios::btnBuscar()
+{
 
     QSqlQuery query;
     query.exec("select * from personas where cedula='"+leCedula->text()+"'");
@@ -153,9 +153,9 @@ void Usuarios::btnBuscar(){
 
     if( aux.size() !=0 ){
 
-    lbNombre->setText(query.value(1).toString());
-    lbApellido->setText(query.value(2).toString());
-    lbTipo->setText(query.value(3).toString());
+        lbNombre->setText(query.value(1).toString());
+        lbApellido->setText(query.value(2).toString());
+        lbTipo->setText(query.value(3).toString());
 
     }
 
@@ -167,7 +167,8 @@ void Usuarios::btnBuscar(){
 
 }
 
-void Usuarios::btnEliminar(){
+void Usuarios::btnEliminar()
+{
 
     QSqlQuery query;
 
@@ -196,7 +197,8 @@ void Usuarios::btnEliminar(){
     }
 }
 
-void Usuarios::inicializar(QWidget *a){
+void Usuarios::inicializar(QWidget *a)
+{
 
 
     lbNombre = new QLabel(a);
@@ -246,7 +248,8 @@ void Usuarios::inicializar(QWidget *a){
 
 }
 
-void Usuarios::limpiar(){
+void Usuarios::limpiar()
+{
 
     lbApellido->setVisible(false);
     lbCedula->setVisible(false);
@@ -265,8 +268,6 @@ void Usuarios::limpiar(){
     leNombre->setText("");
 
 }
-
-
 
 Usuarios::~Usuarios()
 {

@@ -7,16 +7,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->btnAgregar,SIGNAL(clicked()),this,SLOT(slotNewUser()));
-
+    initGUI();
 }
 
+void MainWindow::initGUI()
+{
+    connect(ui->btnAgregar,SIGNAL(clicked()),this,SLOT(slotNewUser()));
 
-void MainWindow::slotNewUser(){
+    user = new Usuarios(ui->centralWidget);
+}
 
-    Usuarios *user = new Usuarios(ui->centralWidget);
+void MainWindow::slotNewUser()
+{
     user->nuevoUser();
-
 }
 
 
