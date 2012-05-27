@@ -14,6 +14,8 @@ SOURCES += main.cpp\
     mainwindow.cpp
 
 HEADERS  += \
-    mainwindow.h
+    mainwindow.h \
+    D:/Users/Jose Luis/Documents/Programacion/Qt/UserIn/usuario.h \
+    D:/Users/Jose Luis/Documents/Programacion/Qt/UserIn/usuario.h
 
 FORMS    += mainwindow.ui
