@@ -7,8 +7,10 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QTableView>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
-namespace Ui {
+namespace Us {
     class Usuarios;
 }
 
@@ -17,12 +19,12 @@ class Usuarios : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Usuarios(QWidget *parent = 0);
-    void inicializar();
+    explicit Usuarios(QWidget *);
+    void inicializar(QWidget *);
     void limpiar();
     ~Usuarios();
 
-private slots:
+public slots:
           void nuevoUser();
           void aceptar();
           void buscarUsuario();
@@ -33,9 +35,10 @@ private slots:
           void cancelar();
 
 
-private:
+public:
 
-    Ui::Usuarios *ui;
+    Us::Usuarios *us;
+
     QPushButton *btnAceptar;
     QPushButton *btnCancelar;
     QLabel *lbNombre;

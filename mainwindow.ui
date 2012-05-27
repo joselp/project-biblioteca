@@ -78,7 +78,7 @@
      <string>Usuarios: </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnAgregar">
     <property name="geometry">
      <rect>
       <x>60</x>

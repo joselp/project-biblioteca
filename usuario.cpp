@@ -1,19 +1,14 @@
 #include "usuario.h"
-#include "ui_Usuarios.h"
 #include<QSqlDatabase>
 #include<QSqlQuery>
 #include<QMessageBox>
 #include<QDebug>
 #include<QValidator>
 
-Usuarios::Usuarios(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Usuarios)
-{
+Usuarios::Usuarios(QWidget *a){
 
-    ui->setupUi(this);
 
-    inicializar();
+    inicializar(a);
 
 
 }
@@ -21,18 +16,18 @@ Usuarios::Usuarios(QWidget *parent) :
 void Usuarios::nuevoUser(){
 
     lbApellido->setVisible(true);
-    lbApellido->setGeometry(QRect(QPoint(250,40),QSize(71,21)));
+    lbApellido->setGeometry(QRect(QPoint(480,140),QSize(71,21)));
     lbApellido->setText("Apellido: ");
 
 
     lbCedula->setVisible(true);
-    lbCedula->setGeometry(QRect(QPoint(50,90),QSize(56,21)));
+    lbCedula->setGeometry(QRect(QPoint(280,190),QSize(56,21)));
     lbCedula->setText("Cedula: ");
 
-    leCedula->setGeometry(QRect(QPoint(100,90),QSize(131,21)));
+    leCedula->setGeometry(QRect(QPoint(330,190),QSize(131,21)));
 
     lbNombre->setVisible(true);
-    lbNombre->setGeometry(QRect(QPoint(50,40),QSize(71,21)));
+    lbNombre->setGeometry(QRect(QPoint(270,140),QSize(71,21)));
     lbNombre->setText("Nombre: ");
     leNombre->setVisible(true);
 
@@ -40,12 +35,10 @@ void Usuarios::nuevoUser(){
     leApellido->setVisible(true);
     leCedula->setVisible(true);
 
-    ui->label->setText("AGREGAR NUEVO USUARIO");
-
 
     btnAceptar->setVisible(true);
     disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
-    btnAceptar->setGeometry(QRect(QPoint(170,180),QSize(75,23)));
+    btnAceptar->setGeometry(QRect(QPoint(400,280),QSize(75,23)));
     btnAceptar->setText("Aceptar");
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
 
@@ -56,7 +49,7 @@ void Usuarios::nuevoUser(){
     rbProf->setVisible(true);
 
     lbTipo->setText("Tipo: ");
-    lbTipo->setGeometry(QRect(QPoint(250,90),QSize(71,21)));
+    lbTipo->setGeometry(QRect(QPoint(480,190),QSize(71,21)));
     lbTipo->setVisible(true);
 
 }
@@ -88,14 +81,13 @@ void Usuarios::aceptar(){
 void Usuarios::cancelar(){
 
     limpiar();
-    ui->label->setText("");
 
 }
 
 void Usuarios::editarUsuario(){
 
 
-    ui->label->setText("EDITAR USUARIO");
+
     //this->close();
 
 }
@@ -103,8 +95,6 @@ void Usuarios::editarUsuario(){
 void Usuarios::eliminarUsuario(){
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
-
-    ui->label->setText("ELIMINAR USUARIO");
 
 
     limpiar();
@@ -127,9 +117,6 @@ void Usuarios::eliminarUsuario(){
 void Usuarios::buscarUsuario(){
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
-
-
-    ui->label->setText("BUSCAR USUARIO");
 
     limpiar();
 
@@ -209,51 +196,52 @@ void Usuarios::btnEliminar(){
     }
 }
 
-void Usuarios::inicializar(){
+void Usuarios::inicializar(QWidget *a){
 
-    lbNombre = new QLabel(ui->centralWidget);
-    lbNombre->setGeometry(QRect(QPoint(40,40),QSize(51,21)));
+
+    lbNombre = new QLabel(a);
+    lbNombre->setGeometry(QRect(QPoint(270,140),QSize(51,21)));
     lbNombre->setVisible(false);
 
-    leNombre = new QLineEdit(ui->centralWidget);
-    leNombre->setGeometry(QRect(QPoint(100,40),QSize(131,20)));
+    leNombre = new QLineEdit(a);
+    leNombre->setGeometry(QRect(QPoint(330,140),QSize(131,20)));
     leNombre->setVisible(false);
 
-    lbApellido = new QLabel(ui->centralWidget);
-    lbApellido->setGeometry(QRect(QPoint(250,40),QSize(56,21)));
+    lbApellido = new QLabel(a);
+    lbApellido->setGeometry(QRect(QPoint(480,140),QSize(56,21)));
     lbApellido->setVisible(false);
 
-    leApellido = new QLineEdit(ui->centralWidget);
-    leApellido->setGeometry(QRect(QPoint(310,40),QSize(131,20)));
+    leApellido = new QLineEdit(a);
+    leApellido->setGeometry(QRect(QPoint(540,140),QSize(131,20)));
     leApellido->setVisible(false);
 
-    lbCedula = new QLabel(ui->centralWidget);
-    lbCedula->setGeometry(QRect(QPoint(50,90),QSize(51,21)));
+    lbCedula = new QLabel(a);
+    lbCedula->setGeometry(QRect(QPoint(280,190),QSize(51,21)));
     lbCedula->setVisible(false);
 
-    leCedula = new QLineEdit(ui->centralWidget);
-    leCedula->setGeometry(QRect(QPoint(100,90),QSize(131,20)));
+    leCedula = new QLineEdit(a);
+    leCedula->setGeometry(QRect(QPoint(330,190),QSize(131,20)));
     leCedula->setVisible(false);
     leCedula->setValidator(new QIntValidator(0,9999999,this));
 
-    lbTipo = new QLabel(ui->centralWidget);
-    lbTipo->setGeometry(QRect(QPoint(250,90),QSize(51,21)));
+    lbTipo = new QLabel(a);
+    lbTipo->setGeometry(QRect(QPoint(480,190),QSize(51,21)));
     lbTipo->setVisible(false);
 
-    rbProf = new QRadioButton("Profesor",ui->centralWidget);
-    rbProf->setGeometry(QRect(QPoint(310,90),QSize(71,17)));
+    rbProf = new QRadioButton("Profesor",a);
+    rbProf->setGeometry(QRect(QPoint(540,190),QSize(71,17)));
     rbProf->setVisible(false);
 
-    rbEstu = new QRadioButton("Estudiante",ui->centralWidget);
-    rbEstu->setGeometry(QRect(QPoint(310,120),QSize(71,17)));
+    rbEstu = new QRadioButton("Estudiante",a);
+    rbEstu->setGeometry(QRect(QPoint(540,220),QSize(71,17)));
     rbEstu->setVisible(false);
 
-    btnAceptar = new QPushButton("Aceptar",ui->centralWidget);
-    btnAceptar->setGeometry(QRect(QPoint(170,180),QSize(131,20)));
+    btnAceptar = new QPushButton("Aceptar",a);
+    btnAceptar->setGeometry(QRect(QPoint(400,280),QSize(75,23)));
     btnAceptar->setVisible(false);
 
-    btnCancelar = new QPushButton("Cancelar",ui->centralWidget);
-    btnCancelar->setGeometry(QRect(QPoint(270,180),QSize(131,20)));
+    btnCancelar = new QPushButton("Cancelar",a);
+    btnCancelar->setGeometry(QRect(QPoint(500,280),QSize(75,23)));
     btnCancelar->setVisible(false);
 
 }
@@ -282,5 +270,5 @@ void Usuarios::limpiar(){
 
 Usuarios::~Usuarios()
 {
-    delete ui;
+    delete us;
 }
