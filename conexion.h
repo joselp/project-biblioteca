@@ -20,7 +20,7 @@ bool crearConexion(){
 
     if (!db.open())
     {
-        QDebug()<<"Error Al abrir la base de datos";
+        qDebug() << "Error Al abrir la base de datos";
         return false;
     }
     return true;

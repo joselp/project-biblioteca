@@ -16,8 +16,6 @@ SOURCES += main.cpp\
 
 HEADERS  += \
     mainwindow.h \
-    D:/Users/Jose Luis/Documents/Programacion/Qt/UserIn/usuario.h \
-    D:/Users/Jose Luis/Documents/Programacion/Qt/UserIn/usuario.h \
     usuario.h \
     conexion.h
 
