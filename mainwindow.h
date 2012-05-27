@@ -1,5 +1,5 @@
-#ifndef PROJECTBIBLIOTECA_H
-#define PROJECTBIBLIOTECA_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 
@@ -19,4 +19,4 @@ private:
     Ui::MainWindow *ui;
 };
 
-#endif // PROJECTBIBLIOTECA_H
+#endif // MAINWINDOW_H
