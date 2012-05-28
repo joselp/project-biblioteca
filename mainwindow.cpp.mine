@@ -1,0 +1,51 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+
+    initGUI();
+}
+
+void MainWindow::initGUI()
+{
+    connect(ui->btnAgregarP,SIGNAL(clicked()),this,SLOT(slotNewUser()));
+    connect(ui->btnEditarP,SIGNAL(clicked()),this,SLOT(slotEditUser()));
+    connect(ui->btnBuscarP,SIGNAL(clicked()),this,SLOT(slotSearchUser()));
+    connect(ui->btnEliminarP,SIGNAL(clicked()),this,SLOT(slotDeleteUser()));
+
+    user = new Usuarios();
+    user->inicializar(ui->centralWidget);
+}
+
+void MainWindow::slotNewUser()
+{
+    user->nuevoUser();
+}
+
+void MainWindow::slotEditUser(){
+
+
+    user->editarUsuario();
+
+}
+
+void MainWindow::slotSearchUser(){
+
+    user->buscarUsuario();
+
+}
+
+void MainWindow::slotDeleteUser(){
+
+    user->eliminarUsuario();
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
