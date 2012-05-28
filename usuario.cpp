@@ -1,9 +1,8 @@
 #include "usuario.h"
 
-Usuarios::Usuarios(QWidget *a)
+Usuarios::Usuarios()
 {
 
-    inicializar(a);
 }
 
 void Usuarios::nuevoUser()
@@ -12,7 +11,6 @@ void Usuarios::nuevoUser()
     lbApellido->setVisible(true);
     lbApellido->setGeometry(QRect(QPoint(480,140),QSize(71,21)));
     lbApellido->setText("Apellido: ");
-
 
     lbCedula->setVisible(true);
     lbCedula->setGeometry(QRect(QPoint(280,190),QSize(56,21)));
@@ -23,12 +21,11 @@ void Usuarios::nuevoUser()
     lbNombre->setVisible(true);
     lbNombre->setGeometry(QRect(QPoint(270,140),QSize(71,21)));
     lbNombre->setText("Nombre: ");
-    leNombre->setVisible(true);
 
+    leNombre->setVisible(true);
 
     leApellido->setVisible(true);
     leCedula->setVisible(true);
-
 
     btnAceptar->setVisible(true);
     disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
@@ -98,10 +95,10 @@ void Usuarios::eliminarUsuario()
     limpiar();
 
 
-    leCedula->setGeometry(QRect(QPoint(210,40),QSize(131,21)));
-    lbCedula->setGeometry(QRect(QPoint(110,40),QSize(131,21)));
+    leCedula->setGeometry(QRect(QPoint(450,130),QSize(131,21)));
+    lbCedula->setGeometry(QRect(QPoint(350,130),QSize(131,21)));
 
-    btnAceptar->setGeometry(QRect(QPoint(230,80),QSize(75,23)));
+    btnAceptar->setGeometry(QRect(QPoint(430,220),QSize(75,23)));
     btnAceptar->setText("Eliminar");
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEliminar()));
 
@@ -119,18 +116,19 @@ void Usuarios::buscarUsuario()
 
     limpiar();
 
-    leCedula->setGeometry(QRect(QPoint(210,40),QSize(131,21)));
-    lbCedula->setGeometry(QRect(QPoint(110,40),QSize(131,21)));
+    leCedula->setGeometry(QRect(QPoint(450,130),QSize(131,21)));
+    lbCedula->setGeometry(QRect(QPoint(350,130),QSize(131,21)));
+    lbCedula->setText("Ingrese Cedula: ");
 
-    btnAceptar->setGeometry(QRect(QPoint(230,80),QSize(75,23)));
+    btnAceptar->setGeometry(QRect(QPoint(430,220),QSize(75,23)));
     btnAceptar->setText("Buscar");
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
-    lbNombre->setGeometry(QRect(QPoint(100,120),QSize(71,21)));
-    lbApellido->setGeometry(QRect(QPoint(250,120),QSize(71,21)));
-    lbCedula->setText("Ingrese Cedula: ");
+    lbNombre->setGeometry(QRect(QPoint(350,150),QSize(71,21)));
+    lbApellido->setGeometry(QRect(QPoint(530,150),QSize(71,21)));
 
-    lbTipo->setGeometry(QRect(QPoint(100,140),QSize(71,21)));
+
+    lbTipo->setGeometry(QRect(QPoint(350,170),QSize(71,21)));
 
     leCedula->show();
     lbCedula->show();
@@ -161,7 +159,7 @@ void Usuarios::btnBuscar()
 
     else{
 
-        QMessageBox::critical(this,"ERROR","El usuario no existe");
+        QMessageBox::warning(this,"ATENCION","El usuario no existe");
 
     }
 
@@ -192,7 +190,7 @@ void Usuarios::btnEliminar()
 
     else{
 
-        QMessageBox::critical(this,"ERROR","El usuario no existe");
+        QMessageBox::warning(this,"ATENCION","El usuario no existe");
 
     }
 }
@@ -204,6 +202,7 @@ void Usuarios::inicializar(QWidget *a)
     lbNombre = new QLabel(a);
     lbNombre->setGeometry(QRect(QPoint(270,140),QSize(51,21)));
     lbNombre->setVisible(false);
+    lbNombre->setText("Nombre: ");
 
     leNombre = new QLineEdit(a);
     leNombre->setGeometry(QRect(QPoint(330,140),QSize(131,20)));
@@ -212,6 +211,7 @@ void Usuarios::inicializar(QWidget *a)
     lbApellido = new QLabel(a);
     lbApellido->setGeometry(QRect(QPoint(480,140),QSize(56,21)));
     lbApellido->setVisible(false);
+    lbApellido->setText("Apellido: ");
 
     leApellido = new QLineEdit(a);
     leApellido->setGeometry(QRect(QPoint(540,140),QSize(131,20)));
@@ -220,6 +220,7 @@ void Usuarios::inicializar(QWidget *a)
     lbCedula = new QLabel(a);
     lbCedula->setGeometry(QRect(QPoint(280,190),QSize(51,21)));
     lbCedula->setVisible(false);
+    lbCedula->setText("Cedula: ");
 
     leCedula = new QLineEdit(a);
     leCedula->setGeometry(QRect(QPoint(330,190),QSize(131,20)));
@@ -262,6 +263,7 @@ void Usuarios::limpiar()
     rbEstu->setVisible(false);
     rbProf->setVisible(false);
     lbTipo->setVisible(false);
+    lbTipo->setText("Tipo: ");
     leCedula->setText("");
     leApellido->setText("");
     leCedula->setText("");
@@ -271,5 +273,5 @@ void Usuarios::limpiar()
 
 Usuarios::~Usuarios()
 {
-    delete us;
+
 }

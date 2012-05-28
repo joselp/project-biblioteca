@@ -13,16 +13,13 @@
 #include<QDebug>
 #include<QValidator>
 
-namespace Us {
-    class Usuarios;
-}
 
 class Usuarios : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Usuarios(QWidget *);
+    explicit Usuarios();
     void inicializar(QWidget *);
     void limpiar();
     ~Usuarios();
@@ -39,8 +36,6 @@ public slots:
 
 
 public:
-
-    Us::Usuarios *us;
 
     QPushButton *btnAceptar;
     QPushButton *btnCancelar;
