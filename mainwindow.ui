@@ -61,6 +61,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
     <property name="text">
      <string>Prestamo: </string>
     </property>
@@ -73,6 +76,9 @@
       <width>61</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
      <string>Usuarios: </string>
@@ -180,7 +186,7 @@
    </property>
    <widget class="QMenu" name="menuArchivo">
     <property name="title">
-     <string>Archivo</string>
+     <string>&amp;Archivo</string>
     </property>
     <addaction name="actionInicio"/>
     <addaction name="actionSalir"/>
@@ -198,12 +204,15 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionInicio">
    <property name="text">
-    <string>Inicio</string>
+    <string>&amp;Inicio</string>
    </property>
   </action>
   <action name="actionSalir">
    <property name="text">
-    <string>Salir</string>
+    <string>&amp;Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>

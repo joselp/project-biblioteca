@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui>
 #include <usuario.h>
 
 namespace Ui {
@@ -18,15 +19,18 @@ public:
 
 private:
     void initGUI();
+    void initConnect();
 
 private slots:
 
     void slotNewUser();
+    void slotCloseWindow();
 
 private:
     Ui::MainWindow *ui;
 
     Usuarios *user;
+
 
 };
 

@@ -8,13 +8,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     initGUI();
+    initConnect();
 }
 
 void MainWindow::initGUI()
 {
-    connect(ui->btnAgregar,SIGNAL(clicked()),this,SLOT(slotNewUser()));
+
+    setWindowFlags(Qt::WindowMinimizeButtonHint);
+
+    QRect geometry = this->geometry();
+    geometry.moveCenter(QApplication::desktop()->availableGeometry().center());
+    setGeometry(geometry);
+
 
     user = new Usuarios(ui->centralWidget);
+}
+
+void MainWindow::initConnect()
+{
+    connect(ui->btnAgregar, SIGNAL(clicked()), this, SLOT(slotNewUser()));
+
+    connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
 }
 
 void MainWindow::slotNewUser()
@@ -22,6 +36,11 @@ void MainWindow::slotNewUser()
     user->nuevoUser();
 }
 
+
+void MainWindow::slotCloseWindow()
+{
+    close();
+}
 
 MainWindow::~MainWindow()
 {
