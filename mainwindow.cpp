@@ -26,7 +26,7 @@ void MainWindow::initGUI()
 
 void MainWindow::initConnect()
 {
-    connect(ui->btnAgregar, SIGNAL(clicked()), this, SLOT(slotNewUser()));
+    connect(ui->btnAgregarP, SIGNAL(clicked()), this, SLOT(slotNewUser()));
 
     connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
 }
