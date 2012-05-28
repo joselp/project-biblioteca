@@ -25,6 +25,10 @@ private slots:
 
     void slotNewUser();
     void slotCloseWindow();
+    void slotDeleteUser();
+    void slotSearchUser();
+    void slotEditUser();
+
 
 private:
     Ui::MainWindow *ui;
