@@ -16,10 +16,9 @@ void MainWindow::initGUI()
 
     setWindowFlags(Qt::WindowMinimizeButtonHint);
 
-//    QRect geometry = this->geometry();
-//    geometry.moveCenter(QApplication::Desktop()->availableGeometry().center());
-//    setGeometry(geometry);
-
+    QRect geometry = this->geometry();
+    geometry.moveCenter(QApplication::desktop()->availableGeometry().center());
+    setGeometry(geometry);
 
     user = new Usuarios();
     user->inicializar(ui->centralWidget);
