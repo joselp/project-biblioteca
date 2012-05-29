@@ -282,6 +282,7 @@ void Prestamo::slotCalendar()
 {
 
     calendarWidget->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+    calendarWidget->setWindowIcon(QIcon(":/images/calendar.png"));
     calendarWidget->setWindowTitle("Fecha Prestamo");
     calendarWidget->setGeometry(685, 250, 220, 150);
     connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(slotDate(QDate)));
