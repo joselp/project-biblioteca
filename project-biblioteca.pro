@@ -12,11 +12,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    usuario.cpp
+    usuario.cpp \
+    prestamo.cpp
 
 HEADERS  += \
     mainwindow.h \
     usuario.h \
-    conexion.h
+    conexion.h \
+    prestamo.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    recursos.qrc

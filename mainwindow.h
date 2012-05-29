@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <prestamo.h>
 #include <usuario.h>
 
 namespace Ui {
@@ -23,6 +24,7 @@ private:
 
 private slots:
 
+    void slotPrestamo();
     void slotNewUser();
     void slotCloseWindow();
     void slotDeleteUser();
@@ -33,6 +35,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    Prestamo *prestamo;
     Usuarios *user;
 
 
