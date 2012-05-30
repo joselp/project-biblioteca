@@ -7,6 +7,7 @@ Usuarios::Usuarios()
 
 void Usuarios::nuevoUser()
 {
+    limpiar();
 
     lbApellido->setVisible(true);
     lbApellido->setGeometry(QRect(QPoint(480,140),QSize(71,21)));
@@ -23,8 +24,11 @@ void Usuarios::nuevoUser()
     lbNombre->setText("Nombre: ");
 
     leNombre->setVisible(true);
+    leNombre->setGeometry(QRect(QPoint(330,140),QSize(131,20)));
 
     leApellido->setVisible(true);
+    leApellido->setGeometry(QRect(QPoint(540,140),QSize(131,20)));
+
     leCedula->setVisible(true);
 
     btnAceptar->setVisible(true);
@@ -34,7 +38,10 @@ void Usuarios::nuevoUser()
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
 
     btnCancelar->setVisible(true);
+    btnCancelar->setText("Cancelar");
+    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
+    btnCancelar->move(500,280);
 
     rbEstu->setVisible(true);
     rbProf->setVisible(true);
@@ -81,19 +88,78 @@ void Usuarios::editarUsuario()
 {
 
 
+    disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
+    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
 
-    //this->close();
+    limpiar();
+
+    leCedula->move(450,130);
+    lbCedula->setGeometry(QRect(QPoint(350,130),QSize(100,21)));
+    lbCedula->setText("Ingrese Cedula: ");
+
+    btnCancelar->move(590,128);
+    btnCancelar->setText("Buscar");
+    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
+
+    btnAceptar->move(450,280);
+    btnAceptar->setText("Editar");
+    btnAceptar->setEnabled(false);
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEditar()));
+
+    lbNombre->move(300,190);
+    leNombre->move(350,190);
+
+    lbApellido->move(490,190);
+    leApellido->move(550,190);
+
+    lbTipo->move(300,220);
+
+    //otraC->setText(leCedula->text());
+    //otraC->move(450,130);
+
+    //otraC->show();
+    leCedula->show();
+    lbCedula->show();
+    btnAceptar->show();
+    btnCancelar->show();
+    lbApellido->show();
+    leApellido->show();
+    lbNombre->show();
+    leNombre->show();
+    lbTipo->show();
 
 }
+
+void Usuarios::btnEditar(){
+
+
+
+        QSqlQuery query;
+        query.exec("select * from personas where cedula='"+cedula+"'");
+
+        if( query.next() ){
+
+            if((leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty())){
+                QMessageBox::warning(this,"Atencion","No deje Campos vacios");
+
+            }
+            else{
+
+            query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"' where cedula='"+cedula+"'");
+            QMessageBox::about(this,"Correcto","Usuario Actualizado");
+
+            limpiar();
+            }
+        }
+}
+
 
 void Usuarios::eliminarUsuario()
 {
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
-
     limpiar();
-
 
     leCedula->setGeometry(QRect(QPoint(450,130),QSize(131,21)));
     lbCedula->setGeometry(QRect(QPoint(350,130),QSize(131,21)));
@@ -112,55 +178,67 @@ void Usuarios::eliminarUsuario()
 void Usuarios::buscarUsuario()
 {
 
+
+
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
+
     limpiar();
+
+    leNombre->setReadOnly(true);
+    leApellido->setReadOnly(true);
 
     leCedula->setGeometry(QRect(QPoint(450,130),QSize(131,21)));
     lbCedula->setGeometry(QRect(QPoint(350,130),QSize(131,21)));
     lbCedula->setText("Ingrese Cedula: ");
 
-    btnAceptar->setGeometry(QRect(QPoint(430,220),QSize(75,23)));
+    btnAceptar->setGeometry(QRect(QPoint(450,280),QSize(75,23)));
     btnAceptar->setText("Buscar");
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
-    lbNombre->setGeometry(QRect(QPoint(350,150),QSize(71,21)));
-    lbApellido->setGeometry(QRect(QPoint(530,150),QSize(71,21)));
+    lbNombre->setGeometry(QRect(QPoint(300,190),QSize(71,21)));
+    leNombre->move(350,190);
+
+    lbApellido->setGeometry(QRect(QPoint(490,190),QSize(71,21)));
+    leApellido->move(550,190);
 
 
-    lbTipo->setGeometry(QRect(QPoint(350,170),QSize(71,21)));
+    lbTipo->setGeometry(QRect(QPoint(300,220),QSize(71,21)));
+
+
 
     leCedula->show();
     lbCedula->show();
     btnAceptar->show();
     lbApellido->show();
+    leApellido->show();
     lbNombre->show();
+    leNombre->show();
     lbTipo->show();
 
 }
 
-void Usuarios::btnBuscar()
+bool Usuarios::btnBuscar()
 {
 
     QSqlQuery query;
     query.exec("select * from personas where cedula='"+leCedula->text()+"'");
 
-    query.next();
-    QString aux = query.value(0).toString();
+    if( query.next() ){
 
-
-    if( aux.size() !=0 ){
-
-        lbNombre->setText(query.value(1).toString());
-        lbApellido->setText(query.value(2).toString());
+        leNombre->setText(query.value(1).toString());
+        leApellido->setText(query.value(2).toString());
         lbTipo->setText(query.value(3).toString());
+        btnAceptar->setEnabled(true);
+        cedula=leCedula->text();
+        return true;
 
     }
 
     else{
 
         QMessageBox::warning(this,"ATENCION","El usuario no existe");
-
+        return false;
     }
 
 }
@@ -172,14 +250,9 @@ void Usuarios::btnEliminar()
 
     query.exec("select * from personas where cedula='"+leCedula->text()+"'");
 
-    query.next();
-    QString aux = query.value(0).toString();
+    if( query.next() ){
 
-    query.exec("delete from personas where cedula='"+leCedula->text()+"'");
-
-    qDebug() << aux;
-
-    if( aux.size() !=0 ){
+        query.exec("delete from personas where cedula='"+leCedula->text()+"'");
 
         QMessageBox msg;
         msg.setModal(true);
@@ -198,6 +271,10 @@ void Usuarios::btnEliminar()
 void Usuarios::inicializar(QWidget *a)
 {
 
+//    otraC = new QLineEdit(a);
+//    otraC->setGeometry(QRect(QPoint(330,190),QSize(131,20)));
+//    otraC->setValidator(new QIntValidator(0,9999999,this));
+//    otraC->setVisible(false);
 
     lbNombre = new QLabel(a);
     lbNombre->setGeometry(QRect(QPoint(270,140),QSize(51,21)));
@@ -258,7 +335,9 @@ void Usuarios::limpiar()
     leNombre->setVisible(false);
     leApellido->setVisible(false);
     leCedula->setVisible(false);
+    leCedula->setEnabled(true);
     btnAceptar->setVisible(false);
+    btnAceptar->setEnabled(true);
     btnCancelar->setVisible(false);
     rbEstu->setVisible(false);
     rbProf->setVisible(false);
@@ -268,6 +347,9 @@ void Usuarios::limpiar()
     leApellido->setText("");
     leCedula->setText("");
     leNombre->setText("");
+    leNombre->setReadOnly(false);
+    leApellido->setReadOnly(false);
+    //otraC->setVisible(false);
 
 }
 

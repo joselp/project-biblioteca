@@ -28,8 +28,9 @@ public slots:
     void nuevoUser();
     void aceptar();
     void buscarUsuario();
-    void btnBuscar();
+    bool btnBuscar();
     void editarUsuario();
+    void btnEditar();
     void eliminarUsuario();
     void btnEliminar();
     void cancelar();
@@ -48,7 +49,7 @@ public:
     QLineEdit *leNombre;
     QLineEdit *leApellido;
     QLineEdit *leCedula;
-
+    QString cedula;
 
 };
 
