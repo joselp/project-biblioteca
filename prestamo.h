@@ -15,8 +15,7 @@ class Prestamo : public QWidget
 public:
     explicit Prestamo(QWidget *parent = 0);
     void initGUI(QWidget *);
-    void realizarPrestamo();
-    void visible(bool );
+    void visibleWidget(bool );
 
 private slots:
     void slotValidate();

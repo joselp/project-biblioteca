@@ -9,134 +9,58 @@ Prestamo::Prestamo(QWidget *parent) :
 void Prestamo::initGUI(QWidget *central)
 {
     lblCota = new QLabel(central);
-    lblCota->setVisible(false);
-
-    lineEditCota = new QLineEdit(central);
-    lineEditCota->setVisible(false);
-
-    lblAutor = new QLabel(central);
-    lblAutor->setVisible(false);
-
-    lineEditAutor = new QLineEdit(central);
-    lineEditAutor->setVisible(false);
-
-    lblTitulo = new QLabel(central);
-    lblTitulo->setVisible(false);
-
-    lineEditTitulo = new QLineEdit(central);
-    lineEditTitulo->setVisible(false);
-
-    lblTipoPrestamo = new QLabel(central);
-    lblTipoPrestamo->setVisible(false);
-
-    comboBoxTipoPrestamo = new QComboBox(central);
-    comboBoxTipoPrestamo->setVisible(false);
-
-    lblGrado = new QLabel(central);
-    lblGrado->setVisible(false);
-
-    comboBoxGrado = new QComboBox(central);
-    comboBoxGrado->setVisible(false);
-
-    lblCedula = new QLabel(central);
-    lblCedula->setVisible(false);
-
-    lineEditCedula = new QLineEdit(central);
-    lineEditCedula->setVisible(false);
-
-    lblFechaP = new QLabel(central);
-    lblFechaP->setVisible(false);
-
-    lineEditFechaP = new QLineEdit(central);
-    lineEditFechaP->setVisible(false);
-
-    btnCalendar = new QPushButton(central);
-    btnCalendar->setVisible(false);
-
-    calendarWidget = new QCalendarWidget;
-    calendarWidget->setVisible(false);
-
-    lblFechaE = new QLabel(central);
-    lblFechaE->setVisible(false);
-
-    lineEditFechaE = new QLineEdit(central);
-    lineEditFechaE->setVisible(false);
-
-    lblCategoria = new QLabel(central);
-    lblCategoria->setVisible(false);
-
-    lineEditCategoria = new QLineEdit(central);
-    lineEditCategoria->setVisible(false);
-
-    lblCantidad = new QLabel(central);
-    lblCantidad->setVisible(false);
-
-    lineEditCantidad = new QLineEdit(central);
-    lineEditCantidad->setVisible(false);
-
-    lblStatus = new QLabel(central);
-    lblStatus->setVisible(false);
-
-    lineEditStatus = new QLineEdit(central);
-    lineEditStatus->setVisible(false);
-
-    lblResponsable = new QLabel(central);
-    lblResponsable->setVisible(false);
-
-    comboBoxResponsable = new QComboBox(central);
-    comboBoxResponsable->setVisible(false);
-
-    btnRegistrar = new QPushButton(central);
-    btnRegistrar->setVisible(false);
-
-}
-
-void Prestamo::realizarPrestamo()
-{
-
     lblCota->setText("Cota: ");
     lblCota->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblCota->move(QPoint(255,140));
-    lblCota->setVisible(true);
+    lblCota->setVisible(false);
 
+    lineEditCota = new QLineEdit(central);
     lineEditCota->move(QPoint(305,140));
-    lineEditCota->setVisible(true);
+    lineEditCota->setVisible(false);
     connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotValidate()));
 
+    lblAutor = new QLabel(central);
     lblAutor->setText("Autor: ");
     lblAutor->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblAutor->move(QPoint(245,170));
-    lblAutor->setVisible(true);
+    lblAutor->setVisible(false);
 
+    lineEditAutor = new QLineEdit(central);
     lineEditAutor->move(QPoint(305,170));
     lineEditAutor->setReadOnly(true);
-    lineEditAutor->setVisible(true);
+    lineEditAutor->setVisible(false);
 
+    lblTitulo = new QLabel(central);
     lblTitulo->setText("Titulo: ");
     lblTitulo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblTitulo->move(QPoint(242,200));
-    lblTitulo->setVisible(true);
+    lblTitulo->setVisible(false);
 
+    lineEditTitulo = new QLineEdit(central);
     lineEditTitulo->move(QPoint(305,200));
     lineEditTitulo->setReadOnly(true);
-    lineEditTitulo->setVisible(true);
+    lineEditTitulo->setVisible(false);
 
+    lblTipoPrestamo = new QLabel(central);
     lblTipoPrestamo->setText("Tipo Préstamo: ");
     lblTipoPrestamo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblTipoPrestamo->move(QPoint(180,230));
-    lblTipoPrestamo->setVisible(true);
+    lblTipoPrestamo->setVisible(false);
 
+    comboBoxTipoPrestamo = new QComboBox(central);
     comboBoxTipoPrestamo->setGeometry(305,230,121,22);
     comboBoxTipoPrestamo->addItem("Aula");
     comboBoxTipoPrestamo->addItem("Hogar");
     comboBoxTipoPrestamo->addItem("Profesor");
-    comboBoxTipoPrestamo->setVisible(true);
+    comboBoxTipoPrestamo->setVisible(false);
 
+    lblGrado = new QLabel(central);
     lblGrado->setText("Grado: ");
     lblGrado->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblGrado->move(QPoint(243,260));
-    lblGrado->setVisible(true);
+    lblGrado->setVisible(false);
 
+    comboBoxGrado = new QComboBox(central);
     comboBoxGrado->setGeometry(305,260,121,22);
     comboBoxGrado->addItem("1º Grado");
     comboBoxGrado->addItem("2º Grado");
@@ -147,22 +71,26 @@ void Prestamo::realizarPrestamo()
     comboBoxGrado->addItem("7º Grado");
     comboBoxGrado->addItem("8º Grado");
     comboBoxGrado->addItem("9º Grado");
-    comboBoxGrado->setVisible(true);
+    comboBoxGrado->setVisible(false);
 
+    lblCedula = new QLabel(central);
     lblCedula->setText("Cédula: ");
     lblCedula->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblCedula->move(QPoint(518,140));
-    lblCedula->setVisible(true);
+    lblCedula->setVisible(false);
 
+    lineEditCedula = new QLineEdit(central);
     lineEditCedula->move(QPoint(585,140));
     lineEditCedula->setValidator(new QIntValidator(0,99999999,this));
-    lineEditCedula->setVisible(true);
+    lineEditCedula->setVisible(false);
 
+    lblFechaP = new QLabel(central);
     lblFechaP->setText("Fecha Préstamo: ");
     lblFechaP->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblFechaP->move(QPoint(455,170));
-    lblFechaP->setVisible(true);
+    lblFechaP->setVisible(false);
 
+    lineEditFechaP = new QLineEdit(central);
     lineEditFechaP->move(QPoint(585,170));
     lineEditFechaP->setToolTip("El formato de la fecha es: DD/MM/AAAA");
 
@@ -172,69 +100,85 @@ void Prestamo::realizarPrestamo()
     QRegExp expFecha(expDia.append(expMes.append(expAnho)));
 
     lineEditFechaP->setValidator(new QRegExpValidator(QRegExp(expFecha),this));
-    lineEditFechaP->setVisible(true);
+    lineEditFechaP->setVisible(false);
 
+    btnCalendar = new QPushButton(central);
     btnCalendar->setIcon(QIcon(":/images/calendar.png"));
     btnCalendar->setGeometry(726,170,21,21);
-    btnCalendar->setVisible(true);
     connect(btnCalendar, SIGNAL(clicked()), this, SLOT(slotCalendar()));
+    btnCalendar->setVisible(false);
 
+    calendarWidget = new QCalendarWidget;
+    calendarWidget->setVisible(false);
+
+    lblFechaE = new QLabel(central);
     lblFechaE->setText("Fecha Entrega: ");
     lblFechaE->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblFechaE->move(QPoint(467,200));
-    lblFechaE->setVisible(true);
+    lblFechaE->setVisible(false);
 
+    lineEditFechaE = new QLineEdit(central);
     lineEditFechaE->move(QPoint(585,200));
     lineEditFechaE->setToolTip("El formato de la fecha es: DD/MM/AAAA");
     lineEditFechaE->setReadOnly(true);
-    lineEditFechaE->setVisible(true);
+    lineEditFechaE->setVisible(false);
 
+    lblCategoria = new QLabel(central);
     lblCategoria->setText("Categoría: ");
     lblCategoria->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblCategoria->move(QPoint(500,230));
-    lblCategoria->setVisible(true);
+    lblCategoria->setVisible(false);
 
+    lineEditCategoria = new QLineEdit(central);
     lineEditCategoria->move(QPoint(585,230));
     lineEditCategoria->setReadOnly(true);
-    lineEditCategoria->setVisible(true);
+    lineEditCategoria->setVisible(false);
 
+    lblCantidad = new QLabel(central);
     lblCantidad->setText("Cantidad: ");
     lblCantidad->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblCantidad->move(QPoint(505,260));
-    lblCantidad->setVisible(true);
+    lblCantidad->setVisible(false);
 
+    lineEditCantidad = new QLineEdit(central);
     lineEditCantidad->setGeometry(585,260,45,20);
     lineEditCantidad->setValidator(new QIntValidator(1,100,this));
-    lineEditCantidad->setVisible(true);
+    lineEditCantidad->setVisible(false);
 
+    lblStatus = new QLabel(central);
     lblStatus->setText("Estado: ");
     lblStatus->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblStatus->move(QPoint(645,260));
-    lblStatus->setVisible(true);
+    lblStatus->setVisible(false);
 
+    lineEditStatus = new QLineEdit(central);
     lineEditStatus->setGeometry(710,260,70,20);
     lineEditStatus->setStyleSheet("background-color: rgb(255, 255, 127);");
     lineEditStatus->setText("[P] Préstamo");
     lineEditStatus->setReadOnly(true);
-    lineEditStatus->setVisible(true);
+    lineEditStatus->setVisible(false);
 
+    lblResponsable = new QLabel(central);
     lblResponsable->setText("Responsable: ");
     lblResponsable->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lblResponsable->move(QPoint(390,300));
-    lblResponsable->setVisible(true);
+    lblResponsable->setVisible(false);
 
+    comboBoxResponsable = new QComboBox(central);
     comboBoxResponsable->setGeometry(495,300,51,22);
     comboBoxResponsable->addItem("01");
     comboBoxResponsable->addItem("02");
-    comboBoxResponsable->setVisible(true);
+    comboBoxResponsable->setVisible(false);
 
+    btnRegistrar = new QPushButton(central);
     btnRegistrar->setText("&Registrar");
     btnRegistrar->move(455,350);
-    btnRegistrar->setVisible(true);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
+    btnRegistrar->setVisible(false);
+
 }
 
-void Prestamo::visible(bool visible)
+void Prestamo::visibleWidget(bool visible)
 {
 
     lblCota->setVisible(visible);
@@ -292,6 +236,9 @@ void Prestamo::slotCalendar()
 
 void Prestamo::slotValidate()
 {
+    if( lineEditCota->text().isEmpty() )
+        return;
+
     // Consultar en Bases dAtos para saber si la cota es correcta
 
     //Mientras
@@ -329,5 +276,18 @@ void Prestamo::slotDate(QDate date)
 
 void Prestamo::slotRegistrar()
 {
+    if( lineEditCota->text().isEmpty() || lineEditAutor->text().isEmpty() || lineEditTitulo->text().isEmpty()
+            || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
+            || lineEditFechaE->text().isEmpty() || lineEditCategoria->text().isEmpty()
+            || lineEditCantidad->text().isEmpty() ) {
+
+            QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
+
+            return;
+        }
+
+
     // GUARDAR en BASES DE DATOS
+
+
 }

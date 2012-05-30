@@ -44,13 +44,13 @@ void MainWindow::slotPrestamo()
 {
     user->limpiar();
 
-    prestamo->realizarPrestamo();
+    prestamo->visibleWidget(true);
 }
 
 void MainWindow::slotNewUser()
 {
 
-    prestamo->visible(false);
+    prestamo->visibleWidget(false);
 
     user->nuevoUser();
 }
@@ -58,7 +58,7 @@ void MainWindow::slotNewUser()
 void MainWindow::slotEditUser()
 {
 
-    prestamo->visible(false);
+    prestamo->visibleWidget(false);
 
     user->editarUsuario();
 }
@@ -66,7 +66,7 @@ void MainWindow::slotEditUser()
 void MainWindow::slotSearchUser()
 {
 
-    prestamo->visible(false);
+    prestamo->visibleWidget(false);
 
     user->buscarUsuario();
 }
@@ -74,7 +74,7 @@ void MainWindow::slotSearchUser()
 void MainWindow::slotDeleteUser()
 {
 
-    prestamo->visible(false);
+    prestamo->visibleWidget(false);
 
     user->eliminarUsuario();
 }
