@@ -1,4 +1,5 @@
 #include "prestamo.h"
+#include <QDebug>
 
 Prestamo::Prestamo(QWidget *parent) :
         QWidget(parent)
@@ -183,12 +184,15 @@ void Prestamo::visibleWidget(bool visible)
 
     lblCota->setVisible(visible);
     lineEditCota->setVisible(visible);
+    lineEditCota->setText("");
 
     lblAutor->setVisible(visible);
     lineEditAutor->setVisible(visible);
+    lineEditAutor->setText("");
 
     lblTitulo->setVisible(visible);
     lineEditTitulo->setVisible(visible);
+    lineEditTitulo->setText("");
 
     lblTipoPrestamo->setVisible(visible);
     comboBoxTipoPrestamo->setVisible(visible);
@@ -198,19 +202,24 @@ void Prestamo::visibleWidget(bool visible)
 
     lblCedula->setVisible(visible);
     lineEditCedula->setVisible(visible);
+    lineEditCedula->setText("");
 
     lblFechaP->setVisible(visible);
     lineEditFechaP->setVisible(visible);
+    lineEditFechaP->setText("");
     btnCalendar->setVisible(visible);
 
     lblFechaE->setVisible(visible);
     lineEditFechaE->setVisible(visible);
+    lineEditFechaE->setText("");
 
     lblCategoria->setVisible(visible);
     lineEditCategoria->setVisible(visible);
+    lineEditCategoria->setText("");
 
     lblCantidad->setVisible(visible);
     lineEditCantidad->setVisible(visible);
+    lineEditCantidad->setText("");
 
     lblStatus->setVisible(visible);
     lineEditStatus->setVisible(visible);
@@ -239,12 +248,25 @@ void Prestamo::slotValidate()
     if( lineEditCota->text().isEmpty() )
         return;
 
-    // Consultar en Bases dAtos para saber si la cota es correcta
+    QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = " + lineEditCota->text();
+    qDebug() << strQuery;
 
-    //Mientras
-    lineEditAutor->setText("Prueba");
-    lineEditTitulo->setText("Prueba");
-    lineEditCategoria->setText("Prueba");
+    QSqlQuery query;
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+        QMessageBox::warning(this, "Advertencia", "La cota del Libro no existe");
+        lineEditCota->setText("");
+        lineEditAutor->setText("");
+        lineEditTitulo->setText("");
+        lineEditCategoria->setText("");
+        lineEditCota->setFocus();
+    }else {
+        lineEditAutor->setText(query.value(0).toString());
+        lineEditTitulo->setText(query.value(1).toString());
+        cantBook = query.value(2).toInt();
+        lineEditCategoria->setText("ELIminar esto!!");
+    }
 
 }
 
@@ -286,8 +308,52 @@ void Prestamo::slotRegistrar()
             return;
         }
 
+    QString strQuery = "SELECT cedula FROM personas WHERE cedula = " + lineEditCedula->text();
+    qDebug() << strQuery;
 
-    // GUARDAR en BASES DE DATOS
+    QSqlQuery query;
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+
+        QMessageBox::warning(this, "Advertencia", "La persona no existe.");
+        lineEditCedula->setText("");
+        lineEditCedula->setFocus();
+
+    }else {
+
+        if( lineEditCantidad->text().toInt() == 0 ) {
+
+            QMessageBox::warning(this, "Advertencia", "La cantidad no puede ser cero.");
+            lineEditCantidad->setText("");
+            lineEditCantidad->setFocus();
+        }
+        else if ( lineEditCantidad->text().toInt() <= cantBook ) {
+
+            strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - lineEditCantidad->text().toInt())
+                       + " WHERE cota = " + lineEditCota->text();
+            qDebug() << strQuery;
+
+            query.exec(strQuery);
+        }
+        else {
+
+            QMessageBox::warning(this, "Advertencia", "La cantidad es mayor a la existente en la Base de Datos.");
+            lineEditCantidad->setText("");
+            lineEditCantidad->setFocus();
+            return;
+        }
 
 
+        strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCedula->text()
+                    + "', '" + lineEditCota->text() + "', '" + lineEditFechaP->text()
+                    + "', '" + lineEditFechaE->text() + "', '"
+                    + comboBoxResponsable->currentText()+ "' )";
+
+        qDebug() << strQuery;
+
+        query.exec(strQuery);
+
+        visibleWidget(false);
+    }
 }

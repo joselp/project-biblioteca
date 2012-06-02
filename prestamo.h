@@ -8,6 +8,7 @@
 #include <QCalendarWidget>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QSqlQuery>
 
 class Prestamo : public QWidget
 {
@@ -64,6 +65,8 @@ private:
 
     QPushButton *btnCalendar;
     QPushButton *btnRegistrar;
+
+    int cantBook;
 
 };
 
