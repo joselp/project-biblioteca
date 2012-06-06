@@ -260,7 +260,7 @@ void Prestamo::slotValidate()
     if( lineEditCota->text().isEmpty() )
         return;
 
-    QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = " + lineEditCota->text();
+    QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = '"+lineEditCota->text()+"'";
     qDebug() << strQuery;
 
     query.exec(strQuery);
@@ -449,8 +449,7 @@ void Prestamo::slotRowSelected(int row)
     item = new QTableWidgetItem;
     item = tablePrestamo->item(row,1);
 
-    QString strQuery2 = "SELECT * FROM libros WHERE cota = "
-                        + item->text();
+    QString strQuery2 = "SELECT * FROM libros WHERE cota = '"+item->text()+"'";
 
     qDebug() << strQuery2;
 
