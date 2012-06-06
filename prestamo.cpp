@@ -260,7 +260,9 @@ void Prestamo::slotValidate()
     if( lineEditCota->text().isEmpty() )
         return;
 
-    QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = '"+lineEditCota->text()+"'";
+    lineEditCota->setText(lineEditCota->text().toUpper());
+
+    QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = '"+ lineEditCota->text().toUpper() +"'";
     qDebug() << strQuery;
 
     query.exec(strQuery);
@@ -384,6 +386,7 @@ void Prestamo::showTablePrestamo()
         return;
     }
 
+    tablePrestamo->setGeometry(225,140,518,173);
     tablePrestamo->setVisible(true);
 
     while( query.next() ) {
