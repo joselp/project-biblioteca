@@ -25,6 +25,7 @@ private:
 private slots:
 
     void slotPrestamo();
+    void slotConsultaPrestamo();
     void slotNewUser();
     void slotCloseWindow();
     void slotDeleteUser();

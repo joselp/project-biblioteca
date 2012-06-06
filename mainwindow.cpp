@@ -31,6 +31,7 @@ void MainWindow::initGUI()
 void MainWindow::initConnect()
 {
     connect(ui->btnPrestamo, SIGNAL(clicked()), this, SLOT(slotPrestamo()));
+    connect(ui->btnConsultar, SIGNAL(clicked()), this, SLOT(slotConsultaPrestamo()));
 
     connect(ui->btnAgregarP,SIGNAL(clicked()),this,SLOT(slotNewUser()));
     connect(ui->btnEditarP,SIGNAL(clicked()),this,SLOT(slotEditUser()));
@@ -43,14 +44,24 @@ void MainWindow::initConnect()
 void MainWindow::slotPrestamo()
 {
     user->limpiar();
+    prestamo->visibleTable(false);
 
     prestamo->visibleWidget(true);
+}
+
+void MainWindow::slotConsultaPrestamo()
+{
+    user->limpiar();
+    prestamo->visibleWidget(false);
+
+    prestamo->showTablePrestamo();
 }
 
 void MainWindow::slotNewUser()
 {
 
     prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
 
     user->nuevoUser();
 }
@@ -59,6 +70,7 @@ void MainWindow::slotEditUser()
 {
 
     prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
 
     user->editarUsuario();
 }
@@ -67,6 +79,7 @@ void MainWindow::slotSearchUser()
 {
 
     prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
 
     user->buscarUsuario();
 }
@@ -75,6 +88,7 @@ void MainWindow::slotDeleteUser()
 {
 
     prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
 
     user->eliminarUsuario();
 }

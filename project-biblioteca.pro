@@ -13,15 +13,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
     mainwindow.cpp \
     usuario.cpp \
-    prestamo.cpp
+    prestamo.cpp \
+    dialogprestamo.cpp
 
 HEADERS  += \
     mainwindow.h \
     usuario.h \
     conexion.h \
-    prestamo.h
+    prestamo.h \
+    dialogprestamo.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogprestamo.ui
 
 RESOURCES += \
     recursos.qrc

@@ -8,7 +8,9 @@
 #include <QCalendarWidget>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QTableWidget>
 #include <QSqlQuery>
+#include <dialogprestamo.h>
 
 class Prestamo : public QWidget
 {
@@ -17,12 +19,15 @@ public:
     explicit Prestamo(QWidget *parent = 0);
     void initGUI(QWidget *);
     void visibleWidget(bool );
+    void showTablePrestamo();
+    void visibleTable(bool );
 
 private slots:
     void slotValidate();
     void slotCalendar();
     void slotDate(QDate );
     void slotRegistrar();
+    void slotRowSelected(int);
 
 private:
     QLabel *lblCota;
@@ -66,7 +71,15 @@ private:
     QPushButton *btnCalendar;
     QPushButton *btnRegistrar;
 
+    QTableWidget *tablePrestamo;
+    QTableWidgetItem *item;
+
+    DialogPrestamo *dialogPrestamo;
+
+    QSqlQuery query;
     int cantBook;
+
+    int rowCount;
 
 };
 

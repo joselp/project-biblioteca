@@ -177,6 +177,18 @@ void Prestamo::initGUI(QWidget *central)
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
     btnRegistrar->setVisible(false);
 
+    tablePrestamo = new QTableWidget(central);
+    tablePrestamo->setColumnCount(5);
+
+    QStringList listHeader;
+    listHeader << "Cédula" << "Cota" << "Fecha Préstamo" << "Fecha Entrega" << "Responsable";
+    tablePrestamo->setHorizontalHeaderLabels(listHeader);
+    rowCount = tablePrestamo->rowCount();
+    connect(tablePrestamo, SIGNAL(cellClicked(int,int)), tablePrestamo, SLOT(selectRow(int)));
+    connect(tablePrestamo, SIGNAL(cellClicked(int,int)), this, SLOT(slotRowSelected(int)));
+
+    tablePrestamo->setVisible(false);
+
 }
 
 void Prestamo::visibleWidget(bool visible)
@@ -251,7 +263,6 @@ void Prestamo::slotValidate()
     QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = " + lineEditCota->text();
     qDebug() << strQuery;
 
-    QSqlQuery query;
     query.exec(strQuery);
 
     if( !query.next() ) {
@@ -299,19 +310,18 @@ void Prestamo::slotDate(QDate date)
 void Prestamo::slotRegistrar()
 {
     if( lineEditCota->text().isEmpty() || lineEditAutor->text().isEmpty() || lineEditTitulo->text().isEmpty()
-            || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
-            || lineEditFechaE->text().isEmpty() || lineEditCategoria->text().isEmpty()
-            || lineEditCantidad->text().isEmpty() ) {
+        || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
+        || lineEditFechaE->text().isEmpty() || lineEditCategoria->text().isEmpty()
+        || lineEditCantidad->text().isEmpty() ) {
 
-            QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
+        QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
 
-            return;
-        }
+        return;
+    }
 
     QString strQuery = "SELECT cedula FROM personas WHERE cedula = " + lineEditCedula->text();
     qDebug() << strQuery;
 
-    QSqlQuery query;
     query.exec(strQuery);
 
     if( !query.next() ) {
@@ -327,6 +337,8 @@ void Prestamo::slotRegistrar()
             QMessageBox::warning(this, "Advertencia", "La cantidad no puede ser cero.");
             lineEditCantidad->setText("");
             lineEditCantidad->setFocus();
+
+            return;
         }
         else if ( lineEditCantidad->text().toInt() <= cantBook ) {
 
@@ -341,14 +353,15 @@ void Prestamo::slotRegistrar()
             QMessageBox::warning(this, "Advertencia", "La cantidad es mayor a la existente en la Base de Datos.");
             lineEditCantidad->setText("");
             lineEditCantidad->setFocus();
+
             return;
         }
 
 
         strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCedula->text()
-                    + "', '" + lineEditCota->text() + "', '" + lineEditFechaP->text()
-                    + "', '" + lineEditFechaE->text() + "', '"
-                    + comboBoxResponsable->currentText()+ "' )";
+                   + "', '" + lineEditCota->text() + "', '" + lineEditFechaP->text()
+                   + "', '" + lineEditFechaE->text() + "', '"
+                   + comboBoxResponsable->currentText()+ "' )";
 
         qDebug() << strQuery;
 
@@ -356,4 +369,135 @@ void Prestamo::slotRegistrar()
 
         visibleWidget(false);
     }
+}
+
+void Prestamo::showTablePrestamo()
+{
+
+    QString strQuery = "SELECT * FROM libroPersona";
+    qDebug() << strQuery;
+
+    query.exec(strQuery);
+
+    if( !query.isNull(0) ) {
+        QMessageBox::warning(this, "Advertencia", "No existe libros en prestamo.");
+        return;
+    }
+
+    tablePrestamo->setVisible(true);
+
+    while( query.next() ) {
+
+        rowCount += 1;
+        tablePrestamo->setRowCount(rowCount);
+        rowCount = tablePrestamo->rowCount();
+
+        if( rowCount < 6 )
+            tablePrestamo->setGeometry(225,140,518,173);
+        else
+            tablePrestamo->setGeometry(212,140,534,173);
+
+        for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(0).toString());
+            tablePrestamo->setItem(row, 0, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(1).toString());
+            tablePrestamo->setItem(row, 1, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(2).toString());
+            tablePrestamo->setItem(row, 2, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(3).toString());
+            tablePrestamo->setItem(row, 3, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(4).toString());
+            tablePrestamo->setItem(row, 4, item);
+
+        }
+    }
+
+}
+
+void Prestamo::visibleTable(bool visible)
+{
+    tablePrestamo->setVisible(visible);
+    rowCount = 0;
+}
+
+void Prestamo::slotRowSelected(int row)
+{
+
+    item = new QTableWidgetItem;
+    item = tablePrestamo->item(row,0);
+
+    QString strQuery = "SELECT * FROM personas WHERE cedula = "
+                       + item->text();
+
+    qDebug() << strQuery;
+
+    item = new QTableWidgetItem;
+    item = tablePrestamo->item(row,1);
+
+    QString strQuery2 = "SELECT * FROM libros WHERE cota = "
+                        + item->text();
+
+    qDebug() << strQuery2;
+
+    QSqlQuery query2;
+
+    query.exec(strQuery);
+    query2.exec(strQuery2);
+
+    dialogPrestamo = new DialogPrestamo;
+
+    if( query.next() ) {
+
+        dialogPrestamo->setNombre(query.value(1).toString());
+        dialogPrestamo->setApellido(query.value(2).toString());
+        dialogPrestamo->setCedula(query.value(0).toString());
+        dialogPrestamo->setTipoUser(query.value(3).toString());
+
+    }
+
+    QString adquisicion;
+    QString estado;
+
+    if( query2.next() ) {
+
+        dialogPrestamo->setCota(query2.value(0).toString());
+        dialogPrestamo->setAutor(query2.value(1).toString());
+        dialogPrestamo->setTitulo(query2.value(2).toString());
+        dialogPrestamo->setEditorial(query2.value(4).toString());
+        dialogPrestamo->setPublicacion(query2.value(5).toString());
+        dialogPrestamo->setEjemplar(query2.value(11).toString());
+
+        if( query2.value(7).toString() == "X" )
+            adquisicion = "Canjeado";
+        else if( query2.value(8).toString() == "X" )
+            adquisicion = "Donado";
+        else if( query2.value(9).toString() == "X" )
+            adquisicion = "Comprado";
+        dialogPrestamo->setAdquisicion(adquisicion);
+
+        if( query2.value(12).toString() == "X" )
+            estado = "Bueno";
+        else if( query2.value(13).toString() == "X" )
+            estado = "Regular";
+        else if( query2.value(14).toString() == "X" )
+            estado = "Malo";
+        dialogPrestamo->setEstado(estado);
+    }
+
+    dialogPrestamo->show();
 }
