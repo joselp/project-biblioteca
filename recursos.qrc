@@ -2,7 +2,5 @@
     <qresource prefix="/">
         <file>images/calendar.png</file>
         <file>images/logo.png</file>
-        <file>images/aceptar.png</file>
-        <file>images/cancel.png</file>
     </qresource>
 </RCC>
