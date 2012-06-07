@@ -193,7 +193,7 @@ void Prestamo::initGUI(QWidget *central)
     tablePrestamo->setColumnCount(5);
 
     QStringList listHeader;
-    listHeader << "Cédula" << "Cota" << "Fecha Préstamo" << "Fecha Entrega" << "Responsable";
+    listHeader << "Cota" << "Cédula" << "Fecha Préstamo" << "Fecha Entrega" << "Responsable";
     tablePrestamo->setHorizontalHeaderLabels(listHeader);
     rowCount = tablePrestamo->rowCount();
     connect(tablePrestamo, SIGNAL(cellClicked(int,int)), tablePrestamo, SLOT(selectRow(int)));
