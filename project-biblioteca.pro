@@ -14,14 +14,16 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     usuario.cpp \
     prestamo.cpp \
-    dialogprestamo.cpp
+    dialogprestamo.cpp \
+    solvencia.cpp
 
 HEADERS  += \
     mainwindow.h \
     usuario.h \
     conexion.h \
     prestamo.h \
-    dialogprestamo.h
+    dialogprestamo.h \
+    solvencia.h
 
 FORMS    += mainwindow.ui \
     dialogprestamo.ui

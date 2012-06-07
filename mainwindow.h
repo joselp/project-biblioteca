@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <prestamo.h>
 #include <usuario.h>
+#include <solvencia.h>
 
 namespace Ui {
     class MainWindow;
@@ -25,19 +26,21 @@ private:
 private slots:
 
     void slotPrestamo();
+    void slotEntregaPrestamo();
     void slotConsultaPrestamo();
     void slotNewUser();
-    void slotCloseWindow();
-    void slotDeleteUser();
-    void slotSearchUser();
     void slotEditUser();
-
+    void slotSearchUser();
+    void slotDeleteUser();
+    void slotSolvencia();
+    void slotCloseWindow();
 
 private:
     Ui::MainWindow *ui;
 
     Prestamo *prestamo;
     Usuarios *user;
+    Solvencia *solvencia;
 
 
 };

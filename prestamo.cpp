@@ -20,6 +20,11 @@ void Prestamo::initGUI(QWidget *central)
     lineEditCota->setVisible(false);
     connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotValidate()));
 
+    lineEditCotaEntrega = new QLineEdit(central);
+    lineEditCotaEntrega->move(QPoint(305,140));
+    lineEditCotaEntrega->setVisible(false);
+    connect(lineEditCotaEntrega, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
+
     lblAutor = new QLabel(central);
     lblAutor->setText("Autor: ");
     lblAutor->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
@@ -174,8 +179,15 @@ void Prestamo::initGUI(QWidget *central)
     btnRegistrar = new QPushButton(central);
     btnRegistrar->setText("&Registrar");
     btnRegistrar->move(455,350);
-    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
     btnRegistrar->setVisible(false);
+    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
+
+    btnEntregar = new QPushButton(central);
+    btnEntregar->setText("&Entregar");
+    btnEntregar->setIcon(QIcon(":/images/aceptar.png"));
+    btnEntregar->move(455,180);
+    btnEntregar->setVisible(false);
+    connect(btnEntregar, SIGNAL(clicked()), this, SLOT(slotAcceptEntrega()));
 
     tablePrestamo = new QTableWidget(central);
     tablePrestamo->setColumnCount(5);
@@ -345,7 +357,7 @@ void Prestamo::slotRegistrar()
         else if ( lineEditCantidad->text().toInt() <= cantBook ) {
 
             strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - lineEditCantidad->text().toInt())
-                       + " WHERE cota = " + lineEditCota->text();
+                       + " WHERE cota = '" + lineEditCota->text() + "'";
             qDebug() << strQuery;
 
             query.exec(strQuery);
@@ -360,8 +372,8 @@ void Prestamo::slotRegistrar()
         }
 
 
-        strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCedula->text()
-                   + "', '" + lineEditCota->text() + "', '" + lineEditFechaP->text()
+        strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCota->text()
+                   + "', '" + lineEditCedula->text() + "', '" + lineEditFechaP->text()
                    + "', '" + lineEditFechaE->text() + "', '"
                    + comboBoxResponsable->currentText()+ "' )";
 
@@ -373,23 +385,106 @@ void Prestamo::slotRegistrar()
     }
 }
 
+void Prestamo::showEntregaPrestamo()
+{
+    lblCota->setVisible(true);
+    lineEditCotaEntrega->setVisible(true);
+
+    lblCedula->setVisible(true);
+    lineEditCedula->setVisible(true);
+
+    btnEntregar->setVisible(true);
+}
+
+void Prestamo::slotUpperText()
+{
+    lineEditCotaEntrega->setText(lineEditCotaEntrega->text().toUpper());
+}
+
+void Prestamo::visibleEntrega(bool visible)
+{
+    lblCota->setVisible(visible);
+    lineEditCotaEntrega->setVisible(false);
+    lineEditCotaEntrega->setText("");
+
+    lblCedula->setVisible(visible);
+    lineEditCedula->setVisible(visible);
+    lineEditCedula->setText("");
+
+    btnEntregar->setVisible(visible);
+}
+
+void Prestamo::slotAcceptEntrega()
+{
+    if( lineEditCotaEntrega->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
+        QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
+        return;
+    }
+
+    lineEditCotaEntrega->setText(lineEditCotaEntrega->text().toUpper());
+
+    QString strQuery = "SELECT * FROM libroPersona WHERE cotaFk = '" + lineEditCotaEntrega->text().toUpper()
+                       + "' AND cedulaFk = " + lineEditCedula->text();
+
+    qDebug() << strQuery;
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+        QMessageBox::warning(this, "Advertencia", "Datos no existente en préstamo.");
+        return;
+    } else {
+
+        strQuery = "SELECT ejemplar FROM libros WHERE cota = '" + lineEditCotaEntrega->text().toUpper() + "'";
+
+        qDebug() << strQuery;
+
+        query.exec(strQuery);
+        int ejemplar;
+
+        if( query.next() ) {
+            ejemplar = query.value(0).toInt();
+            ejemplar += 1;
+        }
+
+        strQuery = "UPDATE libros SET ejemplar = " + QString::number(ejemplar)
+                   + " WHERE cota = '" + lineEditCotaEntrega->text().toUpper() + "'";
+
+        qDebug() << strQuery;
+        query.exec(strQuery);
+
+        strQuery = "DELETE FROM libroPersona WHERE cotaFk = '" + lineEditCotaEntrega->text().toUpper()
+                   + "' AND cedulaFk = " + lineEditCedula->text();
+
+        qDebug() << strQuery;
+
+
+        if( query.exec(strQuery) ) {
+
+            QMessageBox::information(this, "Información", "Se ha realizado la entrega exitosa.");
+        }
+
+    }
+
+    visibleEntrega(false);
+}
+
 void Prestamo::showTablePrestamo()
 {
+    rowCount = 0;
 
     QString strQuery = "SELECT * FROM libroPersona";
     qDebug() << strQuery;
 
     query.exec(strQuery);
 
-    if( !query.isNull(0) ) {
+    if( !query.next() ) {
         QMessageBox::warning(this, "Advertencia", "No existe libros en prestamo.");
         return;
     }
+    else {
 
-    tablePrestamo->setGeometry(225,140,518,173);
-    tablePrestamo->setVisible(true);
-
-    while( query.next() ) {
+        tablePrestamo->setGeometry(225,140,518,173);
+        tablePrestamo->setVisible(true);
 
         rowCount += 1;
         tablePrestamo->setRowCount(rowCount);
@@ -426,7 +521,47 @@ void Prestamo::showTablePrestamo()
             item->setFlags(item->flags() & (~Qt::ItemIsEditable));
             item->setText(query.value(4).toString());
             tablePrestamo->setItem(row, 4, item);
+        }
 
+        while( query.next() ) {
+
+            rowCount += 1;
+            tablePrestamo->setRowCount(rowCount);
+            rowCount = tablePrestamo->rowCount();
+
+            if( rowCount < 6 )
+                tablePrestamo->setGeometry(225,140,518,173);
+            else
+                tablePrestamo->setGeometry(212,140,534,173);
+
+            for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(0).toString());
+                tablePrestamo->setItem(row, 0, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(1).toString());
+                tablePrestamo->setItem(row, 1, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(2).toString());
+                tablePrestamo->setItem(row, 2, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(3).toString());
+                tablePrestamo->setItem(row, 3, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(4).toString());
+                tablePrestamo->setItem(row, 4, item);
+
+            }
         }
     }
 
@@ -444,15 +579,15 @@ void Prestamo::slotRowSelected(int row)
     item = new QTableWidgetItem;
     item = tablePrestamo->item(row,0);
 
-    QString strQuery = "SELECT * FROM personas WHERE cedula = "
-                       + item->text();
+    QString strQuery = "SELECT * FROM libros WHERE cota = '"
+                       + item->text() + "'";
 
     qDebug() << strQuery;
 
     item = new QTableWidgetItem;
     item = tablePrestamo->item(row,1);
 
-    QString strQuery2 = "SELECT * FROM libros WHERE cota = '"+item->text()+"'";
+    QString strQuery2 = "SELECT * FROM personas WHERE cedula = " + item->text();
 
     qDebug() << strQuery2;
 
@@ -463,40 +598,40 @@ void Prestamo::slotRowSelected(int row)
 
     dialogPrestamo = new DialogPrestamo;
 
-    if( query.next() ) {
+    if( query2.next() ) {
 
-        dialogPrestamo->setNombre(query.value(1).toString());
-        dialogPrestamo->setApellido(query.value(2).toString());
-        dialogPrestamo->setCedula(query.value(0).toString());
-        dialogPrestamo->setTipoUser(query.value(3).toString());
+        dialogPrestamo->setNombre(query2.value(1).toString());
+        dialogPrestamo->setApellido(query2.value(2).toString());
+        dialogPrestamo->setCedula(query2.value(0).toString());
+        dialogPrestamo->setTipoUser(query2.value(3).toString());
 
     }
 
     QString adquisicion;
     QString estado;
 
-    if( query2.next() ) {
+    if( query.next() ) {
 
-        dialogPrestamo->setCota(query2.value(0).toString());
-        dialogPrestamo->setAutor(query2.value(1).toString());
-        dialogPrestamo->setTitulo(query2.value(2).toString());
-        dialogPrestamo->setEditorial(query2.value(4).toString());
-        dialogPrestamo->setPublicacion(query2.value(5).toString());
-        dialogPrestamo->setEjemplar(query2.value(11).toString());
+        dialogPrestamo->setCota(query.value(0).toString());
+        dialogPrestamo->setAutor(query.value(1).toString());
+        dialogPrestamo->setTitulo(query.value(2).toString());
+        dialogPrestamo->setEditorial(query.value(4).toString());
+        dialogPrestamo->setPublicacion(query.value(5).toString());
+        dialogPrestamo->setEjemplar(query.value(11).toString());
 
-        if( query2.value(7).toString() == "X" )
+        if( query.value(7).toString() == "X" )
             adquisicion = "Canjeado";
-        else if( query2.value(8).toString() == "X" )
+        else if( query.value(8).toString() == "X" )
             adquisicion = "Donado";
-        else if( query2.value(9).toString() == "X" )
+        else if( query.value(9).toString() == "X" )
             adquisicion = "Comprado";
         dialogPrestamo->setAdquisicion(adquisicion);
 
-        if( query2.value(12).toString() == "X" )
+        if( query.value(12).toString() == "X" )
             estado = "Bueno";
-        else if( query2.value(13).toString() == "X" )
+        else if( query.value(13).toString() == "X" )
             estado = "Regular";
-        else if( query2.value(14).toString() == "X" )
+        else if( query.value(14).toString() == "X" )
             estado = "Malo";
         dialogPrestamo->setEstado(estado);
     }

@@ -84,7 +84,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>170</y>
       <width>61</width>
       <height>21</height>
      </rect>
@@ -100,7 +100,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>160</y>
+      <y>190</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -113,7 +113,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>190</y>
+      <y>220</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -126,7 +126,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>220</y>
+      <y>250</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -139,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>250</y>
+      <y>280</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -152,7 +152,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>280</y>
+      <y>310</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -171,7 +171,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>120</y>
+      <y>150</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -190,7 +190,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>330</y>
       <width>61</width>
       <height>21</height>
      </rect>
@@ -216,13 +216,58 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>90</y>
+      <y>120</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>&amp;Consulta</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnEntrega">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>90</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Entrega</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>470</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSolvencia">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>490</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;Solvencia</string>
     </property>
    </widget>
   </widget>
@@ -268,6 +313,15 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>btnPrestamo</tabstop>
+  <tabstop>btnEntrega</tabstop>
+  <tabstop>btnConsultar</tabstop>
+  <tabstop>btnAgregarP</tabstop>
+  <tabstop>btnBuscarP</tabstop>
+  <tabstop>btnEditarP</tabstop>
+  <tabstop>btnEliminarP</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

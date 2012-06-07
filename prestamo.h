@@ -19,6 +19,8 @@ public:
     explicit Prestamo(QWidget *parent = 0);
     void initGUI(QWidget *);
     void visibleWidget(bool );
+    void showEntregaPrestamo();
+    void visibleEntrega(bool );
     void showTablePrestamo();
     void visibleTable(bool );
 
@@ -28,10 +30,13 @@ private slots:
     void slotDate(QDate );
     void slotRegistrar();
     void slotRowSelected(int);
+    void slotUpperText();
+    void slotAcceptEntrega();
 
 private:
     QLabel *lblCota;
     QLineEdit *lineEditCota;
+    QLineEdit *lineEditCotaEntrega;
 
     QLabel *lblAutor;
     QLineEdit *lineEditAutor;
@@ -70,6 +75,7 @@ private:
 
     QPushButton *btnCalendar;
     QPushButton *btnRegistrar;
+    QPushButton *btnEntregar;
 
     QTableWidget *tablePrestamo;
     QTableWidgetItem *item;
