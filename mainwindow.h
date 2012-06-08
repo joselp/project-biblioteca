@@ -44,8 +44,6 @@ private:
     Usuarios *user;
     Solvencia *solvencia;
     Libro *libro;
-    bool banderaPersona;
-    bool banderaLibro;
 
 };
 

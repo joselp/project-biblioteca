@@ -24,16 +24,13 @@ void MainWindow::initGUI()
     prestamo->initGUI(ui->centralWidget);
 
     user = new Usuarios();
-//    user->inicializar(ui->centralWidget);
-
-    banderaPersona=false;
-    banderaLibro=false;
+    user->inicializar(ui->centralWidget);
 
     solvencia = new Solvencia();
     solvencia->initGUI(ui->centralWidget);
 
     libro = new Libro();
-//    libro->inicializar(ui->centralWidget);
+    libro->inicializar(ui->centralWidget);
 
 }
 
@@ -92,17 +89,7 @@ void MainWindow::slotConsultaPrestamo()
 void MainWindow::slotNewUser()
 {
 
-    if(banderaPersona==false){
-        //user = new Usuarios();
-        user->inicializar(ui->centralWidget);
-        banderaPersona=true;
-    }
-
-    if(banderaLibro==true){
-        libro->limpiar();
-        libro->removeAll();
-        banderaLibro=false;
-    }
+    libro->limpiar();
 
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
@@ -148,17 +135,8 @@ void MainWindow::slotDeleteUser()
 
 void MainWindow::slotNewLibro(){
 
-    if(banderaPersona==true){
         user->limpiar();
-        user->removeall();
-        banderaPersona=false;
-    }
 
-    if(banderaLibro==false){
-        //libro = new Libro();
-        libro->inicializar(ui->centralWidget);
-        banderaLibro=true;
-    }
 
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
