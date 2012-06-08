@@ -14,7 +14,7 @@
 #include<QValidator>
 
 
-class Usuarios : public QMainWindow
+class Usuarios : public QWidget
 {
     Q_OBJECT
 
@@ -22,11 +22,11 @@ public:
     explicit Usuarios();
     void inicializar(QWidget *);
     void limpiar();
+    void removeall();
     ~Usuarios();
 
 public slots:
     void nuevoUser();
-    void aceptar();
     void buscarUsuario();
     bool btnBuscar();
     void editarUsuario();
@@ -34,7 +34,7 @@ public slots:
     void eliminarUsuario();
     void btnEliminar();
     void cancelar();
-
+    void aceptar();
 
 public:
 

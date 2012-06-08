@@ -24,10 +24,16 @@ void MainWindow::initGUI()
     prestamo->initGUI(ui->centralWidget);
 
     user = new Usuarios();
-    user->inicializar(ui->centralWidget);
+//    user->inicializar(ui->centralWidget);
+
+    banderaPersona=false;
+    banderaLibro=false;
 
     solvencia = new Solvencia();
     solvencia->initGUI(ui->centralWidget);
+
+    libro = new Libro();
+//    libro->inicializar(ui->centralWidget);
 
 }
 
@@ -42,6 +48,8 @@ void MainWindow::initConnect()
     connect(ui->btnBuscarP,SIGNAL(clicked()),this,SLOT(slotSearchUser()));
     connect(ui->btnEliminarP,SIGNAL(clicked()),this,SLOT(slotDeleteUser()));
 
+    connect(ui->btnAgregarL,SIGNAL(clicked()),this,SLOT(slotNewLibro()));
+
     connect(ui->btnSolvencia, SIGNAL(clicked()), this, SLOT(slotSolvencia()));
 
     connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
@@ -49,7 +57,9 @@ void MainWindow::initConnect()
 
 void MainWindow::slotPrestamo()
 {
+
     user->limpiar();
+    libro->limpiar();
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
@@ -60,6 +70,7 @@ void MainWindow::slotPrestamo()
 void MainWindow::slotEntregaPrestamo()
 {
     user->limpiar();
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     solvencia->visibleWidget(false);
@@ -70,6 +81,7 @@ void MainWindow::slotEntregaPrestamo()
 void MainWindow::slotConsultaPrestamo()
 {
     user->limpiar();
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
@@ -79,6 +91,19 @@ void MainWindow::slotConsultaPrestamo()
 
 void MainWindow::slotNewUser()
 {
+
+    if(banderaPersona==false){
+        //user = new Usuarios();
+        user->inicializar(ui->centralWidget);
+        banderaPersona=true;
+    }
+
+    if(banderaLibro==true){
+        libro->limpiar();
+        libro->removeAll();
+        banderaLibro=false;
+    }
+
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
@@ -89,6 +114,7 @@ void MainWindow::slotNewUser()
 
 void MainWindow::slotEditUser()
 {
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
@@ -99,6 +125,7 @@ void MainWindow::slotEditUser()
 
 void MainWindow::slotSearchUser()
 {
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
@@ -110,6 +137,7 @@ void MainWindow::slotSearchUser()
 void MainWindow::slotDeleteUser()
 {
 
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
@@ -118,9 +146,32 @@ void MainWindow::slotDeleteUser()
     user->eliminarUsuario();
 }
 
+void MainWindow::slotNewLibro(){
+
+    if(banderaPersona==true){
+        user->limpiar();
+        user->removeall();
+        banderaPersona=false;
+    }
+
+    if(banderaLibro==false){
+        //libro = new Libro();
+        libro->inicializar(ui->centralWidget);
+        banderaLibro=true;
+    }
+
+    prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
+    prestamo->visibleEntrega(false);
+    solvencia->visibleWidget(false);
+
+    libro->nuevoLibro();
+}
+
 void MainWindow::slotSolvencia()
 {
     user->limpiar();
+    libro->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);

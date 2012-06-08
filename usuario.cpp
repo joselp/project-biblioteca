@@ -35,6 +35,7 @@ void Usuarios::nuevoUser()
     disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
     btnAceptar->move(400,280);
     btnAceptar->setText("Aceptar");
+    btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
 
     btnCancelar->setVisible(true);
@@ -313,6 +314,7 @@ void Usuarios::inicializar(QWidget *a)
 
     btnAceptar = new QPushButton("Aceptar",a);
     btnAceptar->move(400,280);
+    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
     btnAceptar->setVisible(false);
 
     btnCancelar = new QPushButton("Cancelar",a);
@@ -344,10 +346,28 @@ void Usuarios::limpiar()
     leNombre->setText("");
     leNombre->setReadOnly(false);
     leApellido->setReadOnly(false);
+    btnAceptar->setIconSize(QSize(0,0));
+
+}
+
+void Usuarios::removeall(){
+
+    delete btnAceptar;
+    delete btnCancelar;
+    delete lbNombre;
+    delete lbApellido;
+    delete lbCedula;
+    delete lbTipo;
+    delete rbProf;
+    delete rbEstu;
+    delete leNombre;
+    delete leApellido;
+    delete leCedula;
 
 }
 
 Usuarios::~Usuarios()
 {
+
 
 }
