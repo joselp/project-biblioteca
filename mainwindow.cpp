@@ -45,7 +45,10 @@ void MainWindow::initConnect()
     connect(ui->btnBuscarP,SIGNAL(clicked()),this,SLOT(slotSearchUser()));
     connect(ui->btnEliminarP,SIGNAL(clicked()),this,SLOT(slotDeleteUser()));
 
-    connect(ui->btnAgregarL,SIGNAL(clicked()),this,SLOT(slotNewLibro()));
+    connect(ui->btnAgregarL,SIGNAL(clicked()),this,SLOT(slotNewBook()));
+    connect(ui->btnBuscarL,SIGNAL(clicked()),this,SLOT(slotSearchBook()));
+    connect(ui->btnEditarL,SIGNAL(clicked()),this,SLOT(slotEditBook()));
+    connect(ui->btnEliminarL,SIGNAL(clicked()),this,SLOT(slotDeleteBook()));
 
     connect(ui->btnSolvencia, SIGNAL(clicked()), this, SLOT(slotSolvencia()));
 
@@ -133,17 +136,48 @@ void MainWindow::slotDeleteUser()
     user->eliminarUsuario();
 }
 
-void MainWindow::slotNewLibro(){
+void MainWindow::slotNewBook(){
 
-        user->limpiar();
-
-
+    user->limpiar();
     prestamo->visibleWidget(false);
     prestamo->visibleTable(false);
     prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     libro->nuevoLibro();
+}
+
+void MainWindow::slotSearchBook(){
+
+    user->limpiar();
+    prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
+    prestamo->visibleEntrega(false);
+    solvencia->visibleWidget(false);
+
+    libro->buscarLibro();
+}
+
+void MainWindow::slotEditBook(){
+
+    user->limpiar();
+    prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
+    prestamo->visibleEntrega(false);
+    solvencia->visibleWidget(false);
+
+    libro->editarLibro();
+}
+
+void MainWindow::slotDeleteBook(){
+
+    user->limpiar();
+    prestamo->visibleWidget(false);
+    prestamo->visibleTable(false);
+    prestamo->visibleEntrega(false);
+    solvencia->visibleWidget(false);
+
+    libro->eliminarLibro();
 }
 
 void MainWindow::slotSolvencia()

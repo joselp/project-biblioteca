@@ -9,6 +9,12 @@
 #include<QLabel>
 #include<QSqlDatabase>
 #include<QSqlQuery>
+#include<QTableWidget>
+#include<QWidgetItem>
+#include<QTableView>
+#include<QSqlQueryModel>
+#include<QSqlTableModel>
+#include<QDebug>
 
 class Libro : public QWidget
 {
@@ -25,7 +31,7 @@ public:
 public slots:
     void nuevoLibro();
     void buscarLibro();
-    bool btnBuscar();
+    void btnBuscar();
     void editarLibro();
     void btnEditar();
     void eliminarLibro();
@@ -46,8 +52,11 @@ public:
     QLabel *lbVolumen;
     QLabel *lbEjemplar;
     QLabel *lbEstado;
+    QLabel *lbBuscar;
+    QLabel *lbTipoBusqueda;
     QComboBox *comboEstado;
     QComboBox *comboAdquisicion;
+    QComboBox *comboTipoBusqueda;
     QLineEdit *leCota;
     QLineEdit *leAutor;
     QLineEdit *leTitulo;
@@ -57,9 +66,20 @@ public:
     QLineEdit *leLugar;
     QLineEdit *leVolumen;
     QLineEdit *leEjemplar;
+    QLineEdit *leBuscar;
     QPushButton *btnAceptar;
     QPushButton *btnCancelar;
+    QTableWidget *tableBusqueda;
+    QTableWidgetItem *item;
 
+    QTableView *tableview;
+
+    bool bandera;
+
+    int cantBook;
+    int rowCount;
+
+    QString cota;
 
 
 };

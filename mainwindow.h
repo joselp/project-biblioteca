@@ -35,7 +35,10 @@ private slots:
     void slotDeleteUser();
     void slotSolvencia();
     void slotCloseWindow();
-    void slotNewLibro();
+    void slotNewBook();
+    void slotSearchBook();
+    void slotDeleteBook();
+    void slotEditBook();
 
 private:
     Ui::MainWindow *ui;

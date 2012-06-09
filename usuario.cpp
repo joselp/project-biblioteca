@@ -35,11 +35,14 @@ void Usuarios::nuevoUser()
     disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
     btnAceptar->move(400,280);
     btnAceptar->setText("Aceptar");
+    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
     btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
 
     btnCancelar->setVisible(true);
     btnCancelar->setText("Cancelar");
+    btnCancelar->setIcon(QIcon(":/images/cancel.png"));
+    btnCancelar->setIconSize(QSize(15,15));
     disconnect(btnCancelar,SIGNAL(clicked()),0,0);
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
     btnCancelar->move(500,280);
@@ -100,10 +103,13 @@ void Usuarios::editarUsuario()
 
     btnCancelar->move(610,128);
     btnCancelar->setText("Buscar");
+    btnCancelar->setIcon(QIcon(":/images/ver.png"));
+    btnCancelar->setIconSize(QSize(15,15));
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
     btnAceptar->move(450,280);
     btnAceptar->setText("Editar");
+    btnAceptar->setIconSize(QSize(0,0));
     btnAceptar->setEnabled(false);
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEditar()));
 
@@ -163,6 +169,8 @@ void Usuarios::eliminarUsuario()
 
     btnAceptar->move(430,220);
     btnAceptar->setText("Eliminar");
+    btnAceptar->setIcon(QIcon(":/images/cancel.png"));
+    btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEliminar()));
 
     leCedula->show();
@@ -191,6 +199,8 @@ void Usuarios::buscarUsuario()
 
     btnAceptar->move(450,280);
     btnAceptar->setText("Buscar");
+    btnAceptar->setIcon(QIcon(":/images/ver.png"));
+    btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
     lbNombre->move(280,190);
@@ -314,7 +324,6 @@ void Usuarios::inicializar(QWidget *a)
 
     btnAceptar = new QPushButton("Aceptar",a);
     btnAceptar->move(400,280);
-    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
     btnAceptar->setVisible(false);
 
     btnCancelar = new QPushButton("Cancelar",a);
@@ -346,7 +355,7 @@ void Usuarios::limpiar()
     leNombre->setText("");
     leNombre->setReadOnly(false);
     leApellido->setReadOnly(false);
-    btnAceptar->setIconSize(QSize(0,0));
+    //btnAceptar->setIconSize(QSize(0,0));
 
 }
 

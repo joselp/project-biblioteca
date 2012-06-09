@@ -17,6 +17,7 @@ void Libro::nuevoLibro()
     disconnect(btnCancelar,SIGNAL(clicked()),0,0);
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
 
+    bandera=false;
 }
 
 void Libro::aceptar()
@@ -62,7 +63,7 @@ void Libro::aceptar()
 
     else{
         QSqlQuery sql;
-        sql.exec("INSERT INTO libros values('"+leCota->text()+"','"+leTitulo->text()+"','"+leAutor->text()
+        sql.exec("INSERT INTO libros values('"+leCota->text().toUpper()+"','"+leTitulo->text()+"','"+leAutor->text()
                  +"','"+leMateria->text()+"','"+leEditorial->text()+"','"+leAnhoPublicacion->text()
                  +"','"+leLugar->text()+"','"+canjeado+"','"+donado+"','"+comprado+"','"+leVolumen->text()
                  +"','"+leEjemplar->text()+"','"+bueno+"','"+regular+"','"+malo+"')");
@@ -90,6 +91,27 @@ void Libro::editarLibro()
 
     limpiar();
 
+    mostrarNuevo();
+
+    lbCota->setText("Cota:");
+    lbBuscar->setVisible(true);
+    leBuscar->setVisible(true);
+    lbTipoBusqueda->setVisible(false);
+    comboTipoBusqueda->setCurrentIndex(0);
+
+    btnAceptar->setText("Buscar");
+    btnAceptar->move(630,98);
+    btnAceptar->setVisible(true);
+
+
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
+
+    btnCancelar->setText("Editar");
+    btnCancelar->move(380,390);
+    btnCancelar->setEnabled(false);
+    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnEditar()));
+
+    bandera=true;
 
 }
 
@@ -97,138 +119,806 @@ void Libro::btnEditar(){
 
 
         QSqlQuery query;
-//        query.exec("select * from personas where cedula='"+cedula+"'");
+        query.exec("select * from libros where cota='"+cota+"'");
 
-//        if( query.next() ){
+        qDebug()<<cota;
 
-//            if((leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty())){
-//                QMessageBox::warning(this,"Atencion","No deje Campos vacios");
+        if( query.next() ){
 
-//            }
-//            else{
+            if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty() || leEjemplar->text().isEmpty() ){
+                QMessageBox::warning(this,"Campos Vacios","Por favor inserte todos los obligatorios (*)");
+            }
+            else{
 
-//            query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"' where cedula='"+cedula+"'");
-//            QMessageBox::about(this,"Correcto","Usuario Actualizado");
+                QString bueno,malo,regular,comprado,donado,canjeado;
 
-//            limpiar();
-//            }
-//        }
+                if(comboEstado->currentText()=="Bueno"){
+                    bueno="X";
+                    regular="";
+                    malo="";
+                }
+                if(comboEstado->currentText()=="regular"){
+                    bueno="";
+                    regular="X";
+                    malo="";
+                }
+                if(comboEstado->currentText()=="malo"){
+                    bueno="";
+                    regular="";
+                    malo="X";
+                }
+
+                if(comboAdquisicion->currentText()=="Comprado"){
+                    comprado="X";
+                    donado="";
+                    canjeado="";
+                }
+                if(comboAdquisicion->currentText()=="donado"){
+                    comprado="";
+                    donado="X";
+                    canjeado="";
+                }
+                if(comboAdquisicion->currentText()=="canjeado"){
+                    comprado="";
+                    donado="";
+                    canjeado="X";
+                }
+
+                query.exec("update libros set cota='"+leCota->text().toUpper()+"', titulo='"+leTitulo->text()+"', autor='"+leAutor->text()
+                       +"', materia='"+leMateria->text()+"', editorial='"+leEditorial->text()+"', anhoPublicacion='"+leAnhoPublicacion->text()
+                       +"', lugar='"+leLugar->text()+"', canjeado='"+canjeado+"', donado='"+donado+"', comprado='"+comprado+"', volumen='"+leVolumen->text()
+                       +"', ejemplar='"+leEjemplar->text()+"', bueno='"+bueno+"', regular='"+regular+"', malo='"+malo+"' where cota='"+cota+"'");
+
+
+                QMessageBox::about(this,"Correcto","Libro Actualizado");
+
+            limpiar();
+            }
+        }
 }
 
+void Libro::buscarLibro()
+{
+
+    disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
+
+    limpiar();
+
+    lbBuscar->setVisible(true);
+    leBuscar->setVisible(true);
+    lbTipoBusqueda->setVisible(true);
+    comboTipoBusqueda->setVisible(true);
+
+    btnAceptar->setText("Buscar");
+    btnAceptar->move(630,98);
+    btnAceptar->setVisible(true);
+
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
+
+    bandera=false;
+}
+
+void Libro::btnBuscar()
+{
+
+    rowCount = 0;
+    QSqlQuery query;
+    leBuscar->setText(leBuscar->text().toUpper());
+
+
+    if(comboTipoBusqueda->currentText() == "Cota"){
+
+        mostrarNuevo();
+        btnCancelar->setVisible(false);
+
+        btnAceptar->move(630,98);
+
+        query.exec("select * from libros where cota='"+leBuscar->text()+"'");
+
+        if(query.next()){
+
+            comboAdquisicion->setEditable(false);
+            leCota->setReadOnly(true);
+            leAutor->setReadOnly(true);
+            leTitulo->setReadOnly(true);
+            leMateria->setReadOnly(true);
+            leEditorial->setReadOnly(true);
+            leAnhoPublicacion->setReadOnly(true);
+            leLugar->setReadOnly(true);
+            leVolumen->setReadOnly(true);
+            leEjemplar->setReadOnly(true);
+
+            if (bandera==true){
+                btnCancelar->setVisible(true);
+                btnCancelar->setEnabled(true);
+                btnCancelar->move(380,390);
+                btnCancelar->setText("Editar");
+                leCota->setReadOnly(false);
+                leAutor->setReadOnly(false);
+                leTitulo->setReadOnly(false);
+                leMateria->setReadOnly(false);
+                leEditorial->setReadOnly(false);
+                leAnhoPublicacion->setReadOnly(false);
+                leLugar->setReadOnly(false);
+                leVolumen->setReadOnly(false);
+                leEjemplar->setReadOnly(false);
+                cota=leBuscar->text();
+
+            }
+
+            leCota->setText(query.value(0).toString());
+            leAutor->setText(query.value(1).toString());
+            leTitulo->setText(query.value(2).toString());
+            leMateria->setText(query.value(3).toString());
+            leEditorial->setText(query.value(4).toString());
+            leAnhoPublicacion->setText(query.value(5).toString());
+            leLugar->setText(query.value(6).toString());
+            leVolumen->setText(query.value(10).toString());
+            leEjemplar->setText(query.value(11).toString());
+
+            if(query.value(7).toString()=="X")
+                comboAdquisicion->setCurrentIndex(3);
+            if(query.value(8).toString()=="X")
+                comboAdquisicion->setCurrentIndex(2);
+            if(query.value(9).toString()=="X")
+                comboAdquisicion->setCurrentIndex(1);
+
+            if(query.value(12).toString()=="X")
+                comboEstado->setCurrentIndex(1);
+            if(query.value(13).toString()=="X")
+                comboEstado->setCurrentIndex(2);
+            if(query.value(14).toString()=="X")
+                comboEstado->setCurrentIndex(3);
+
+        }
+
+        else{
+
+            QMessageBox::about(this,"Advertencia","Cota no Existe");
+            leCota->setText("");
+            leAutor->setText("");
+            leTitulo->setText("");
+            leMateria->setText("");
+            leEditorial->setText("");
+            leAnhoPublicacion->setText("");
+            leLugar->setText("");
+            leVolumen->setText("");
+            leEjemplar->setText("");
+        }
+
+    }
+
+
+    if(comboTipoBusqueda->currentText() == "Titulo"){
+
+        lbCota->hide();
+        leCota->hide();
+        lbAutor->hide();
+        leAutor->hide();
+        lbTitulo->hide();
+        leTitulo->hide();
+
+
+        query.exec("select * from libros where titulo like '"+leBuscar->text()+"%'");
+
+        if( !query.next() ) {
+            QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+
+        }
+
+        else{
+
+                tableBusqueda->setVisible(true);
+
+                rowCount += 1;
+                tableBusqueda->setRowCount(rowCount);
+                rowCount = tableBusqueda->rowCount();
+
+
+
+                for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(0).toString());
+                    tableBusqueda->setItem(row, 0, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(1).toString());
+                    tableBusqueda->setItem(row, 1, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(2).toString());
+                    tableBusqueda->setItem(row, 2, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(3).toString());
+                    tableBusqueda->setItem(row, 3, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(4).toString());
+                    tableBusqueda->setItem(row, 4, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(5).toString());
+                    tableBusqueda->setItem(row, 5, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(6).toString());
+                    tableBusqueda->setItem(row, 6, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(7).toString());
+                    tableBusqueda->setItem(row, 7, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(8).toString());
+                    tableBusqueda->setItem(row, 8, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(9).toString());
+                    tableBusqueda->setItem(row, 9, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(10).toString());
+                    tableBusqueda->setItem(row, 10, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(11).toString());
+                    tableBusqueda->setItem(row, 11, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(12).toString());
+                    tableBusqueda->setItem(row, 12, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(13).toString());
+                    tableBusqueda->setItem(row, 13, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(14).toString());
+                    tableBusqueda->setItem(row, 14, item);
+
+                }
+
+                while( query.next() ) {
+
+                    rowCount += 1;
+                    tableBusqueda->setRowCount(rowCount);
+                    rowCount = tableBusqueda->rowCount();
+
+                    for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(0).toString());
+                        tableBusqueda->setItem(row, 0, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(1).toString());
+                        tableBusqueda->setItem(row, 1, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(2).toString());
+                        tableBusqueda->setItem(row, 2, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(3).toString());
+                        tableBusqueda->setItem(row, 3, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(4).toString());
+                        tableBusqueda->setItem(row, 4, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(5).toString());
+                        tableBusqueda->setItem(row, 5, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(6).toString());
+                        tableBusqueda->setItem(row, 6, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(7).toString());
+                        tableBusqueda->setItem(row, 7, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(8).toString());
+                        tableBusqueda->setItem(row, 8, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(9).toString());
+                        tableBusqueda->setItem(row, 9, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(10).toString());
+                        tableBusqueda->setItem(row, 10, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(11).toString());
+                        tableBusqueda->setItem(row, 11, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(12).toString());
+                        tableBusqueda->setItem(row, 12, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(13).toString());
+                        tableBusqueda->setItem(row, 13, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(14).toString());
+                        tableBusqueda->setItem(row, 14, item);
+
+                    }
+                }
+        }
+    }
+
+    if(comboTipoBusqueda->currentText() == "Autor"){
+
+        lbCota->hide();
+        leCota->hide();
+        lbAutor->hide();
+        leAutor->hide();
+        lbTitulo->hide();
+        leTitulo->hide();
+
+        query.exec("select * from libros where autor like '"+leBuscar->text()+"%'");
+
+        if( !query.next() ) {
+            QMessageBox::warning(this, "Advertencia", "No existen libros con este autor.");
+
+        }
+
+        else{
+
+                tableBusqueda->setVisible(true);
+
+                rowCount += 1;
+                tableBusqueda->setRowCount(rowCount);
+                rowCount = tableBusqueda->rowCount();
+
+
+
+                for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(0).toString());
+                    tableBusqueda->setItem(row, 0, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(1).toString());
+                    tableBusqueda->setItem(row, 1, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(2).toString());
+                    tableBusqueda->setItem(row, 2, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(3).toString());
+                    tableBusqueda->setItem(row, 3, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(4).toString());
+                    tableBusqueda->setItem(row, 4, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(5).toString());
+                    tableBusqueda->setItem(row, 5, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(6).toString());
+                    tableBusqueda->setItem(row, 6, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(7).toString());
+                    tableBusqueda->setItem(row, 7, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(8).toString());
+                    tableBusqueda->setItem(row, 8, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(9).toString());
+                    tableBusqueda->setItem(row, 9, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(10).toString());
+                    tableBusqueda->setItem(row, 10, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(11).toString());
+                    tableBusqueda->setItem(row, 11, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(12).toString());
+                    tableBusqueda->setItem(row, 12, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(13).toString());
+                    tableBusqueda->setItem(row, 13, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(14).toString());
+                    tableBusqueda->setItem(row, 14, item);
+
+                }
+
+                while( query.next() ) {
+
+                    rowCount += 1;
+                    tableBusqueda->setRowCount(rowCount);
+                    rowCount = tableBusqueda->rowCount();
+
+                    for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(0).toString());
+                        tableBusqueda->setItem(row, 0, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(1).toString());
+                        tableBusqueda->setItem(row, 1, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(2).toString());
+                        tableBusqueda->setItem(row, 2, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(3).toString());
+                        tableBusqueda->setItem(row, 3, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(4).toString());
+                        tableBusqueda->setItem(row, 4, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(5).toString());
+                        tableBusqueda->setItem(row, 5, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(6).toString());
+                        tableBusqueda->setItem(row, 6, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(7).toString());
+                        tableBusqueda->setItem(row, 7, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(8).toString());
+                        tableBusqueda->setItem(row, 8, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(9).toString());
+                        tableBusqueda->setItem(row, 9, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(10).toString());
+                        tableBusqueda->setItem(row, 10, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(11).toString());
+                        tableBusqueda->setItem(row, 11, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(12).toString());
+                        tableBusqueda->setItem(row, 12, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(13).toString());
+                        tableBusqueda->setItem(row, 13, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(14).toString());
+                        tableBusqueda->setItem(row, 14, item);
+
+                    }
+                }
+        }
+    }
+
+
+    if(comboTipoBusqueda->currentText() == "Materia"){
+
+        lbCota->hide();
+        leCota->hide();
+        lbAutor->hide();
+        leAutor->hide();
+        lbTitulo->hide();
+        leTitulo->hide();
+
+        query.exec("select * from libros where materia like '"+leBuscar->text()+"%'");
+
+        if( !query.next() ) {
+            QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+
+        }
+
+        else{
+
+                tableBusqueda->setVisible(true);
+
+                rowCount += 1;
+                tableBusqueda->setRowCount(rowCount);
+                rowCount = tableBusqueda->rowCount();
+
+
+
+                for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(0).toString());
+                    tableBusqueda->setItem(row, 0, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(1).toString());
+                    tableBusqueda->setItem(row, 1, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(2).toString());
+                    tableBusqueda->setItem(row, 2, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(3).toString());
+                    tableBusqueda->setItem(row, 3, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(4).toString());
+                    tableBusqueda->setItem(row, 4, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(5).toString());
+                    tableBusqueda->setItem(row, 5, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(6).toString());
+                    tableBusqueda->setItem(row, 6, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(7).toString());
+                    tableBusqueda->setItem(row, 7, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(8).toString());
+                    tableBusqueda->setItem(row, 8, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(9).toString());
+                    tableBusqueda->setItem(row, 9, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(10).toString());
+                    tableBusqueda->setItem(row, 10, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(11).toString());
+                    tableBusqueda->setItem(row, 11, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(12).toString());
+                    tableBusqueda->setItem(row, 12, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(13).toString());
+                    tableBusqueda->setItem(row, 13, item);
+
+                    item = new QTableWidgetItem;
+                    item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                    item->setText(query.value(14).toString());
+                    tableBusqueda->setItem(row, 14, item);
+
+                }
+
+                while( query.next() ) {
+
+                    rowCount += 1;
+                    tableBusqueda->setRowCount(rowCount);
+                    rowCount = tableBusqueda->rowCount();
+
+                    for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(0).toString());
+                        tableBusqueda->setItem(row, 0, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(1).toString());
+                        tableBusqueda->setItem(row, 1, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(2).toString());
+                        tableBusqueda->setItem(row, 2, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(3).toString());
+                        tableBusqueda->setItem(row, 3, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(4).toString());
+                        tableBusqueda->setItem(row, 4, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(5).toString());
+                        tableBusqueda->setItem(row, 5, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(6).toString());
+                        tableBusqueda->setItem(row, 6, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(7).toString());
+                        tableBusqueda->setItem(row, 7, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(8).toString());
+                        tableBusqueda->setItem(row, 8, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(9).toString());
+                        tableBusqueda->setItem(row, 9, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(10).toString());
+                        tableBusqueda->setItem(row, 10, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(11).toString());
+                        tableBusqueda->setItem(row, 11, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(12).toString());
+                        tableBusqueda->setItem(row, 12, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(13).toString());
+                        tableBusqueda->setItem(row, 13, item);
+
+                        item = new QTableWidgetItem;
+                        item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                        item->setText(query.value(14).toString());
+                        tableBusqueda->setItem(row, 14, item);
+
+                    }
+                }
+        }
+    }
+
+}
 
 void Libro::eliminarLibro()
 {
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
-//    limpiar();
+    limpiar();
 
-//    lbCedula->setText("Ingrese Cedula: ");
-//    leCedula->move(460,130);
-//    lbCedula->move(330,130);
+    lbCota->setText("Ingrese Cota: ");
+    lbCota->move(360,180);
+    leCota->move(450,180);
 
-//    btnAceptar->move(430,220);
-//    btnAceptar->setText("Eliminar");
-//    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEliminar()));
+    btnAceptar->move(430,230);
+    btnAceptar->setText("Eliminar");
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEliminar()));
 
-//    leCedula->show();
-//    lbCedula->show();
-//    btnAceptar->show();
+    leCota->show();
+    lbCota->show();
+    btnAceptar->show();
 
+    bandera=false;
 
-}
-
-void Libro::buscarLibro()
-{
-
-
-
-    disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
-
-
-//    limpiar();
-
-//    leNombre->setReadOnly(true);
-//    leApellido->setReadOnly(true);
-
-//    leCedula->move(450,130);
-//    lbCedula->move(330,130);
-//    lbCedula->setText("Ingrese Cedula: ");
-
-//    btnAceptar->move(450,280);
-//    btnAceptar->setText("Buscar");
-//    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
-
-//    lbNombre->move(280,190);
-//    leNombre->move(350,190);
-
-//    lbApellido->move(510,190);
-//    leApellido->move(580,190);
-
-
-//    lbTipo->move(300,220);
-
-
-
-//    leCedula->show();
-//    lbCedula->show();
-//    btnAceptar->show();
-//    lbApellido->show();
-//    leApellido->show();
-//    lbNombre->show();
-//    leNombre->show();
-//    lbTipo->show();
-
-}
-
-bool Libro::btnBuscar()
-{
-
-    QSqlQuery query;
-//    query.exec("select * from personas where cedula='"+leCedula->text()+"'");
-
-//    if( query.next() ){
-
-//        leNombre->setText(query.value(1).toString());
-//        leApellido->setText(query.value(2).toString());
-//        lbTipo->setText(query.value(3).toString());
-//        btnAceptar->setEnabled(true);
-//        cedula=leCedula->text();
-//        return true;
-
-//    }
-
-//    else{
-
-//        QMessageBox::warning(this,"ATENCION","El usuario no existe");
-//        return false;
-//    }
-return true;
 }
 
 void Libro::btnEliminar()
 {
 
     QSqlQuery query;
+    leCota->setText(leCota->text().toUpper());
 
-//    query.exec("select * from personas where cedula='"+leCedula->text()+"'");
+    query.exec("select * from libros where cota='"+leCota->text()+"'");
 
-//    if( query.next() ){
+    if( query.next() ){
 
-//        query.exec("delete from personas where cedula='"+leCedula->text()+"'");
+        query.exec("delete from personas where cedula='"+leCota->text()+"'");
 
-//        QMessageBox msg;
-//        msg.setModal(true);
-//        msg.setWindowTitle("Eliminar");
-//        msg.setText("Usuario Eliminado");
-//        msg.exec();
-//    }
+        QMessageBox msg;
+        msg.setModal(true);
+        msg.setWindowTitle("Eliminar");
+        msg.setText("Usuario Eliminado");
+        msg.exec();
+    }
 
-//    else{
+    else{
 
-//        QMessageBox::warning(this,"ATENCION","El usuario no existe");
+        QMessageBox::warning(this,"ATENCION","El libro no existe");
 
-//    }
+    }
 }
 
 void Libro::inicializar(QWidget *a)
@@ -304,6 +994,7 @@ void Libro::inicializar(QWidget *a)
     lbAdquisicion->setText("Adquisición: ");
 
     comboAdquisicion = new QComboBox(a);
+    comboAdquisicion->addItem("");
     comboAdquisicion->addItem("Comprado");
     comboAdquisicion->addItem("Donado");
     comboAdquisicion->addItem("Canjeado");
@@ -336,6 +1027,7 @@ void Libro::inicializar(QWidget *a)
     lbEstado->setText("Estado: ");
 
     comboEstado = new QComboBox(a);
+    comboEstado->addItem("");
     comboEstado->addItem("Bueno");
     comboEstado->addItem("Regular");
     comboEstado->addItem("Malo");
@@ -349,6 +1041,41 @@ void Libro::inicializar(QWidget *a)
     btnCancelar = new QPushButton("Cancelar",a);
     btnCancelar->move(490,390);
     btnCancelar->setVisible(false);
+
+    lbBuscar = new QLabel(a);
+    lbBuscar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
+    lbBuscar->move(190,100);
+    lbBuscar->setText("Buscar:");
+    lbBuscar->setVisible(false);
+
+    leBuscar = new QLineEdit(a);
+    leBuscar->setGeometry(240,100,270,20);
+    leBuscar->setVisible(false);
+
+    lbTipoBusqueda = new QLabel(a);
+    lbTipoBusqueda->setFont(QFont("Baskerville Old Face",9,QFont::Bold));
+    lbTipoBusqueda->move(515,80);
+    lbTipoBusqueda->setText("Tipo de Busqueda");
+    lbTipoBusqueda->setVisible(false);
+
+    comboTipoBusqueda = new QComboBox(a);
+    comboTipoBusqueda->addItem("Cota");
+    comboTipoBusqueda->addItem("Autor");
+    comboTipoBusqueda->addItem("Titulo");
+    comboTipoBusqueda->addItem("Materia");
+    comboTipoBusqueda->move(535,100);
+    comboTipoBusqueda->setVisible(false);
+
+    tableBusqueda = new QTableWidget(a);
+    tableBusqueda->setGeometry(170,200,621,321);
+    tableBusqueda->setColumnCount(15);
+    QStringList listHeader;
+    listHeader << "Cota" << "Autor" << "Titulo" << "Materia" << "Editorial" << "Año Public." << "Lugar"
+                << "Canjeado" << "Donado" << "Comprado" << "Volumen" << "Ejemplar" << "Bueno" << "Malo" << "Regular";
+    tableBusqueda->setHorizontalHeaderLabels(listHeader);
+    tableBusqueda->setVisible(false);
+
+    bandera=false;
 
 }
 
@@ -422,7 +1149,10 @@ void Libro::mostrarNuevo(){
     btnAceptar->setVisible(true);
 
     btnCancelar->move(490,390);
+    btnCancelar->setText("Cancelar");
+    btnCancelar->setEnabled(true);
     btnCancelar->setVisible(true);
+
 
 }
 
@@ -440,6 +1170,8 @@ void Libro::limpiar()
     lbVolumen->setVisible(false);
     lbEjemplar->setVisible(false);
     lbEstado->setVisible(false);
+    lbBuscar->setVisible(false);
+    lbTipoBusqueda->setVisible(false);
 
     leCota->setVisible(false);
     leAutor->setVisible(false);
@@ -450,6 +1182,7 @@ void Libro::limpiar()
     leLugar->setVisible(false);
     leVolumen->setVisible(false);
     leEjemplar->setVisible(false);
+    leBuscar->setVisible(false);
 
     leCota->setText("");
     leAutor->setText("");
@@ -460,12 +1193,16 @@ void Libro::limpiar()
     leLugar->setText("");
     leVolumen->setText("");
     leEjemplar->setText("");
+    leBuscar->setText("");
 
     comboEstado->setVisible(false);
     comboAdquisicion->setVisible(false);
+    comboTipoBusqueda->setVisible(false);
 
     btnAceptar->setVisible(false);
     btnCancelar->setVisible(false);
+
+    tableBusqueda->setVisible(false);
 
 }
 

@@ -4,5 +4,6 @@
         <file>images/logo.png</file>
         <file>images/cancel.png</file>
         <file>images/aceptar.png</file>
+        <file>images/ver.png</file>
     </qresource>
 </RCC>
