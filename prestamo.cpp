@@ -18,12 +18,6 @@ void Prestamo::initGUI(QWidget *central)
     lineEditCota = new QLineEdit(central);
     lineEditCota->move(QPoint(305,140));
     lineEditCota->setVisible(false);
-    connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotValidate()));
-
-    lineEditCotaEntrega = new QLineEdit(central);
-    lineEditCotaEntrega->move(QPoint(305,140));
-    lineEditCotaEntrega->setVisible(false);
-    connect(lineEditCotaEntrega, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
 
     lblAutor = new QLabel(central);
     lblAutor->setText("Autor: ");
@@ -47,18 +41,14 @@ void Prestamo::initGUI(QWidget *central)
     lineEditTitulo->setReadOnly(true);
     lineEditTitulo->setVisible(false);
 
-    lblTipoPrestamo = new QLabel(central);
-    lblTipoPrestamo->setText("Tipo Préstamo: ");
-    lblTipoPrestamo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblTipoPrestamo->move(QPoint(180,230));
-    lblTipoPrestamo->setVisible(false);
+    lblCedula = new QLabel(central);
+    lblCedula->setText("Cédula: ");
+    lblCedula->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lblCedula->setVisible(false);
 
-    comboBoxTipoPrestamo = new QComboBox(central);
-    comboBoxTipoPrestamo->setGeometry(305,230,121,22);
-    comboBoxTipoPrestamo->addItem("Aula");
-    comboBoxTipoPrestamo->addItem("Hogar");
-    comboBoxTipoPrestamo->addItem("Profesor");
-    comboBoxTipoPrestamo->setVisible(false);
+    lineEditCedula = new QLineEdit(central);
+    lineEditCedula->setValidator(new QIntValidator(0,99999999,this));
+    lineEditCedula->setVisible(false);
 
     lblGrado = new QLabel(central);
     lblGrado->setText("Grado: ");
@@ -79,16 +69,18 @@ void Prestamo::initGUI(QWidget *central)
     comboBoxGrado->addItem("9º Grado");
     comboBoxGrado->setVisible(false);
 
-    lblCedula = new QLabel(central);
-    lblCedula->setText("Cédula: ");
-    lblCedula->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCedula->move(QPoint(518,140));
-    lblCedula->setVisible(false);
+    lblTipoPrestamo = new QLabel(central);
+    lblTipoPrestamo->setText("Tipo Préstamo: ");
+    lblTipoPrestamo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lblTipoPrestamo->move(QPoint(462,140));
+    lblTipoPrestamo->setVisible(false);
 
-    lineEditCedula = new QLineEdit(central);
-    lineEditCedula->move(QPoint(585,140));
-    lineEditCedula->setValidator(new QIntValidator(0,99999999,this));
-    lineEditCedula->setVisible(false);
+    comboBoxTipoPrestamo = new QComboBox(central);
+    comboBoxTipoPrestamo->setGeometry(585,140,121,22);
+    comboBoxTipoPrestamo->addItem("Aula");
+    comboBoxTipoPrestamo->addItem("Hogar");
+    comboBoxTipoPrestamo->setVisible(false);
+    connect(comboBoxTipoPrestamo, SIGNAL(activated(int)), this, SLOT(slotTipoPrestamo(int)));
 
     lblFechaP = new QLabel(central);
     lblFechaP->setText("Fecha Préstamo: ");
@@ -98,24 +90,10 @@ void Prestamo::initGUI(QWidget *central)
 
     lineEditFechaP = new QLineEdit(central);
     lineEditFechaP->move(QPoint(585,170));
+    lineEditFechaP->setReadOnly(true);
     lineEditFechaP->setToolTip("El formato de la fecha es: DD/MM/AAAA");
-
-    QString expDia("([0-2]\\d|[3][0-1])");
-    QString expMes("/([0]\\d)/|/([1][0-2])/");
-    QString expAnho("[0-9]{4}");
-    QRegExp expFecha(expDia.append(expMes.append(expAnho)));
-
-    lineEditFechaP->setValidator(new QRegExpValidator(QRegExp(expFecha),this));
+    lineEditFechaP->setText(QDate::currentDate().toString("dd/MM/yyyy"));
     lineEditFechaP->setVisible(false);
-
-    btnCalendar = new QPushButton(central);
-    btnCalendar->setIcon(QIcon(":/images/calendar.png"));
-    btnCalendar->setGeometry(726,170,21,21);
-    connect(btnCalendar, SIGNAL(clicked()), this, SLOT(slotCalendar()));
-    btnCalendar->setVisible(false);
-
-    calendarWidget = new QCalendarWidget;
-    calendarWidget->setVisible(false);
 
     lblFechaE = new QLabel(central);
     lblFechaE->setText("Fecha Entrega: ");
@@ -126,39 +104,45 @@ void Prestamo::initGUI(QWidget *central)
     lineEditFechaE = new QLineEdit(central);
     lineEditFechaE->move(QPoint(585,200));
     lineEditFechaE->setToolTip("El formato de la fecha es: DD/MM/AAAA");
-    lineEditFechaE->setReadOnly(true);
+
+    QString expDia("([0-2]\\d|[3][0-1])/");
+    QString expMes("([0]\\d|[1][0-2])/");
+    QString expAnho("([0-9]{4})");
+    expFecha.setPattern(expDia.append(expMes.append(expAnho)));
+
+    lineEditFechaE->setValidator(new QRegExpValidator(QRegExp(expFecha),this));
     lineEditFechaE->setVisible(false);
 
-    lblCategoria = new QLabel(central);
-    lblCategoria->setText("Categoría: ");
-    lblCategoria->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCategoria->move(QPoint(500,230));
-    lblCategoria->setVisible(false);
+    btnCalendar = new QPushButton(central);
+    btnCalendar->setIcon(QIcon(":/images/calendar.png"));
+    btnCalendar->setGeometry(726,200,21,21);
+    btnCalendar->setVisible(false);
+    connect(btnCalendar, SIGNAL(clicked()), this, SLOT(slotCalendar()));
 
-    lineEditCategoria = new QLineEdit(central);
-    lineEditCategoria->move(QPoint(585,230));
-    lineEditCategoria->setReadOnly(true);
-    lineEditCategoria->setVisible(false);
+    calendarWidget = new QCalendarWidget;
+    calendarWidget->setVisible(false);
 
     lblCantidad = new QLabel(central);
     lblCantidad->setText("Cantidad: ");
     lblCantidad->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCantidad->move(QPoint(505,260));
+    lblCantidad->move(QPoint(505,230));
     lblCantidad->setVisible(false);
 
     lineEditCantidad = new QLineEdit(central);
-    lineEditCantidad->setGeometry(585,260,45,20);
+    lineEditCantidad->setText("1");
+    lineEditCantidad->setGeometry(585,230,45,20);
+    lineEditCantidad->setReadOnly(true);
     lineEditCantidad->setValidator(new QIntValidator(1,100,this));
     lineEditCantidad->setVisible(false);
 
     lblStatus = new QLabel(central);
     lblStatus->setText("Estado: ");
     lblStatus->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblStatus->move(QPoint(645,260));
+    lblStatus->move(QPoint(645,230));
     lblStatus->setVisible(false);
 
     lineEditStatus = new QLineEdit(central);
-    lineEditStatus->setGeometry(710,260,70,20);
+    lineEditStatus->setGeometry(710,230,70,20);
     lineEditStatus->setStyleSheet("background-color: rgb(255, 255, 127);");
     lineEditStatus->setText("[P] Préstamo");
     lineEditStatus->setReadOnly(true);
@@ -167,33 +151,45 @@ void Prestamo::initGUI(QWidget *central)
     lblResponsable = new QLabel(central);
     lblResponsable->setText("Responsable: ");
     lblResponsable->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblResponsable->move(QPoint(390,300));
+    lblResponsable->move(QPoint(480,260));
     lblResponsable->setVisible(false);
 
     comboBoxResponsable = new QComboBox(central);
-    comboBoxResponsable->setGeometry(495,300,51,22);
+    comboBoxResponsable->setGeometry(585,260,51,22);
     comboBoxResponsable->addItem("01");
     comboBoxResponsable->addItem("02");
     comboBoxResponsable->setVisible(false);
 
     btnRegistrar = new QPushButton(central);
-    btnRegistrar->setText("&Registrar");
-    btnRegistrar->move(455,350);
     btnRegistrar->setVisible(false);
-    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
 
-    btnEntregar = new QPushButton(central);
-    btnEntregar->setText("&Entregar");
-    btnEntregar->setIcon(QIcon(":/images/aceptar.png"));
-    btnEntregar->move(455,180);
-    btnEntregar->setVisible(false);
-    connect(btnEntregar, SIGNAL(clicked()), this, SLOT(slotAcceptEntrega()));
+    lblFiltro = new QLabel(central);
+    lblFiltro->setText("Filtrar: ");
+    lblFiltro->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lblFiltro->move(270,140);
+    lblFiltro->setVisible(false);
+
+    comboBoxFiltro = new QComboBox(central);
+    comboBoxFiltro->move(340,140);
+    comboBoxFiltro->addItem("Todas");
+    comboBoxFiltro->addItem("Cota");
+    comboBoxFiltro->addItem("Cédula");
+    comboBoxFiltro->addItem("Fecha Préstamo");
+    comboBoxFiltro->addItem("Fecha Entrega");
+    comboBoxFiltro->addItem("Responsable");
+    comboBoxFiltro->setVisible(false);
+    connect(comboBoxFiltro, SIGNAL(currentIndexChanged(int)), this, SLOT(slotTipoFiltro(int)));
+
+    lineEditFiltro = new QLineEdit(central);
+    lineEditFiltro->move(465,140);
+    lineEditFiltro->setReadOnly(true);
+    lineEditFiltro->setVisible(false);
 
     tablePrestamo = new QTableWidget(central);
     tablePrestamo->setColumnCount(5);
 
     QStringList listHeader;
-    listHeader << "Cota" << "Cédula" << "Fecha Préstamo" << "Fecha Entrega" << "Responsable";
+    listHeader << "Cota" << "Cédula" << "Fecha Préstamo" << "Fecha Entrega" <<"Responsable";
     tablePrestamo->setHorizontalHeaderLabels(listHeader);
     rowCount = tablePrestamo->rowCount();
     connect(tablePrestamo, SIGNAL(cellClicked(int,int)), tablePrestamo, SLOT(selectRow(int)));
@@ -203,55 +199,56 @@ void Prestamo::initGUI(QWidget *central)
 
 }
 
-void Prestamo::visibleWidget(bool visible)
+void Prestamo::showPrestamo()
 {
 
-    lblCota->setVisible(visible);
-    lineEditCota->setVisible(visible);
-    lineEditCota->setText("");
+    lblCota->setVisible(true);
+    lineEditCota->setVisible(true);
+    lineEditCota->disconnect(this);
+    connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotValidateCota()));
 
-    lblAutor->setVisible(visible);
-    lineEditAutor->setVisible(visible);
-    lineEditAutor->setText("");
+    lblAutor->setVisible(true);
+    lineEditAutor->setVisible(true);
 
-    lblTitulo->setVisible(visible);
-    lineEditTitulo->setVisible(visible);
-    lineEditTitulo->setText("");
+    lblTitulo->setVisible(true);
+    lineEditTitulo->setVisible(true);
 
-    lblTipoPrestamo->setVisible(visible);
-    comboBoxTipoPrestamo->setVisible(visible);
-
-    lblGrado->setVisible(visible);
-    comboBoxGrado->setVisible(visible);
-
-    lblCedula->setVisible(visible);
-    lineEditCedula->setVisible(visible);
+    lblCedula->setVisible(true);
+    lblCedula->move(QPoint(242,230));
+    lineEditCedula->setVisible(true);
+    lineEditCedula->move(QPoint(305,230));
     lineEditCedula->setText("");
+    connect(lineEditCedula, SIGNAL(editingFinished()), this, SLOT(slotValidateCedula()));
 
-    lblFechaP->setVisible(visible);
-    lineEditFechaP->setVisible(visible);
-    lineEditFechaP->setText("");
-    btnCalendar->setVisible(visible);
+    lblGrado->setVisible(true);
+    comboBoxGrado->setVisible(true);
 
-    lblFechaE->setVisible(visible);
-    lineEditFechaE->setVisible(visible);
-    lineEditFechaE->setText("");
+    lblTipoPrestamo->setVisible(true);
+    comboBoxTipoPrestamo->setVisible(true);
+    comboBoxTipoPrestamo->setCurrentIndex(0);
 
-    lblCategoria->setVisible(visible);
-    lineEditCategoria->setVisible(visible);
-    lineEditCategoria->setText("");
+    lblFechaP->setVisible(true);
+    lineEditFechaP->setVisible(true);
+    btnCalendar->setVisible(true);
 
-    lblCantidad->setVisible(visible);
-    lineEditCantidad->setVisible(visible);
-    lineEditCantidad->setText("");
+    lblFechaE->setVisible(true);
+    lineEditFechaE->setVisible(true);
 
-    lblStatus->setVisible(visible);
-    lineEditStatus->setVisible(visible);
+    lblCantidad->setVisible(true);
+    lineEditCantidad->setVisible(true);
 
-    lblResponsable->setVisible(visible);
-    comboBoxResponsable->setVisible(visible);
+    lblStatus->setVisible(true);
+    lineEditStatus->setVisible(true);
 
-    btnRegistrar->setVisible(visible);
+    lblResponsable->setVisible(true);
+    comboBoxResponsable->setVisible(true);
+
+    btnRegistrar->disconnect(this);
+    btnRegistrar->setVisible(true);
+    btnRegistrar->setText("&Registrar");
+    btnRegistrar->setIcon(QIcon(":/images/book.png"));
+    btnRegistrar->setGeometry(435,320,75,23);
+    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
 
 }
 
@@ -260,14 +257,15 @@ void Prestamo::slotCalendar()
 
     calendarWidget->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     calendarWidget->setWindowIcon(QIcon(":/images/calendar.png"));
-    calendarWidget->setWindowTitle("Fecha Prestamo");
+    calendarWidget->setWindowTitle("Fecha Entrega");
     calendarWidget->setGeometry(685, 250, 220, 150);
+    calendarWidget->setSelectedDate(QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy"));
     connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(slotDate(QDate)));
 
     calendarWidget->setVisible(true);
 }
 
-void Prestamo::slotValidate()
+void Prestamo::slotValidateCota()
 {
     if( lineEditCota->text().isEmpty() )
         return;
@@ -284,13 +282,69 @@ void Prestamo::slotValidate()
         lineEditCota->setText("");
         lineEditAutor->setText("");
         lineEditTitulo->setText("");
-        lineEditCategoria->setText("");
         lineEditCota->setFocus();
     }else {
         lineEditAutor->setText(query.value(0).toString());
         lineEditTitulo->setText(query.value(1).toString());
         cantBook = query.value(2).toInt();
-        lineEditCategoria->setText("ELIminar esto!!");
+    }
+
+    lineEditCedula->setFocus();
+
+}
+
+void Prestamo::slotValidateCedula()
+{
+    if( lineEditCedula->text().isEmpty() )
+        return;
+
+    QString strQuery = "SELECT tipo FROM personas WHERE cedula = "+ lineEditCedula->text();
+    qDebug() << strQuery;
+
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+        QMessageBox::warning(this, "Advertencia", "La cedula del usuario no existe.");
+        lineEditCedula->setText("");
+        lineEditCedula->setFocus();
+    }else {
+
+        if( (query.value(0).toString() == "Profesor") ) {
+            comboBoxTipoPrestamo->removeItem(2);
+            comboBoxTipoPrestamo->addItem("Aula - Profesor");
+        }
+        else {
+            if( comboBoxTipoPrestamo->count() == 3)
+                comboBoxTipoPrestamo->removeItem(2);
+        }
+    }
+}
+
+void Prestamo::slotTipoPrestamo(int item)
+{
+    if( item == 0 ) {
+
+        lineEditCantidad->setText("1");
+        lineEditCantidad->setReadOnly(true);
+
+        lineEditFechaE->setText(QDate::currentDate().toString("dd/MM/yyyy"));
+    }
+    else if( item == 1 ) {
+
+        lineEditCantidad->setText("1");
+        lineEditCantidad->setReadOnly(true);
+
+        if ( QDate::currentDate().dayOfWeek() == 3 )
+            lineEditFechaE->setText(QDate::currentDate().addDays(5).toString("dd/MM/yyyy"));
+        else if ( QDate::currentDate().dayOfWeek() == 4 )
+            lineEditFechaE->setText(QDate::currentDate().addDays(4).toString("dd/MM/yyyy"));
+        else
+            lineEditFechaE->setText(QDate::currentDate().addDays(3).toString("dd/MM/yyyy"));
+    }
+    else {
+       lineEditFechaE->setText(QDate::currentDate().toString("dd/MM/yyyy"));
+       lineEditCantidad->setText("");
+       lineEditCantidad->setReadOnly(false);
     }
 
 }
@@ -298,25 +352,14 @@ void Prestamo::slotValidate()
 void Prestamo::slotDate(QDate date)
 {
 
-    lineEditFechaP->setValidator(new QRegExpValidator(QRegExp(date.toString("dd/MM/yyyy")),this));
-    lineEditFechaP->setText(date.toString("dd/MM/yyyy"));
+    lineEditFechaE->setValidator(new QRegExpValidator(QRegExp(expFecha),this));
 
-    calendarWidget->close();
-
-    if( comboBoxTipoPrestamo->currentText() == "Aula" ) {
+    if (date >= QDate::currentDate() ) {
         lineEditFechaE->setText(date.toString("dd/MM/yyyy"));
-    }
-    else if( comboBoxTipoPrestamo->currentText() == "Hogar" ) {
-
-        if ( date.dayOfWeek() == 3 )
-            lineEditFechaE->setText(date.addDays(5).toString("dd/MM/yyyy"));
-        else if ( date.dayOfWeek() == 4 )
-            lineEditFechaE->setText(date.addDays(4).toString("dd/MM/yyyy"));
-        else
-            lineEditFechaE->setText(date.addDays(3).toString("dd/MM/yyyy"));
+        calendarWidget->close();
     }
     else {
-        lineEditFechaE->setText(date.addDays(7).toString("dd/MM/yyyy"));
+        QMessageBox::information(this,"Información","La fecha de entrega no puede ser menor a la fecha de préstamo.");
     }
 
 }
@@ -325,105 +368,101 @@ void Prestamo::slotRegistrar()
 {
     if( lineEditCota->text().isEmpty() || lineEditAutor->text().isEmpty() || lineEditTitulo->text().isEmpty()
         || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
-        || lineEditFechaE->text().isEmpty() || lineEditCategoria->text().isEmpty()
-        || lineEditCantidad->text().isEmpty() ) {
+        || lineEditFechaE->text().isEmpty() || lineEditCantidad->text().isEmpty() ) {
 
         QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
 
         return;
     }
 
-    QString strQuery = "SELECT cedula FROM personas WHERE cedula = " + lineEditCedula->text();
+    QString strQuery;
+
+    QDate fechaP = QDate::fromString(lineEditFechaP->text(),"dd/MM/yyyy");
+    QDate fechaE = QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy");
+
+    if( fechaE < fechaP ) {
+        QMessageBox::information(this, "Información", "La fecha de entrega no puede ser menor a la fecha de préstamo.");
+
+        lineEditFechaE->setText("");
+        lineEditFechaE->setFocus();
+
+        return;
+    }
+
+    if( lineEditCantidad->text().toInt() == 0 ) {
+
+        QMessageBox::warning(this, "Advertencia", "La cantidad no puede ser cero.");
+        lineEditCantidad->setFocus();
+
+        return;
+    }
+    else if ( lineEditCantidad->text().toInt() <= cantBook ) {
+
+        strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - lineEditCantidad->text().toInt())
+                   + " WHERE cota = '" + lineEditCota->text() + "'";
+        qDebug() << strQuery;
+
+        query.exec(strQuery);
+    }
+    else {
+
+        QMessageBox::warning(this, "Advertencia", "La cantidad es mayor a la existente en la Base de Datos.");
+        lineEditCantidad->setFocus();
+
+        return;
+    }
+
+    strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCota->text()
+               + "', '" + lineEditCedula->text() + "', '" + lineEditFechaP->text()
+               + "', '" + lineEditFechaE->text() + "', '"
+               + comboBoxResponsable->currentText()+ "' )";
+
     qDebug() << strQuery;
 
     query.exec(strQuery);
 
-    if( !query.next() ) {
+    clearWidget();
 
-        QMessageBox::warning(this, "Advertencia", "La persona no existe.");
-        lineEditCedula->setText("");
-        lineEditCedula->setFocus();
-
-    }else {
-
-        if( lineEditCantidad->text().toInt() == 0 ) {
-
-            QMessageBox::warning(this, "Advertencia", "La cantidad no puede ser cero.");
-            lineEditCantidad->setText("");
-            lineEditCantidad->setFocus();
-
-            return;
-        }
-        else if ( lineEditCantidad->text().toInt() <= cantBook ) {
-
-            strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - lineEditCantidad->text().toInt())
-                       + " WHERE cota = '" + lineEditCota->text() + "'";
-            qDebug() << strQuery;
-
-            query.exec(strQuery);
-        }
-        else {
-
-            QMessageBox::warning(this, "Advertencia", "La cantidad es mayor a la existente en la Base de Datos.");
-            lineEditCantidad->setText("");
-            lineEditCantidad->setFocus();
-
-            return;
-        }
-
-
-        strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCota->text()
-                   + "', '" + lineEditCedula->text() + "', '" + lineEditFechaP->text()
-                   + "', '" + lineEditFechaE->text() + "', '"
-                   + comboBoxResponsable->currentText()+ "' )";
-
-        qDebug() << strQuery;
-
-        query.exec(strQuery);
-
-        visibleWidget(false);
-    }
 }
 
-void Prestamo::showEntregaPrestamo()
+void Prestamo::showEntrega()
 {
+
     lblCota->setVisible(true);
-    lineEditCotaEntrega->setVisible(true);
+    lineEditCota->setVisible(true);
+    lineEditCota->disconnect(this);
+    connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
 
     lblCedula->setVisible(true);
+    lblCedula->move(465,140);
     lineEditCedula->setVisible(true);
+    lineEditCedula->move(530,140);
+    lineEditCedula->disconnect(this);
 
-    btnEntregar->setVisible(true);
+    btnRegistrar->setVisible(true);
+    btnRegistrar->setText("&Entregar");
+    btnRegistrar->setIcon(QIcon(":/images/aceptar.png"));
+    btnRegistrar->setGeometry(435,180,75,23);
+    btnRegistrar->disconnect(this);
+    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotAcceptEntrega()));
+
 }
 
 void Prestamo::slotUpperText()
 {
-    lineEditCotaEntrega->setText(lineEditCotaEntrega->text().toUpper());
-}
-
-void Prestamo::visibleEntrega(bool visible)
-{
-    lblCota->setVisible(visible);
-    lineEditCotaEntrega->setVisible(false);
-    lineEditCotaEntrega->setText("");
-
-    lblCedula->setVisible(visible);
-    lineEditCedula->setVisible(visible);
-    lineEditCedula->setText("");
-
-    btnEntregar->setVisible(visible);
+    lineEditCota->setText(lineEditCota->text().toUpper());
 }
 
 void Prestamo::slotAcceptEntrega()
 {
-    if( lineEditCotaEntrega->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
+    if( lineEditCota->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
         QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
         return;
     }
 
-    lineEditCotaEntrega->setText(lineEditCotaEntrega->text().toUpper());
+    lineEditCota->setText(lineEditCota->text().toUpper());
 
-    QString strQuery = "SELECT * FROM libroPersona WHERE cotaFk = '" + lineEditCotaEntrega->text().toUpper()
+    QString strQuery = "SELECT * FROM libroPersona WHERE cotaFk = '" + lineEditCota->text().toUpper()
                        + "' AND cedulaFk = " + lineEditCedula->text();
 
     qDebug() << strQuery;
@@ -434,7 +473,7 @@ void Prestamo::slotAcceptEntrega()
         return;
     } else {
 
-        strQuery = "SELECT ejemplar FROM libros WHERE cota = '" + lineEditCotaEntrega->text().toUpper() + "'";
+        strQuery = "SELECT ejemplar FROM libros WHERE cota = '" + lineEditCota->text().toUpper() + "'";
 
         qDebug() << strQuery;
 
@@ -447,12 +486,12 @@ void Prestamo::slotAcceptEntrega()
         }
 
         strQuery = "UPDATE libros SET ejemplar = " + QString::number(ejemplar)
-                   + " WHERE cota = '" + lineEditCotaEntrega->text().toUpper() + "'";
+                   + " WHERE cota = '" + lineEditCota->text().toUpper() + "'";
 
         qDebug() << strQuery;
         query.exec(strQuery);
 
-        strQuery = "DELETE FROM libroPersona WHERE cotaFk = '" + lineEditCotaEntrega->text().toUpper()
+        strQuery = "DELETE FROM libroPersona WHERE cotaFk = '" + lineEditCota->text().toUpper()
                    + "' AND cedulaFk = " + lineEditCedula->text();
 
         qDebug() << strQuery;
@@ -465,12 +504,81 @@ void Prestamo::slotAcceptEntrega()
 
     }
 
-    visibleEntrega(false);
+    clearWidget();
+}
+
+void Prestamo::showRenovacion()
+{
+
+    lblCota->setVisible(true);
+    lineEditCota->setVisible(true);
+    lineEditCota->disconnect(this);
+    connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
+
+    lblCedula->setVisible(true);
+    lblCedula->move(465,140);
+    lineEditCedula->setVisible(true);
+    lineEditCedula->move(530,140);
+    lineEditCedula->disconnect(this);
+
+    btnRegistrar->setVisible(true);
+    btnRegistrar->setText("&Renovación");
+    btnRegistrar->setIcon(QIcon(":/images/aceptar.png"));
+    btnRegistrar->setGeometry(435,180,95,23);
+    btnRegistrar->disconnect(this);
+    connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRenovacion()));
+}
+
+void Prestamo::slotRenovacion()
+{
+    if( lineEditCota->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
+        QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
+        return;
+    }
+
+    lineEditCota->setText(lineEditCota->text().toUpper());
+
+    QString strQuery = "SELECT * FROM libroPersona WHERE cotaFk = '" + lineEditCota->text().toUpper()
+                       + "' AND cedulaFk = " + lineEditCedula->text();
+
+    qDebug() << strQuery;
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+        QMessageBox::warning(this, "Advertencia", "Datos no existente en préstamo.");
+        return;
+    } else {
+
+        QDate fecha;
+        fecha = QDate::fromString(query.value(3).toString(),"dd/MM/yyyy");
+        qDebug()<< fecha.toString("dd/MM/yyyy");
+        QString fechaUpdate;
+
+        if( fecha.dayOfWeek() == 4  )
+            fechaUpdate = fecha.addDays(4).toString("dd/MM/yyyy");
+        else if( fecha.dayOfWeek() == 5 )
+            fechaUpdate = fecha.addDays(3).toString("dd/MM/yyyy");
+        else
+            fechaUpdate = fecha.addDays(2).toString("dd/MM/yyyy");
+
+        qDebug() << fechaUpdate;
+
+        strQuery = "UPDATE libroPersona SET fechaEntrega = '" + fechaUpdate
+                   + "' WHERE cotaFk = '" + lineEditCota->text().toUpper() + "'"
+                   + " AND cedulaFk = " + lineEditCedula->text();
+
+        qDebug() << strQuery;
+
+        if( query.exec(strQuery) )
+            QMessageBox::information(this, "Información", "Se ha realizado la renovación exitosa.");
+
+    }
+
+    clearWidget();
 }
 
 void Prestamo::showTablePrestamo()
 {
-    rowCount = 0;
 
     QString strQuery = "SELECT * FROM libroPersona";
     qDebug() << strQuery;
@@ -483,7 +591,16 @@ void Prestamo::showTablePrestamo()
     }
     else {
 
-        tablePrestamo->setGeometry(225,140,518,173);
+        lblFiltro->setVisible(true);
+        comboBoxFiltro->setVisible(true);
+        lineEditFiltro->setVisible(true);
+        btnRegistrar->setVisible(true);
+        btnRegistrar->setText("&Filtrar");
+        btnRegistrar->setIcon(QIcon(":/images/ver.png"));
+        btnRegistrar->setGeometry(620,140,75,21);
+        btnRegistrar->disconnect(this);
+        connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotFiltro()));
+
         tablePrestamo->setVisible(true);
 
         rowCount += 1;
@@ -491,9 +608,9 @@ void Prestamo::showTablePrestamo()
         rowCount = tablePrestamo->rowCount();
 
         if( rowCount < 6 )
-            tablePrestamo->setGeometry(225,140,518,173);
+            tablePrestamo->setGeometry(225,170,518,173);
         else
-            tablePrestamo->setGeometry(212,140,534,173);
+            tablePrestamo->setGeometry(212,170,534,173);
 
         for( int row = rowCount - 1; row < rowCount; row++ ) {
 
@@ -530,9 +647,9 @@ void Prestamo::showTablePrestamo()
             rowCount = tablePrestamo->rowCount();
 
             if( rowCount < 6 )
-                tablePrestamo->setGeometry(225,140,518,173);
+                tablePrestamo->setGeometry(225,170,518,173);
             else
-                tablePrestamo->setGeometry(212,140,534,173);
+                tablePrestamo->setGeometry(212,170,534,173);
 
             for( int row = rowCount - 1; row < rowCount; row++ ) {
 
@@ -565,12 +682,6 @@ void Prestamo::showTablePrestamo()
         }
     }
 
-}
-
-void Prestamo::visibleTable(bool visible)
-{
-    tablePrestamo->setVisible(visible);
-    rowCount = 0;
 }
 
 void Prestamo::slotRowSelected(int row)
@@ -637,4 +748,249 @@ void Prestamo::slotRowSelected(int row)
     }
 
     dialogPrestamo->show();
+}
+
+void Prestamo::slotTipoFiltro(int item)
+{
+    if( item  == 0 ){
+        lineEditFiltro->setText("");
+        lineEditFiltro->setToolTip("");
+        lineEditFiltro->setReadOnly(true);
+
+    }
+    else if( item == 1 ) {
+        lineEditFiltro->setText("");
+        lineEditFiltro->setToolTip("");
+        lineEditFiltro->setReadOnly(false);
+        lineEditFiltro->setValidator(new QRegExpValidator(this));
+        connect(lineEditFiltro, SIGNAL(textChanged(QString)), this, SLOT(slotUpperText(QString)));
+
+    }
+    else if( item == 2 ) {
+        lineEditFiltro->setText("");
+        lineEditFiltro->setToolTip("");
+        lineEditFiltro->setReadOnly(false);
+        lineEditFiltro->setValidator(new QIntValidator(0,99999999,this));
+    }
+    else if( item == 3 ) {
+        lineEditFiltro->setText("");
+        lineEditFiltro->setReadOnly(false);
+        lineEditFiltro->setToolTip("El formato de fecha es: DD/MM/AAAA");
+        lineEditFiltro->setValidator(new QRegExpValidator(expFecha,this));
+
+    }
+    else if( item == 4 ) {
+        lineEditFiltro->setText("");
+        lineEditFiltro->setReadOnly(false);
+        lineEditFiltro->setToolTip("El formato de fecha es: DD/MM/AAAA");
+        lineEditFiltro->setValidator(new QRegExpValidator(expFecha,this));
+    }
+    else {
+        lineEditFiltro->setText("");
+        lineEditFiltro->setToolTip("");
+        lineEditFiltro->setReadOnly(false);
+        QRegExp expReg("(01|02)");
+        lineEditFiltro->setValidator(new QRegExpValidator(expReg,this));
+        QStringList list;
+        list << "01" << "02" ;
+        lineEditFiltro->setCompleter(new QCompleter(list));
+    }
+}
+
+void Prestamo::slotUpperText(QString str)
+{
+    lineEditFiltro->setText(str.toUpper());
+}
+
+void Prestamo::slotFiltro()
+{
+    if( (lineEditFiltro->text().isEmpty()) && (comboBoxFiltro->currentIndex() != 0) ) {
+        QMessageBox::warning(this,"Advertencia","No debe dejar el campo vacio.");
+        lineEditFiltro->setFocus();
+        return;
+    }
+
+    QString strQuery;
+
+    if( comboBoxFiltro->currentIndex() == 0 ) {
+        strQuery = "SELECT * FROM libroPersona";
+        filtroTable(strQuery);
+    }
+    else if( comboBoxFiltro->currentIndex() == 1 ) {
+        strQuery = "SELECT * FROM libroPersona WHERE cotaFk = '" + lineEditFiltro->text() + "'";
+        filtroTable(strQuery);
+    }
+    else if( comboBoxFiltro->currentIndex() == 2 ) {
+        strQuery = "SELECT * FROM libroPersona WHERE cedulaFk = " + lineEditFiltro->text();
+        filtroTable(strQuery);
+    }
+    else if( comboBoxFiltro->currentIndex() == 3 ) {
+        strQuery = "SELECT * FROM libroPersona WHERE fechaPrestamo = '" + lineEditFiltro->text() + "'";
+        filtroTable(strQuery);
+    }
+    else if( comboBoxFiltro->currentIndex() == 4 ) {
+        strQuery = "SELECT * FROM libroPersona WHERE fechaEntrega = '" + lineEditFiltro->text() + "'";
+        filtroTable(strQuery);
+    }
+    else {
+        strQuery = "SELECT * FROM libroPersona WHERE responsable = '" + lineEditFiltro->text() + "'";
+        filtroTable(strQuery);
+    }
+
+}
+
+void Prestamo::filtroTable(QString strQuery)
+{
+    rowCount = 0;
+
+    qDebug() << strQuery;
+
+    query.exec(strQuery);
+
+    if( !query.next() ) {
+        QMessageBox::warning(this, "Advertencia", "No existe el filtro realizado.");
+        return;
+    }
+    else {
+
+        tablePrestamo->setVisible(true);
+
+        rowCount += 1;
+        tablePrestamo->setRowCount(rowCount);
+        rowCount = tablePrestamo->rowCount();
+
+        if( rowCount < 6 )
+            tablePrestamo->setGeometry(225,170,518,173);
+        else
+            tablePrestamo->setGeometry(212,170,534,173);
+
+        for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(0).toString());
+            tablePrestamo->setItem(row, 0, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(1).toString());
+            tablePrestamo->setItem(row, 1, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(2).toString());
+            tablePrestamo->setItem(row, 2, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(3).toString());
+            tablePrestamo->setItem(row, 3, item);
+
+            item = new QTableWidgetItem;
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+            item->setText(query.value(4).toString());
+            tablePrestamo->setItem(row, 4, item);
+        }
+
+        while( query.next() ) {
+
+            rowCount += 1;
+            tablePrestamo->setRowCount(rowCount);
+            rowCount = tablePrestamo->rowCount();
+
+            if( rowCount < 6 )
+                tablePrestamo->setGeometry(225,170,518,173);
+            else
+                tablePrestamo->setGeometry(212,170,534,173);
+
+            for( int row = rowCount - 1; row < rowCount; row++ ) {
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(0).toString());
+                tablePrestamo->setItem(row, 0, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(1).toString());
+                tablePrestamo->setItem(row, 1, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(2).toString());
+                tablePrestamo->setItem(row, 2, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(3).toString());
+                tablePrestamo->setItem(row, 3, item);
+
+                item = new QTableWidgetItem;
+                item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+                item->setText(query.value(4).toString());
+                tablePrestamo->setItem(row, 4, item);
+
+            }
+        }
+    }
+
+}
+
+void Prestamo::clearWidget()
+{
+    lblCota->setVisible(false);
+    lineEditCota->setVisible(false);
+    lineEditCota->setText("");
+
+    lblAutor->setVisible(false);
+    lineEditAutor->setVisible(false);
+    lineEditAutor->setText("");
+
+    lblTitulo->setVisible(false);
+    lineEditTitulo->setVisible(false);
+    lineEditTitulo->setText("");
+
+    lblTipoPrestamo->setVisible(false);
+    comboBoxTipoPrestamo->removeItem(2);
+    comboBoxTipoPrestamo->setVisible(false);
+
+    lblGrado->setVisible(false);
+    comboBoxGrado->setVisible(false);
+
+    lblCedula->setVisible(false);
+    lineEditCedula->setVisible(false);
+    lineEditCedula->setText("");
+
+    lblFechaP->setVisible(false);
+    lineEditFechaP->setVisible(false);
+    btnCalendar->setVisible(false);
+
+    lblFechaE->setVisible(false);
+    lineEditFechaE->setVisible(false);
+    lineEditFechaE->setText("");
+
+    lblCantidad->setVisible(false);
+    lineEditCantidad->setVisible(false);
+
+    lblStatus->setVisible(false);
+    lineEditStatus->setVisible(false);
+
+    lblResponsable->setVisible(false);
+    comboBoxResponsable->setVisible(false);
+
+    btnRegistrar->setVisible(false);
+
+    lblFiltro->setVisible(false);
+    comboBoxFiltro->setVisible(false);
+    lineEditFiltro->setVisible(false);
+    lineEditFiltro->setText("");
+
+    tablePrestamo->setVisible(false);
+    rowCount = 0;
+
+}
+
+void Prestamo::distroyedCalendar()
+{
+    calendarWidget->close();
 }

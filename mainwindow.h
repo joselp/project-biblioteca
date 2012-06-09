@@ -23,12 +23,14 @@ public:
 private:
     void initGUI();
     void initConnect();
+    void closeEvent(QCloseEvent *);
 
 private slots:
 
     void slotPrestamo();
     void slotEntregaPrestamo();
     void slotConsultaPrestamo();
+    void slotRenovacion();
     void slotNewUser();
     void slotEditUser();
     void slotSearchUser();

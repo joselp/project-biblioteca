@@ -18,20 +18,30 @@ class Prestamo : public QWidget
 public:
     explicit Prestamo(QWidget *parent = 0);
     void initGUI(QWidget *);
-    void visibleWidget(bool );
-    void showEntregaPrestamo();
-    void visibleEntrega(bool );
+    void showPrestamo();
+    void showEntrega();
+    void showRenovacion();
     void showTablePrestamo();
-    void visibleTable(bool );
+    void clearWidget();
+    void distroyedCalendar();
 
 private slots:
-    void slotValidate();
+    void slotValidateCota();
+    void slotValidateCedula();
+    void slotTipoPrestamo(int);
     void slotCalendar();
     void slotDate(QDate );
     void slotRegistrar();
     void slotRowSelected(int);
     void slotUpperText();
+    void slotUpperText(QString);
     void slotAcceptEntrega();
+    void slotRenovacion();
+    void slotTipoFiltro(int );
+    void slotFiltro();
+
+private:
+    void filtroTable(QString );
 
 private:
     QLabel *lblCota;
@@ -59,8 +69,7 @@ private:
     QLabel *lblFechaE;
     QLineEdit *lineEditFechaE;
 
-    QLabel *lblCategoria;
-    QLineEdit *lineEditCategoria;
+    QRegExp expFecha;
 
     QLabel *lblCantidad;
     QLineEdit *lineEditCantidad;
@@ -75,7 +84,10 @@ private:
 
     QPushButton *btnCalendar;
     QPushButton *btnRegistrar;
-    QPushButton *btnEntregar;
+
+    QLabel *lblFiltro;
+    QComboBox *comboBoxFiltro;
+    QLineEdit *lineEditFiltro;
 
     QTableWidget *tablePrestamo;
     QTableWidgetItem *item;

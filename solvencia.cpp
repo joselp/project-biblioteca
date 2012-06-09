@@ -35,7 +35,7 @@ void Solvencia::slotGenerateSolvencia()
         return;
     }
 
-    QString strQuery = "SELECT * FORM libroPersona WHERE cedulaFk = " + lineEditCedula->text();
+    QString strQuery = "SELECT * FROM libroPersona WHERE cedulaFk = " + lineEditCedula->text();
 
     qDebug() << strQuery;
 

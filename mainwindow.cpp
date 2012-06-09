@@ -38,6 +38,7 @@ void MainWindow::initConnect()
 {
     connect(ui->btnPrestamo, SIGNAL(clicked()), this, SLOT(slotPrestamo()));
     connect(ui->btnEntrega, SIGNAL(clicked()), this, SLOT(slotEntregaPrestamo()));
+    connect(ui->btnRenovacion, SIGNAL(clicked()), this, SLOT(slotRenovacion()));
     connect(ui->btnConsultar, SIGNAL(clicked()), this, SLOT(slotConsultaPrestamo()));
 
     connect(ui->btnAgregarP,SIGNAL(clicked()),this,SLOT(slotNewUser()));
@@ -57,33 +58,39 @@ void MainWindow::initConnect()
 
 void MainWindow::slotPrestamo()
 {
-
+    prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
-    prestamo->visibleWidget(true);
+    prestamo->showPrestamo();
 }
 
 void MainWindow::slotEntregaPrestamo()
 {
+    prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
     solvencia->visibleWidget(false);
 
-    prestamo->showEntregaPrestamo();
+    prestamo->showEntrega();
+}
+
+void MainWindow::slotRenovacion()
+{
+    prestamo->clearWidget();
+    user->limpiar();
+    libro->limpiar();
+    solvencia->visibleWidget(false);
+
+    prestamo->showRenovacion();
 }
 
 void MainWindow::slotConsultaPrestamo()
 {
+    prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     prestamo->showTablePrestamo();
@@ -91,12 +98,8 @@ void MainWindow::slotConsultaPrestamo()
 
 void MainWindow::slotNewUser()
 {
-
+    prestamo->clearWidget();
     libro->limpiar();
-
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     user->nuevoUser();
@@ -104,10 +107,8 @@ void MainWindow::slotNewUser()
 
 void MainWindow::slotEditUser()
 {
+    prestamo->clearWidget();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     user->editarUsuario();
@@ -115,10 +116,8 @@ void MainWindow::slotEditUser()
 
 void MainWindow::slotSearchUser()
 {
+    prestamo->clearWidget();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     user->buscarUsuario();
@@ -126,55 +125,44 @@ void MainWindow::slotSearchUser()
 
 void MainWindow::slotDeleteUser()
 {
-
+    prestamo->clearWidget();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     user->eliminarUsuario();
 }
 
-void MainWindow::slotNewBook(){
-
+void MainWindow::slotNewBook()
+{
+    prestamo->clearWidget();
     user->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     libro->nuevoLibro();
 }
 
-void MainWindow::slotSearchBook(){
-
+void MainWindow::slotSearchBook()
+{
+    prestamo->clearWidget();
     user->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     libro->buscarLibro();
 }
 
-void MainWindow::slotEditBook(){
-
+void MainWindow::slotEditBook()
+{
+    prestamo->clearWidget();
     user->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     libro->editarLibro();
 }
 
-void MainWindow::slotDeleteBook(){
-
+void MainWindow::slotDeleteBook()
+{
+    prestamo->clearWidget();
     user->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
     solvencia->visibleWidget(false);
 
     libro->eliminarLibro();
@@ -182,18 +170,22 @@ void MainWindow::slotDeleteBook(){
 
 void MainWindow::slotSolvencia()
 {
+    prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
-    prestamo->visibleWidget(false);
-    prestamo->visibleTable(false);
-    prestamo->visibleEntrega(false);
 
     solvencia->visibleWidget(true);
 
 }
 
+void MainWindow::closeEvent(QCloseEvent *)
+{
+    prestamo->distroyedCalendar();
+}
+
 void MainWindow::slotCloseWindow()
 {
+    prestamo->distroyedCalendar();
     close();
 }
 
