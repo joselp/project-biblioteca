@@ -203,7 +203,7 @@ void Libro::btnBuscar()
 
     rowCount = 0;
     QSqlQuery query;
-    leBuscar->setText(leBuscar->text().toUpper());
+    leBuscar->setText(leBuscar->text());
 
 
     if(comboTipoBusqueda->currentText() == "Cota"){
@@ -213,7 +213,9 @@ void Libro::btnBuscar()
 
         btnAceptar->move(630,98);
 
-        query.exec("select * from libros where cota='"+leBuscar->text()+"'");
+        query.exec("select * from libros where cota= \""+leBuscar->text()+"\"");
+
+
 
         if(query.next()){
 
@@ -300,6 +302,7 @@ void Libro::btnBuscar()
 
 
         query.exec("select * from libros where titulo like '"+leBuscar->text()+"%'");
+
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
@@ -492,7 +495,7 @@ void Libro::btnBuscar()
         lbTitulo->hide();
         leTitulo->hide();
 
-        query.exec("select * from libros where autor like '"+leBuscar->text()+"%'");
+        query.exec("select * from libros where autor like \""+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este autor.");
@@ -686,7 +689,7 @@ void Libro::btnBuscar()
         lbTitulo->hide();
         leTitulo->hide();
 
-        query.exec("select * from libros where materia like '"+leBuscar->text()+"%'");
+        query.exec("select * from libros where materia like \""+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
