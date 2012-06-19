@@ -44,12 +44,14 @@ public:
     QLabel *lbApellido;
     QLabel *lbCedula;
     QLabel *lbTipo;
+    QLabel *lbTipo2;
     QRadioButton *rbProf;
     QRadioButton *rbEstu;
     QLineEdit *leNombre;
     QLineEdit *leApellido;
     QLineEdit *leCedula;
     QString cedula;
+    QString aux;
 
 };
 

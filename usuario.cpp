@@ -48,6 +48,8 @@ void Usuarios::nuevoUser()
     btnCancelar->move(500,280);
 
     rbEstu->setVisible(true);
+    rbEstu->move(540,220);
+    rbProf->move(540,190);
     rbProf->setVisible(true);
 
     lbTipo->setText("Tipo: ");
@@ -58,8 +60,6 @@ void Usuarios::nuevoUser()
 
 void Usuarios::aceptar()
 {
-
-    QString aux;
 
     if(rbEstu->isChecked())
         aux="Estudiante";
@@ -121,6 +121,9 @@ void Usuarios::editarUsuario()
 
     lbTipo->move(300,220);
 
+    rbProf->move(300,240);
+    rbEstu->move(300,260);
+
     leCedula->show();
     lbCedula->show();
     btnAceptar->show();
@@ -130,6 +133,8 @@ void Usuarios::editarUsuario()
     lbNombre->show();
     leNombre->show();
     lbTipo->show();
+    rbEstu->show();
+    rbProf->show();
 
 }
 
@@ -139,6 +144,11 @@ void Usuarios::btnEditar(){
         QSqlQuery query;
         query.exec("select * from personas where cedula='"+cedula+"'");
 
+        if(rbEstu->isChecked())
+            aux="Estudiante";
+        else
+            aux="Profesor";
+
         if( query.next() ){
 
             if((leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty())){
@@ -147,7 +157,7 @@ void Usuarios::btnEditar(){
             }
             else{
 
-            query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"' where cedula='"+cedula+"'");
+            query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"',tipo='"+aux+"' where cedula='"+cedula+"'");
             QMessageBox::about(this,"Correcto","Usuario Actualizado");
 
             limpiar();
@@ -177,16 +187,13 @@ void Usuarios::eliminarUsuario()
     lbCedula->show();
     btnAceptar->show();
 
-
 }
 
 void Usuarios::buscarUsuario()
 {
 
 
-
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
-
 
     limpiar();
 
@@ -209,10 +216,7 @@ void Usuarios::buscarUsuario()
     lbApellido->move(510,190);
     leApellido->move(580,190);
 
-
     lbTipo->move(300,220);
-
-
 
     leCedula->show();
     lbCedula->show();
@@ -223,10 +227,12 @@ void Usuarios::buscarUsuario()
     leNombre->show();
     lbTipo->show();
 
+
 }
 
 bool Usuarios::btnBuscar()
 {
+    lbTipo2->move(350,220);
 
     QSqlQuery query;
     query.exec("select * from personas where cedula='"+leCedula->text()+"'");
@@ -235,9 +241,15 @@ bool Usuarios::btnBuscar()
 
         leNombre->setText(query.value(1).toString());
         leApellido->setText(query.value(2).toString());
-        lbTipo->setText(query.value(3).toString());
+        lbTipo2->setText(query.value(3).toString());
         btnAceptar->setEnabled(true);
         cedula=leCedula->text();
+        lbTipo2->show();
+
+        if(lbTipo2->text()=="Profesor")
+            rbProf->setChecked(true);
+        else
+            rbEstu->setChecked(true);
         return true;
 
     }
@@ -314,6 +326,10 @@ void Usuarios::inicializar(QWidget *a)
     lbTipo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbTipo->setVisible(false);
 
+    lbTipo2 = new QLabel(a);
+    lbTipo2->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lbTipo2->setVisible(false);
+
     rbProf = new QRadioButton("Profesor",a);
     rbProf->move(540,190);
     rbProf->setVisible(false);
@@ -338,6 +354,7 @@ void Usuarios::limpiar()
     lbApellido->setVisible(false);
     lbCedula->setVisible(false);
     lbNombre->setVisible(false);
+    lbTipo2->setVisible(false);
     leNombre->setVisible(false);
     leApellido->setVisible(false);
     leCedula->setVisible(false);
@@ -355,6 +372,8 @@ void Usuarios::limpiar()
     leNombre->setText("");
     leNombre->setReadOnly(false);
     leApellido->setReadOnly(false);
+    rbEstu->setChecked(false);
+    rbEstu->setChecked(false);
     //btnAceptar->setIconSize(QSize(0,0));
 
 }
