@@ -32,6 +32,9 @@ void MainWindow::initGUI()
     libro = new Libro();
     libro->inicializar(ui->centralWidget);
 
+    util = new Utils();
+   // util->cargarArchivo();
+
 }
 
 void MainWindow::initConnect()
@@ -187,6 +190,14 @@ void MainWindow::slotCloseWindow()
 {
     prestamo->distroyedCalendar();
     close();
+}
+
+void MainWindow::cargarLibros(){
+
+    util->cargarArchivo(ui->centralWidget);
+    util->start();
+
+
 }
 
 MainWindow::~MainWindow()

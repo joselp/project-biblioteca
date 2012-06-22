@@ -342,7 +342,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">
@@ -350,6 +350,8 @@
      <string>&amp;Archivo</string>
     </property>
     <addaction name="actionInicio"/>
+    <addaction name="actionCargar_Lote_libros"/>
+    <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
    <addaction name="menuArchivo"/>
@@ -367,6 +369,11 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
+  <action name="actionCargar_Lote_libros">
+   <property name="text">
+    <string>Cargar Lote (libros)</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
@@ -379,5 +386,25 @@
   <tabstop>btnEliminarP</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionCargar_Lote_libros</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>cargarLibros()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>cargarLibros()</slot>
+ </slots>
 </ui>

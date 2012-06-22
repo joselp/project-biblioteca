@@ -63,7 +63,7 @@ void Libro::aceptar()
 
     else{
         QSqlQuery sql;
-        sql.exec("INSERT INTO libros values('"+leCota->text().toUpper()+"','"+leTitulo->text()+"','"+leAutor->text()
+        sql.exec("INSERT INTO libros values('"+leCota->text().toUpper()+"','"+leAutor->text()+"','"+leTitulo->text()
                  +"','"+leMateria->text()+"','"+leEditorial->text()+"','"+leAnhoPublicacion->text()
                  +"','"+leLugar->text()+"','"+canjeado+"','"+donado+"','"+comprado+"','"+leVolumen->text()
                  +"','"+leEjemplar->text()+"','"+bueno+"','"+regular+"','"+malo+"')");
@@ -119,7 +119,7 @@ void Libro::btnEditar(){
 
 
         QSqlQuery query;
-        query.exec("select * from libros where cota='"+cota+"'");
+        query.exec("select * from libros where cota='"+cota.toUpper()+"'");
 
         qDebug()<<cota;
 
@@ -164,10 +164,10 @@ void Libro::btnEditar(){
                     canjeado="X";
                 }
 
-                query.exec("update libros set cota='"+leCota->text().toUpper()+"', titulo='"+leTitulo->text()+"', autor='"+leAutor->text()
-                       +"', materia='"+leMateria->text()+"', editorial='"+leEditorial->text()+"', anhoPublicacion='"+leAnhoPublicacion->text()
-                       +"', lugar='"+leLugar->text()+"', canjeado='"+canjeado+"', donado='"+donado+"', comprado='"+comprado+"', volumen='"+leVolumen->text()
-                       +"', ejemplar='"+leEjemplar->text()+"', bueno='"+bueno+"', regular='"+regular+"', malo='"+malo+"' where cota='"+cota+"'");
+                query.exec("update libros set cota=\""+leCota->text().toUpper()+"\", autor=\""+leAutor->text()+"\", titulo=\""+leTitulo->text()
+                       +"\", materia=\""+leMateria->text()+"\", editorial=\""+leEditorial->text()+"\", anhoPublicacion=\""+leAnhoPublicacion->text()
+                       +"\", lugar=\""+leLugar->text()+"\", canjeado=\""+canjeado+"\", donado=\""+donado+"\", comprado=\""+comprado+"\", volumen=\""+leVolumen->text()
+                       +"\", ejemplar=\""+leEjemplar->text()+"\", bueno=\""+bueno+"\", regular=\""+regular+"\", malo=\""+malo+"\" where cota=\""+cota.toUpper()+"\"");
 
 
                 QMessageBox::about(this,"Correcto","Libro Actualizado");
@@ -206,14 +206,15 @@ void Libro::btnBuscar()
     leBuscar->setText(leBuscar->text());
 
 
+
     if(comboTipoBusqueda->currentText() == "Cota"){
 
         mostrarNuevo();
         btnCancelar->setVisible(false);
-
+        tableBusqueda->setVisible(false);
         btnAceptar->move(630,98);
 
-        query.exec("select * from libros where cota= \""+leBuscar->text()+"\"");
+        query.exec("select * from libros where cota= '"+leBuscar->text().toUpper()+"'");
 
 
 
@@ -292,7 +293,7 @@ void Libro::btnBuscar()
 
 
     if(comboTipoBusqueda->currentText() == "Titulo"){
-
+        tableBusqueda->setVisible(true);
         lbCota->hide();
         leCota->hide();
         lbAutor->hide();
@@ -488,6 +489,7 @@ void Libro::btnBuscar()
 
     if(comboTipoBusqueda->currentText() == "Autor"){
 
+        tableBusqueda->setVisible(true);
         lbCota->hide();
         leCota->hide();
         lbAutor->hide();
@@ -682,6 +684,7 @@ void Libro::btnBuscar()
 
     if(comboTipoBusqueda->currentText() == "Materia"){
 
+        tableBusqueda->setVisible(true);
         lbCota->hide();
         leCota->hide();
         lbAutor->hide();

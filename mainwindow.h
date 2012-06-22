@@ -7,6 +7,7 @@
 #include <usuario.h>
 #include <solvencia.h>
 #include <libro.h>
+#include <utils.h>
 
 namespace Ui {
     class MainWindow;
@@ -41,6 +42,7 @@ private slots:
     void slotSearchBook();
     void slotDeleteBook();
     void slotEditBook();
+    void cargarLibros();
 
 private:
     Ui::MainWindow *ui;
@@ -49,6 +51,8 @@ private:
     Usuarios *user;
     Solvencia *solvencia;
     Libro *libro;
+    Utils *util;
+
 
 };
 

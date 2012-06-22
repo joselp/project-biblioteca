@@ -16,7 +16,8 @@ SOURCES += main.cpp\
     prestamo.cpp \
     dialogprestamo.cpp \
     solvencia.cpp \
-    libro.cpp
+    libro.cpp \
+    utils.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -25,7 +26,8 @@ HEADERS  += \
     prestamo.h \
     dialogprestamo.h \
     solvencia.h \
-    libro.h
+    libro.h \
+    utils.h
 
 FORMS    += mainwindow.ui \
     dialogprestamo.ui

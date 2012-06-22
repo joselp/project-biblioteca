@@ -12,8 +12,6 @@
 #include<QTableWidget>
 #include<QWidgetItem>
 #include<QTableView>
-#include<QSqlQueryModel>
-#include<QSqlTableModel>
 #include<QDebug>
 
 class Libro : public QWidget
