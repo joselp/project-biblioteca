@@ -259,6 +259,7 @@ void Prestamo::slotCalendar()
     calendarWidget->setWindowIcon(QIcon(":/images/calendar.png"));
     calendarWidget->setWindowTitle("Fecha Entrega");
     calendarWidget->setGeometry(685, 250, 220, 150);
+    calendarWidget->setMinimumDate(QDate::currentDate());
     calendarWidget->setSelectedDate(QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy"));
     connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(slotDate(QDate)));
 
@@ -352,15 +353,10 @@ void Prestamo::slotTipoPrestamo(int item)
 void Prestamo::slotDate(QDate date)
 {
 
+    lineEditFechaE->setText("");
     lineEditFechaE->setValidator(new QRegExpValidator(QRegExp(expFecha),this));
-
-    if (date >= QDate::currentDate() ) {
-        lineEditFechaE->setText(date.toString("dd/MM/yyyy"));
-        calendarWidget->close();
-    }
-    else {
-        QMessageBox::information(this,"Información","La fecha de entrega no puede ser menor a la fecha de préstamo.");
-    }
+    lineEditFechaE->setText(date.toString("dd/MM/yyyy"));
+    calendarWidget->close();
 
 }
 
@@ -952,9 +948,11 @@ void Prestamo::clearWidget()
 
     lblTipoPrestamo->setVisible(false);
     comboBoxTipoPrestamo->removeItem(2);
+    comboBoxTipoPrestamo->setCurrentIndex(0);
     comboBoxTipoPrestamo->setVisible(false);
 
     lblGrado->setVisible(false);
+    comboBoxGrado->setCurrentIndex(0);
     comboBoxGrado->setVisible(false);
 
     lblCedula->setVisible(false);
@@ -976,12 +974,14 @@ void Prestamo::clearWidget()
     lineEditStatus->setVisible(false);
 
     lblResponsable->setVisible(false);
+    comboBoxResponsable->setCurrentIndex(0);
     comboBoxResponsable->setVisible(false);
 
     btnRegistrar->setVisible(false);
 
     lblFiltro->setVisible(false);
     comboBoxFiltro->setVisible(false);
+    comboBoxFiltro->setCurrentIndex(0);
     lineEditFiltro->setVisible(false);
     lineEditFiltro->setText("");
 

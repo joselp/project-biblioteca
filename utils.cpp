@@ -1,9 +1,4 @@
 #include "utils.h"
-#include "QFileDialog"
-#include <QDebug>
-#include <string>
-#include<QSqlQuery>
-#include<QSqlDatabase>
 
 Utils::Utils()
 {
@@ -85,10 +80,6 @@ void Utils::cargarArchivo(QWidget * a){
     j=0;
     k=0;
 
-    progress = new QProgressBar(a);
-    progress->setTextVisible(false);
-    progress->setGeometry(0,0,161,31);
-
     nombreArchivo = QFileDialog::getOpenFileName(a,("Abrir archivo"), "C:\\",("csv(*.csv)"));
     QFile archivo(nombreArchivo);
 
@@ -104,10 +95,26 @@ void Utils::cargarArchivo(QWidget * a){
 
     }
 
-    progress->show();
-    progress->setMinimum(0);
-    progress->setMaximum(j);
-    progress->setValue(0);
+//    progress = new QProgressBar(a);
+//    progress->setTextVisible(false);
+//    progress->setGeometry(0,0,161,31);
+
+//    progress->show();
+//    progress->setMinimum(0);
+//    progress->setMaximum(j);
+//    progress->setValue(0);
+
+    progressDialog = new QProgressDialog(a);
+    progressDialog->setLabelText("Cargando");
+    progressDialog->setRange(0,j);
+    progressDialog->setCancelButton(0);
+    progressDialog->setWindowModality(Qt::WindowModal);
+    progressDialog->setWindowTitle(tr("Cargando Archivo"));
+    progressDialog->setMaximumWidth(250);
+    progressDialog->setMinimumWidth(250);
+//    progressDialog->setWindowFlags(Qt::Tool | Qt::CustomizeWindowHint); /*Sale sin Marco*/
+    progressDialog->setWindowFlags(Qt::Tool | Qt::WindowTitleHint | Qt::CustomizeWindowHint); /*Sale Con marco sin botones*/
+    progressDialog->show();
 
     archivo.seek(0);
     archivo.readLine(0);
@@ -116,17 +123,18 @@ void Utils::cargarArchivo(QWidget * a){
     while(!archivo.atEnd()){
 
         k++;
-        qApp->processEvents();
         c=0;
         comienzo=0;
         fin=0;
         line = archivo.readLine(0);
         aux = line.toStdString();
 
-        progress->setValue(k);
+        //progress->setValue(k);
+        progressDialog->setValue(k);
 
-        for(int i=0;i<c+1;i++){
+        qApp->processEvents();
 
+        for(int i=0;i<c+1;i++) {
 
             comienzo = c;
 
@@ -173,6 +181,9 @@ void Utils::cargarArchivo(QWidget * a){
                  +"\",\""+this->lugar+"\",\""+this->canjeado+"\",\""+this->donado+"\",\""+this->comprado+"\",\""+this->volumen
                  +"\",\""+this->ejemplar+"\",\""+this->bueno+"\",\""+this->regular+"\",\""+this->malo+"\"); COMMIT");
     }
-    progress->hide();
+    //progress->hide();
+
+    progressDialog->setValue(j);
+    progressDialog->close();
 
 }

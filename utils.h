@@ -2,12 +2,15 @@
 #define UTILS_H
 
 #include <QWidget>
-#include<QSqlDatabase>
-#include<QSqlQuery>
-#include"QFileDialog"
-#include<QtCore>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QFileDialog>
+#include <QtCore>
 #include <QProgressBar>
+#include <QProgressDialog>
 #include <QStyle>
+#include <QDebug>
+#include <string>
 
 
 class Utils : public QThread
@@ -18,11 +21,7 @@ public:
     void cargarArchivo(QWidget *);
     void run();
 
-public slots:
-
-public:
-
-    QProgressBar *bar;
+private:
 
     QString nombreArchivo;
     QString cota;
@@ -43,6 +42,7 @@ public:
 
     QString line;
     std::string aux;
+
     int c;
     int comienzo;
     int fin;
@@ -50,6 +50,7 @@ public:
     int k;
 
     QProgressBar *progress;
+    QProgressDialog *progressDialog;
 
 
 };
