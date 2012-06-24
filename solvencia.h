@@ -25,6 +25,10 @@ public:
 
 private:
     void printDocument(QPrinter *);
+    QList<QString> cuadroTitulo();
+    QString cuadroConstancia();
+    QString cuadroConstar1();
+    QString cuadroConstar2();
 
 private slots:
     void slotGenerateSolvencia();

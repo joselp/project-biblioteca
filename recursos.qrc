@@ -6,5 +6,6 @@
         <file>images/aceptar.png</file>
         <file>images/ver.png</file>
         <file>images/book.png</file>
+        <file>images/melogo.png</file>
     </qresource>
 </RCC>

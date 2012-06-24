@@ -44,8 +44,13 @@ void Solvencia::slotGenerateSolvencia()
     if( !query.next() ) {
 
         QPrinter printer(QPrinter::HighResolution);
+        printer.setPageSize(QPrinter::Letter);
+        printer.setOrientation(QPrinter::Portrait);
+        printer.setPaperSource(QPrinter::Tractor);
+
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle("Imprimir Documento");
+
         if( dialog.exec() != QDialog::Accepted )
             return;
 
@@ -60,65 +65,106 @@ void Solvencia::slotGenerateSolvencia()
 
 }
 
+QList<QString> Solvencia::cuadroTitulo()
+{
+    QList<QString> listString;
+    QString titulo = "República Bolivariana de Venezuela";
+    listString.append(titulo);
+
+    titulo = "ESCUELA BASICA NACIONAL \"ELOY PAREDES\"";
+    listString.append(titulo);
+    titulo = "MÉRIDA ESTADO MÉRIDA";
+    listString.append(titulo);
+
+    return listString;
+}
+
+QString Solvencia::cuadroConstancia()
+{
+    QString constancia = "El personal de la Biblioteca \"INES OTILLA FERNANDEZ\", que funciona en la Escuela ";
+    constancia += "Básica \"Eloy Paredes\", en la Urbanización Humboldt, Municipio Autónomo Libertador de ";
+    constancia += "la Parroquia Caracciolo Parra Pérez del estado Mérida.";
+
+    return constancia;
+}
+
+QString Solvencia::cuadroConstar1()
+{
+
+    QString constar = "Que _______________________________________, alumno (a) titular de la Cédula de ";
+    constar += "Indentidad N° ______________________, del _______________________ de Educación ";
+    constar += "Básica, Año Escolar _______________, se encuentra solvente en esta Biblioteca.";
+
+    return constar;
+}
+
+QString Solvencia::cuadroConstar2()
+{
+    QString constar = "Constancia que se expide a solicitud de parte interesada para los fines legales ";
+    constar += "consiguientes en la ciudad de Mérida, a los _______ días del mes de ________________ ";
+    constar += "del año ____________.";
+
+    return constar;
+}
+
 void Solvencia::printDocument(QPrinter *printer)
 {
 
+    QList<QString> listHtml = cuadroTitulo();
 
-    int izquierdo = printer->pageRect().left() + printer->resolution()*0.5;
-    int superior = printer->pageRect().top() + printer->resolution()*0.5;
-    int derecho = printer->pageRect().width() - printer->resolution()*1.0;
+    QPainter painter(printer);
 
-    printer->setOutputFormat(QPrinter::PdfFormat);
-    printer->setOutputFileName("solvencia.pdf");
+    painter.setFont(QFont("Arial", 10, QFont::Bold));
 
-    QPainter painter;
-    painter.begin(printer);
+    // TITULO
+    painter.drawText(370, 370, 2000, 100, Qt::AlignLeft
+                     | Qt::TextWordWrap, listHtml.at(0));
+    QImage img;
+    img.load(":images/melogo.png");
+    painter.drawImage(370,500,img);
 
-    QFont ftTitulo("Arial", 16, QFont::Bold);
-    QFontMetrics tamTitulo(ftTitulo, printer);
+    painter.drawText(370, 780, 2000, 100, Qt::AlignLeft
+                     | Qt::TextWordWrap, listHtml.at(1));
+    painter.drawText(370, 910, 2000, 100, Qt::AlignLeft
+                     | Qt::TextWordWrap, listHtml.at(2));
 
-    QRect rectTitulo(izquierdo, superior, derecho, tamTitulo.lineSpacing());
+    QString html;
 
-    painter.setFont(ftTitulo);
-    painter.drawText(rectTitulo, Qt::AlignCenter, tr("SOLVENCIA BIBLIOTECA"));
+    // CONSTANCIA
+    html = cuadroConstancia();
+    painter.setFont(QFont("Arial", 16, QFont::Bold));
+    painter.drawText(1550, 1650, 2000, 100, Qt::AlignCenter
+                     | Qt::TextWordWrap, "CONSTANCIA");
 
-    rectTitulo.translate(0, rectTitulo.height());
+    painter.setFont(QFont("Arial", 12, QFont::Bold));
+    painter.drawText(370, 1990, 4200, 360, Qt::AlignJustify
+                     | Qt::TextWordWrap, html);
 
-    painter.setFont(QFont("Arial", 10));
-    painter.drawText(rectTitulo, Qt::AlignCenter, tr("U.E.N Eloy Paredes\n\n"));
+    // HACE CONSTAR
+    html = cuadroConstar1();
+    painter.setFont(QFont("Arial", 16, QFont::Bold));
+    painter.drawText(1550, 2700, 2000, 100, Qt::AlignCenter
+                     | Qt::TextWordWrap, "HACER CONSTAR");
 
-    rectTitulo.translate(0, rectTitulo.height());
+    painter.setFont(QFont("Arial", 12, QFont::Bold));
+    painter.drawText(370, 3040, 4200, 390, Qt::AlignJustify
+                     | Qt::TextWordWrap, html);
+    // AQUI AGREGAR DATA
 
-    // Contenido
-    QFont ftContenido("Arial", 12);
-    QFontMetrics tamContenido(ftContenido, printer);
+    html = cuadroConstar2();
+    painter.setFont(QFont("Arial", 12, QFont::Bold));
+    painter.drawText(370, 3670, 4200, 390, Qt::AlignJustify
+                     | Qt::TextWordWrap, html);
+    // AQUI AGREGAR DATA
 
-    QRect rectContenido(izquierdo, superior + 1000, derecho + 1100, tamContenido.lineSpacing());
-
-    QString strQuery = "SELECT * FROM personas WHERE cedula = " + lineEditCedula->text();
-    qDebug() << strQuery;
-
-    query.exec(strQuery);
-
-    QString linea;
-    if( query.next() ) {
-
-        linea = "El estudiante: " + query.value(1).toString() + ", " + query.value(2).toString()
-                + " con cédula de identidad: V-0" + query.value(0).toString() + ",";
-    }
-
-    qDebug() << linea;
-
-    painter.setFont(ftContenido);
-    painter.drawText(rectContenido, Qt::AlignLeft, linea);
-
-    QRect rectContenido1(izquierdo, superior + 1300, derecho + 1100, tamContenido.lineSpacing());
-
-    linea = "se encuentra solvente en la biblioteca de la institución.";
-
-    painter.drawText(rectContenido1, Qt::AlignLeft, linea);
-
-    painter.end();
+    // SELLO Y FIRMA
+    painter.setFont(QFont("Arial", 12, QFont::Bold));
+    painter.drawText(685, 5260, 1000, 100, Qt::AlignJustify
+                     | Qt::TextWordWrap, "SELLO");
+    painter.drawText(2500, 5260, 4000, 110, Qt::AlignJustify
+                     | Qt::TextWordWrap, "______________________________");
+    painter.drawText(2980, 5380, 4000, 100, Qt::AlignJustify
+                     | Qt::TextWordWrap, "BIBLIOTECARIO");
 
 }
 
@@ -130,3 +176,9 @@ void Solvencia::visibleWidget(bool visible)
 
     btnSolvencia->setVisible(visible);
 }
+
+
+
+
+
+
