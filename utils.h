@@ -7,6 +7,7 @@
 #include"QFileDialog"
 #include<QtCore>
 #include <QProgressBar>
+#include <QStyle>
 
 
 class Utils : public QThread
@@ -45,6 +46,10 @@ public:
     int c;
     int comienzo;
     int fin;
+    int j;
+    int k;
+
+    QProgressBar *progress;
 
 
 };

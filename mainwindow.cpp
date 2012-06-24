@@ -195,7 +195,7 @@ void MainWindow::slotCloseWindow()
 void MainWindow::cargarLibros(){
 
     util->cargarArchivo(ui->centralWidget);
-    util->start();
+    //util->start();
 
 
 }
