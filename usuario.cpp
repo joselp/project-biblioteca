@@ -319,7 +319,7 @@ void Usuarios::inicializar(QWidget *a)
     leCedula = new QLineEdit(a);
     leCedula->move(330,190);
     leCedula->setVisible(false);
-    leCedula->setValidator(new QIntValidator(0,9999999,this));
+    leCedula->setValidator(new QIntValidator(0,99999999,this));
 
     lbTipo = new QLabel(a);
     lbTipo->move(480,190);
