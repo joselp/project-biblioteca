@@ -24,11 +24,9 @@ public:
     void visibleWidget(bool );
 
 private:
-    void printDocument(QPrinter *);
+    void printDocument(QPrinter *, QSqlQuery );
     QList<QString> cuadroTitulo();
     QString cuadroConstancia();
-    QString cuadroConstar1();
-    QString cuadroConstar2();
 
 private slots:
     void slotGenerateSolvencia();
@@ -38,9 +36,17 @@ private:
     QLabel *lblCedula;
     QLineEdit *lineEditCedula;
 
+    QLabel *lblGrado;
+    QComboBox *comboBoxGrado;
+
+    QLabel *lblPeriodo;
+    QLineEdit *lineEditPeriodo;
+
     QPushButton *btnSolvencia;
 
     QSqlQuery query;
+
+    QTextDocument doc;
 
 };
 

@@ -1,7 +1,7 @@
 #include "solvencia.h"
 
 Solvencia::Solvencia(QWidget *parent) :
-        QWidget(parent)
+    QWidget(parent)
 {
 
 }
@@ -19,9 +19,39 @@ void Solvencia::initGUI(QWidget *central)
     lineEditCedula->move(QPoint(465,140));
     lineEditCedula->setVisible(false);
 
+    lblGrado = new QLabel(central);
+    lblGrado->setText("Grado: ");
+    lblGrado->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lblGrado->move(QPoint(245,200));
+    lblGrado->setVisible(false);
+
+    comboBoxGrado = new QComboBox(central);
+    comboBoxGrado->setGeometry(315,200,121,22);
+    comboBoxGrado->addItem("1º Grado");
+    comboBoxGrado->addItem("2º Grado");
+    comboBoxGrado->addItem("3º Grado");
+    comboBoxGrado->addItem("4º Grado");
+    comboBoxGrado->addItem("5º Grado");
+    comboBoxGrado->addItem("6º Grado");
+    comboBoxGrado->addItem("7º Grado");
+    comboBoxGrado->addItem("8º Grado");
+    comboBoxGrado->addItem("9º Grado");
+    comboBoxGrado->setVisible(false);
+
+    lblPeriodo = new QLabel(central);
+    lblPeriodo->setText("Año Escolar: ");
+    lblPeriodo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
+    lblPeriodo->move(462,200);
+    lblPeriodo->setVisible(false);
+
+    lineEditPeriodo = new QLineEdit(central);
+    lineEditPeriodo->move(QPoint(585,200));
+    lineEditPeriodo->setVisible(false);
+
     btnSolvencia = new QPushButton(central);
-    btnSolvencia->setText("&Generar");
-    btnSolvencia->move(QPoint(425,180));
+    btnSolvencia->setText("&Imprimir");
+    btnSolvencia->move(QPoint(425,350));
+    btnSolvencia->setIcon(QIcon(":images/impresora.png"));
     btnSolvencia->setVisible(false);
     connect(btnSolvencia, SIGNAL(clicked()), this, SLOT(slotGenerateSolvencia()));
 
@@ -30,18 +60,40 @@ void Solvencia::initGUI(QWidget *central)
 void Solvencia::slotGenerateSolvencia()
 {
 
-    if( lineEditCedula->text().isEmpty() ) {
+    if( lineEditCedula->text().isEmpty() || lineEditPeriodo->text().isEmpty() ) {
         QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
         return;
     }
 
-    QString strQuery = "SELECT * FROM libroPersona WHERE cedulaFk = " + lineEditCedula->text();
+    QString strQuery = "SELECT * FROM personas WHERE cedula = " + lineEditCedula->text();
 
     qDebug() << strQuery;
 
     query.exec(strQuery);
 
     if( !query.next() ) {
+        QMessageBox::warning(this,"Advertencia","La cédula no existe");
+        lineEditCedula->setText("");
+        lineEditCedula->setFocus();
+
+        return;
+    }
+    else if( query.value(3).toString() != "Estudiante" ) {
+        QMessageBox::warning(this,"Advertencia","La cédula no pertenece a un estudiante");
+        lineEditCedula->setText("");
+        lineEditCedula->setFocus();
+
+        return;
+    }
+
+    strQuery = "SELECT * FROM libroPersona WHERE cedulaFk = " + lineEditCedula->text();
+
+    qDebug() << strQuery;
+
+    QSqlQuery query2;
+    query2.exec(strQuery);
+
+    if( !query2.next() ) {
 
         QPrinter printer(QPrinter::HighResolution);
         printer.setPageSize(QPrinter::Letter);
@@ -54,12 +106,12 @@ void Solvencia::slotGenerateSolvencia()
         if( dialog.exec() != QDialog::Accepted )
             return;
 
-        printDocument(&printer);
+        printDocument(&printer, query);
 
         visibleWidget(false);
 
     } else {
-        QMessageBox::warning(this, "Advertencia", "El usuario tiene libros en préstamo.");
+        QMessageBox::warning(this, "Advertencia", "El estudiante tiene libros en préstamo.");
         return;
     }
 
@@ -88,83 +140,42 @@ QString Solvencia::cuadroConstancia()
     return constancia;
 }
 
-QString Solvencia::cuadroConstar1()
+void Solvencia::printDocument(QPrinter *printer, QSqlQuery query)
 {
 
-    QString constar = "Que _______________________________________, alumno (a) titular de la Cédula de ";
-    constar += "Indentidad N° ______________________, del _______________________ de Educación ";
-    constar += "Básica, Año Escolar _______________, se encuentra solvente en esta Biblioteca.";
+    QList<QString> listTitulo = cuadroTitulo();
+    QString htmlConstancia = cuadroConstancia();
 
-    return constar;
-}
+    doc.setHtml( "<p align=left><font face=\"Arial\" size = 4><b>" + listTitulo.at(0) + "</b></font><br>"
+                 "<img src = \":images/melogo.png\" align = left width = \"250\" heigth = \"50\"> <br clear = right>"
+                 "<br><br><br><br><br>"
+                 "<font face=\"Arial\" size = 4><b>" + listTitulo.at(1) + "</b></font><br>"
+                 "<font face=\"Arial\" size = 4><b>" + listTitulo.at(2) + "</b></font></p>"
+                 "<br><br><br>"
+                 "<H1 align = center><font face=\"Arial\"> CONSTANCIA </font></H1><br>"
+                 "<p aling=\"justify\"><font face=\"Arial\" size = 5><b> " + htmlConstancia + "</b></font></p><br>"
+                 "<H1 align = center><font face=\"Arial\"> HACE CONSTAR </font></H1><br>"
+                 "<p aling=\"justify\"><font face=\"Arial\" size = 5><b> Que <u>&nbsp;&nbsp;&nbsp;" + query.value(1).toString() +
+                 " , " + query.value(2).toString() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, alumno (a) titular de la Cédula de "
+                 "Identidad N° <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + query.value(0).toString() + "&nbsp;&nbsp;&nbsp;&nbsp;"
+                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, del <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                 comboBoxGrado->currentText() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> de Educación "
+                 "Básica, Año Escolar <u>&nbsp;&nbsp;&nbsp;&nbsp;" + lineEditPeriodo->text() + "&nbsp;&nbsp;&nbsp;&nbsp;</u>, "
+                 "se encuentra solvente en esta Biblioteca.</b></font></p><br>"
+                 "<p aling = \"justify\"><font face = \"Arial\" size = 5><b> Constancia que se expide a solicitud de parte interesada para los fines legales "
+                 "consiguientes en la ciudad de Mérida, a los <u>&nbsp;&nbsp;" + QString::number(QDate::currentDate().day()) + "&nbsp;&nbsp;</u> "
+                 "días del mes de <u>&nbsp;&nbsp;&nbsp;" + QDate::longMonthName(QDate::currentDate().month())  + "&nbsp;&nbsp;&nbsp;</u> "
+                 "del año <u>&nbsp;&nbsp;&nbsp;" + QString::number(QDate::currentDate().year()) + "&nbsp;&nbsp;&nbsp;</u>."
+                 "</b></font></p><br><br><br><br><br>"
+                 "<p><font face = \"Arial\" size = 5><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+                 "SELLO <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "
+                 "<span style=\"text-decoration:overline\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIBLIOTECARIO"
+                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></b></font></p>");
 
-QString Solvencia::cuadroConstar2()
-{
-    QString constar = "Constancia que se expide a solicitud de parte interesada para los fines legales ";
-    constar += "consiguientes en la ciudad de Mérida, a los _______ días del mes de ________________ ";
-    constar += "del año ____________.";
-
-    return constar;
-}
-
-void Solvencia::printDocument(QPrinter *printer)
-{
-
-    QList<QString> listHtml = cuadroTitulo();
-
-    QPainter painter(printer);
-
-    painter.setFont(QFont("Arial", 10, QFont::Bold));
-
-    // TITULO
-    painter.drawText(370, 370, 2000, 100, Qt::AlignLeft
-                     | Qt::TextWordWrap, listHtml.at(0));
-    QImage img;
-    img.load(":images/melogo.png");
-    painter.drawImage(370,500,img);
-
-    painter.drawText(370, 780, 2000, 100, Qt::AlignLeft
-                     | Qt::TextWordWrap, listHtml.at(1));
-    painter.drawText(370, 910, 2000, 100, Qt::AlignLeft
-                     | Qt::TextWordWrap, listHtml.at(2));
-
-    QString html;
-
-    // CONSTANCIA
-    html = cuadroConstancia();
-    painter.setFont(QFont("Arial", 16, QFont::Bold));
-    painter.drawText(1550, 1650, 2000, 100, Qt::AlignCenter
-                     | Qt::TextWordWrap, "CONSTANCIA");
-
-    painter.setFont(QFont("Arial", 12, QFont::Bold));
-    painter.drawText(370, 1990, 4200, 360, Qt::AlignJustify
-                     | Qt::TextWordWrap, html);
-
-    // HACE CONSTAR
-    html = cuadroConstar1();
-    painter.setFont(QFont("Arial", 16, QFont::Bold));
-    painter.drawText(1550, 2700, 2000, 100, Qt::AlignCenter
-                     | Qt::TextWordWrap, "HACER CONSTAR");
-
-    painter.setFont(QFont("Arial", 12, QFont::Bold));
-    painter.drawText(370, 3040, 4200, 390, Qt::AlignJustify
-                     | Qt::TextWordWrap, html);
-    // AQUI AGREGAR DATA
-
-    html = cuadroConstar2();
-    painter.setFont(QFont("Arial", 12, QFont::Bold));
-    painter.drawText(370, 3670, 4200, 390, Qt::AlignJustify
-                     | Qt::TextWordWrap, html);
-    // AQUI AGREGAR DATA
-
-    // SELLO Y FIRMA
-    painter.setFont(QFont("Arial", 12, QFont::Bold));
-    painter.drawText(685, 5260, 1000, 100, Qt::AlignJustify
-                     | Qt::TextWordWrap, "SELLO");
-    painter.drawText(2500, 5260, 4000, 110, Qt::AlignJustify
-                     | Qt::TextWordWrap, "______________________________");
-    painter.drawText(2980, 5380, 4000, 100, Qt::AlignJustify
-                     | Qt::TextWordWrap, "BIBLIOTECARIO");
+    doc.print(printer);
 
 }
 
@@ -174,11 +185,13 @@ void Solvencia::visibleWidget(bool visible)
     lineEditCedula->setVisible(visible);
     lineEditCedula->setText("");
 
+    lblGrado->setVisible(visible);
+    comboBoxGrado->setVisible(visible);
+    comboBoxGrado->setCurrentIndex(0);
+
+    lblPeriodo->setVisible(visible);
+    lineEditPeriodo->setVisible(visible);
+    lineEditPeriodo->setText("");
+
     btnSolvencia->setVisible(visible);
 }
-
-
-
-
-
-

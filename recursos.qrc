@@ -7,5 +7,6 @@
         <file>images/ver.png</file>
         <file>images/book.png</file>
         <file>images/melogo.png</file>
+        <file>images/impresora.png</file>
     </qresource>
 </RCC>
