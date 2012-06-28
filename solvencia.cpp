@@ -155,8 +155,8 @@ void Solvencia::printDocument(QPrinter *printer, QSqlQuery query)
                  "<H1 align = center><font face=\"Arial\"> CONSTANCIA </font></H1><br>"
                  "<p aling=\"justify\"><font face=\"Arial\" size = 5><b> " + htmlConstancia + "</b></font></p><br>"
                  "<H1 align = center><font face=\"Arial\"> HACE CONSTAR </font></H1><br>"
-                 "<p aling=\"justify\"><font face=\"Arial\" size = 5><b> Que <u>&nbsp;&nbsp;&nbsp;" + query.value(1).toString() +
-                 " , " + query.value(2).toString() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, alumno (a) titular de la Cédula de "
+                 "<p aling=\"justify\"><font face=\"Arial\" size = 5><b> Que <u>&nbsp;&nbsp;&nbsp;" + query.value(2).toString() +
+                 " , " + query.value(1).toString() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, alumno (a) titular de la Cédula de "
                  "Identidad N° <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + query.value(0).toString() + "&nbsp;&nbsp;&nbsp;&nbsp;"
                  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, del <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                  comboBoxGrado->currentText() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> de Educación "

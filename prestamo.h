@@ -23,6 +23,7 @@ public:
     void showRenovacion();
     void showTablePrestamo();
     void clearWidget();
+    void prestamoWidget();
     void distroyedCalendar();
 
 private slots:
@@ -57,9 +58,6 @@ private:
     QLabel *lblTipoPrestamo;
     QComboBox *comboBoxTipoPrestamo;
 
-    QLabel *lblGrado;
-    QComboBox *comboBoxGrado;
-
     QLabel *lblCedula;
     QLineEdit *lineEditCedula;
 
@@ -70,12 +68,6 @@ private:
     QLineEdit *lineEditFechaE;
 
     QRegExp expFecha;
-
-    QLabel *lblCantidad;
-    QLineEdit *lineEditCantidad;
-
-    QLabel *lblStatus;
-    QLineEdit *lineEditStatus;
 
     QLabel *lblResponsable;
     QComboBox *comboBoxResponsable;
@@ -98,7 +90,6 @@ private:
     int cantBook;
 
     int rowCount;
-
 };
 
 #endif // PRESTAMO_H

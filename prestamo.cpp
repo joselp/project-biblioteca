@@ -50,25 +50,6 @@ void Prestamo::initGUI(QWidget *central)
     lineEditCedula->setValidator(new QIntValidator(0,99999999,this));
     lineEditCedula->setVisible(false);
 
-    lblGrado = new QLabel(central);
-    lblGrado->setText("Grado: ");
-    lblGrado->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblGrado->move(QPoint(243,260));
-    lblGrado->setVisible(false);
-
-    comboBoxGrado = new QComboBox(central);
-    comboBoxGrado->setGeometry(305,260,121,22);
-    comboBoxGrado->addItem("1º Grado");
-    comboBoxGrado->addItem("2º Grado");
-    comboBoxGrado->addItem("3º Grado");
-    comboBoxGrado->addItem("4º Grado");
-    comboBoxGrado->addItem("5º Grado");
-    comboBoxGrado->addItem("6º Grado");
-    comboBoxGrado->addItem("7º Grado");
-    comboBoxGrado->addItem("8º Grado");
-    comboBoxGrado->addItem("9º Grado");
-    comboBoxGrado->setVisible(false);
-
     lblTipoPrestamo = new QLabel(central);
     lblTipoPrestamo->setText("Tipo Préstamo: ");
     lblTipoPrestamo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
@@ -122,40 +103,14 @@ void Prestamo::initGUI(QWidget *central)
     calendarWidget = new QCalendarWidget;
     calendarWidget->setVisible(false);
 
-    lblCantidad = new QLabel(central);
-    lblCantidad->setText("Cantidad: ");
-    lblCantidad->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCantidad->move(QPoint(505,230));
-    lblCantidad->setVisible(false);
-
-    lineEditCantidad = new QLineEdit(central);
-    lineEditCantidad->setText("1");
-    lineEditCantidad->setGeometry(585,230,45,20);
-    lineEditCantidad->setReadOnly(true);
-    lineEditCantidad->setValidator(new QIntValidator(1,100,this));
-    lineEditCantidad->setVisible(false);
-
-    lblStatus = new QLabel(central);
-    lblStatus->setText("Estado: ");
-    lblStatus->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblStatus->move(QPoint(645,230));
-    lblStatus->setVisible(false);
-
-    lineEditStatus = new QLineEdit(central);
-    lineEditStatus->setGeometry(710,230,70,20);
-    lineEditStatus->setStyleSheet("background-color: rgb(255, 255, 127);");
-    lineEditStatus->setText("[P] Préstamo");
-    lineEditStatus->setReadOnly(true);
-    lineEditStatus->setVisible(false);
-
     lblResponsable = new QLabel(central);
     lblResponsable->setText("Responsable: ");
     lblResponsable->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblResponsable->move(QPoint(480,260));
+    lblResponsable->move(QPoint(480,230));
     lblResponsable->setVisible(false);
 
     comboBoxResponsable = new QComboBox(central);
-    comboBoxResponsable->setGeometry(585,260,51,22);
+    comboBoxResponsable->setGeometry(585,230,51,22);
     comboBoxResponsable->addItem("01");
     comboBoxResponsable->addItem("02");
     comboBoxResponsable->setVisible(false);
@@ -220,9 +175,6 @@ void Prestamo::showPrestamo()
     lineEditCedula->setText("");
     connect(lineEditCedula, SIGNAL(editingFinished()), this, SLOT(slotValidateCedula()));
 
-    lblGrado->setVisible(true);
-    comboBoxGrado->setVisible(true);
-
     lblTipoPrestamo->setVisible(true);
     comboBoxTipoPrestamo->setVisible(true);
     comboBoxTipoPrestamo->setCurrentIndex(0);
@@ -234,12 +186,6 @@ void Prestamo::showPrestamo()
     lblFechaE->setVisible(true);
     lineEditFechaE->setVisible(true);
 
-    lblCantidad->setVisible(true);
-    lineEditCantidad->setVisible(true);
-
-    lblStatus->setVisible(true);
-    lineEditStatus->setVisible(true);
-
     lblResponsable->setVisible(true);
     comboBoxResponsable->setVisible(true);
 
@@ -247,7 +193,7 @@ void Prestamo::showPrestamo()
     btnRegistrar->setVisible(true);
     btnRegistrar->setText("&Registrar");
     btnRegistrar->setIcon(QIcon(":/images/book.png"));
-    btnRegistrar->setGeometry(435,320,75,23);
+    btnRegistrar->setGeometry(435,300,75,23);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
 
 }
@@ -324,16 +270,9 @@ void Prestamo::slotValidateCedula()
 void Prestamo::slotTipoPrestamo(int item)
 {
     if( item == 0 ) {
-
-        lineEditCantidad->setText("1");
-        lineEditCantidad->setReadOnly(true);
-
         lineEditFechaE->setText(QDate::currentDate().toString("dd/MM/yyyy"));
     }
     else if( item == 1 ) {
-
-        lineEditCantidad->setText("1");
-        lineEditCantidad->setReadOnly(true);
 
         if ( QDate::currentDate().dayOfWeek() == 3 )
             lineEditFechaE->setText(QDate::currentDate().addDays(5).toString("dd/MM/yyyy"));
@@ -344,8 +283,6 @@ void Prestamo::slotTipoPrestamo(int item)
     }
     else {
        lineEditFechaE->setText(QDate::currentDate().toString("dd/MM/yyyy"));
-       lineEditCantidad->setText("");
-       lineEditCantidad->setReadOnly(false);
     }
 
 }
@@ -364,14 +301,12 @@ void Prestamo::slotRegistrar()
 {
     if( lineEditCota->text().isEmpty() || lineEditAutor->text().isEmpty() || lineEditTitulo->text().isEmpty()
         || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
-        || lineEditFechaE->text().isEmpty() || lineEditCantidad->text().isEmpty() ) {
+        || lineEditFechaE->text().isEmpty() ) {
 
         QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
 
         return;
     }
-
-    QString strQuery;
 
     QDate fechaP = QDate::fromString(lineEditFechaP->text(),"dd/MM/yyyy");
     QDate fechaE = QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy");
@@ -385,27 +320,25 @@ void Prestamo::slotRegistrar()
         return;
     }
 
-    if( lineEditCantidad->text().toInt() == 0 ) {
+    QString strQuery;
 
-        QMessageBox::warning(this, "Advertencia", "La cantidad no puede ser cero.");
-        lineEditCantidad->setFocus();
-
-        return;
-    }
-    else if ( lineEditCantidad->text().toInt() <= cantBook ) {
-
-        strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - lineEditCantidad->text().toInt())
-                   + " WHERE cota = '" + lineEditCota->text() + "'";
+    if( cantBook > 0 ) {
+        strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - 1)
+                + " WHERE cota = '" + lineEditCota->text() + "'";
         qDebug() << strQuery;
 
         query.exec(strQuery);
     }
     else {
+        QMessageBox::warning(this, "Advertencia", "No hay disponibilidad del libro.");
 
-        QMessageBox::warning(this, "Advertencia", "La cantidad es mayor a la existente en la Base de Datos.");
-        lineEditCantidad->setFocus();
+        lineEditCota->setText("");
+        lineEditAutor->setText("");
+        lineEditTitulo->setText("");
+        lineEditCota->setFocus();
 
         return;
+
     }
 
     strQuery = "INSERT INTO libroPersona VALUES ( '" + lineEditCota->text()
@@ -417,8 +350,7 @@ void Prestamo::slotRegistrar()
 
     query.exec(strQuery);
 
-    clearWidget();
-
+    prestamoWidget();
 }
 
 void Prestamo::showEntrega()
@@ -604,7 +536,7 @@ void Prestamo::showTablePrestamo()
         rowCount = tablePrestamo->rowCount();
 
         if( rowCount < 6 )
-            tablePrestamo->setGeometry(225,170,518,173);
+            tablePrestamo->setGeometry(225,170,518,175);
         else
             tablePrestamo->setGeometry(212,170,534,173);
 
@@ -643,7 +575,7 @@ void Prestamo::showTablePrestamo()
             rowCount = tablePrestamo->rowCount();
 
             if( rowCount < 6 )
-                tablePrestamo->setGeometry(225,170,518,173);
+                tablePrestamo->setGeometry(225,170,518,175);
             else
                 tablePrestamo->setGeometry(212,170,534,173);
 
@@ -856,7 +788,7 @@ void Prestamo::filtroTable(QString strQuery)
         rowCount = tablePrestamo->rowCount();
 
         if( rowCount < 6 )
-            tablePrestamo->setGeometry(225,170,518,173);
+            tablePrestamo->setGeometry(225,170,518,175);
         else
             tablePrestamo->setGeometry(212,170,534,173);
 
@@ -895,7 +827,7 @@ void Prestamo::filtroTable(QString strQuery)
             rowCount = tablePrestamo->rowCount();
 
             if( rowCount < 6 )
-                tablePrestamo->setGeometry(225,170,518,173);
+                tablePrestamo->setGeometry(225,170,518,175);
             else
                 tablePrestamo->setGeometry(212,170,534,173);
 
@@ -932,6 +864,45 @@ void Prestamo::filtroTable(QString strQuery)
 
 }
 
+void Prestamo::prestamoWidget()
+{
+    lblCota->setVisible(true);
+    lineEditCota->setVisible(true);
+    lineEditCota->setText("");
+
+    lblAutor->setVisible(true);
+    lineEditAutor->setVisible(true);
+    lineEditAutor->setText("");
+
+    lblTitulo->setVisible(true);
+    lineEditTitulo->setVisible(true);
+    lineEditTitulo->setText("");
+
+    lblTipoPrestamo->setVisible(true);
+    comboBoxTipoPrestamo->removeItem(2);
+    comboBoxTipoPrestamo->setCurrentIndex(0);
+    comboBoxTipoPrestamo->setVisible(true);
+
+    lblCedula->setVisible(true);
+    lineEditCedula->setVisible(true);
+    lineEditCedula->setText("");
+
+    lblFechaP->setVisible(true);
+    lineEditFechaP->setVisible(true);
+    btnCalendar->setVisible(true);
+
+    lblFechaE->setVisible(true);
+    lineEditFechaE->setVisible(true);
+    lineEditFechaE->setText("");
+
+    lblResponsable->setVisible(true);
+    comboBoxResponsable->setCurrentIndex(0);
+    comboBoxResponsable->setVisible(true);
+
+    btnRegistrar->setVisible(true);
+
+}
+
 void Prestamo::clearWidget()
 {
     lblCota->setVisible(false);
@@ -951,10 +922,6 @@ void Prestamo::clearWidget()
     comboBoxTipoPrestamo->setCurrentIndex(0);
     comboBoxTipoPrestamo->setVisible(false);
 
-    lblGrado->setVisible(false);
-    comboBoxGrado->setCurrentIndex(0);
-    comboBoxGrado->setVisible(false);
-
     lblCedula->setVisible(false);
     lineEditCedula->setVisible(false);
     lineEditCedula->setText("");
@@ -966,12 +933,6 @@ void Prestamo::clearWidget()
     lblFechaE->setVisible(false);
     lineEditFechaE->setVisible(false);
     lineEditFechaE->setText("");
-
-    lblCantidad->setVisible(false);
-    lineEditCantidad->setVisible(false);
-
-    lblStatus->setVisible(false);
-    lineEditStatus->setVisible(false);
 
     lblResponsable->setVisible(false);
     comboBoxResponsable->setCurrentIndex(0);
@@ -994,3 +955,4 @@ void Prestamo::distroyedCalendar()
 {
     calendarWidget->close();
 }
+
