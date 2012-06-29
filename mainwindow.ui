@@ -338,7 +338,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>260</x>
       <y>40</y>
       <width>111</width>
       <height>111</height>
@@ -354,7 +354,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>380</x>
       <y>60</y>
       <width>261</width>
       <height>61</height>
@@ -363,7 +363,23 @@
     <property name="text">
      <string>ESCUELA BASICA NACIONAL &quot;ELOY PAREDES&quot;
                  MÉRIDA ESTADO MÉRIDA
-         Biblioteca &quot;INES OTILLA FERNANDEZ&quot;</string>
+    BIBLIOTECA &quot;INES OTILLA FERNANDEZ&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>50</y>
+      <width>85</width>
+      <height>92</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="recursos.qrc">:/images/pilalibros.png</pixmap>
     </property>
    </widget>
   </widget>
