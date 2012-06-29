@@ -335,6 +335,37 @@
      <string>&amp;Renovación</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>40</y>
+      <width>111</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="recursos.qrc">:/images/escudoEs.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>60</y>
+      <width>261</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ESCUELA BASICA NACIONAL &quot;ELOY PAREDES&quot;
+                 MÉRIDA ESTADO MÉRIDA
+         Biblioteca &quot;INES OTILLA FERNANDEZ&quot;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -385,7 +416,9 @@
   <tabstop>btnEditarP</tabstop>
   <tabstop>btnEliminarP</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="recursos.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionCargar_Lote_libros</sender>

@@ -85,30 +85,16 @@ void Libro::cancelar()
 void Libro::editarLibro()
 {
 
-
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
     disconnect(btnCancelar,SIGNAL(clicked()),0,0);
 
     limpiar();
 
-    mostrarNuevo();
-
-    lbCota->setText("Cota:");
-    lbBuscar->setVisible(true);
-    leBuscar->setVisible(true);
-    lbTipoBusqueda->setVisible(false);
+    mostrarEditar();
     comboTipoBusqueda->setCurrentIndex(0);
-
-    btnAceptar->setText("Buscar");
-    btnAceptar->move(630,98);
-    btnAceptar->setVisible(true);
-
 
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
-    btnCancelar->setText("Editar");
-    btnCancelar->move(380,390);
-    btnCancelar->setEnabled(false);
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnEditar()));
 
     bandera=true;
@@ -190,7 +176,7 @@ void Libro::buscarLibro()
     comboTipoBusqueda->setVisible(true);
 
     btnAceptar->setText("Buscar");
-    btnAceptar->move(630,98);
+    btnAceptar->move(630,180);
     btnAceptar->setVisible(true);
 
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
@@ -205,18 +191,13 @@ void Libro::btnBuscar()
     QSqlQuery query;
     leBuscar->setText(leBuscar->text());
 
-
+    mostrarEditar();
+    btnCancelar->setVisible(false);
+    tableBusqueda->setVisible(false);
 
     if(comboTipoBusqueda->currentText() == "Cota"){
 
-        mostrarNuevo();
-        btnCancelar->setVisible(false);
-        tableBusqueda->setVisible(false);
-        btnAceptar->move(630,98);
-
         query.exec("select * from libros where cota= '"+leBuscar->text().toUpper()+"'");
-
-
 
         if(query.next()){
 
@@ -232,9 +213,10 @@ void Libro::btnBuscar()
             leEjemplar->setReadOnly(true);
 
             if (bandera==true){
+
                 btnCancelar->setVisible(true);
                 btnCancelar->setEnabled(true);
-                btnCancelar->move(380,390);
+                btnCancelar->move(380,470);
                 btnCancelar->setText("Editar");
                 leCota->setReadOnly(false);
                 leAutor->setReadOnly(false);
@@ -302,11 +284,12 @@ void Libro::btnBuscar()
         leTitulo->hide();
 
 
-        query.exec("select * from libros where titulo like '"+leBuscar->text()+"%'");
+        query.exec("select * from libros where titulo like \"%"+leBuscar->text()+"%\"");
 
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+            tableBusqueda->clearContents();
 
         }
 
@@ -497,10 +480,11 @@ void Libro::btnBuscar()
         lbTitulo->hide();
         leTitulo->hide();
 
-        query.exec("select * from libros where autor like \""+leBuscar->text()+"%\"");
+        query.exec("select * from libros where autor like \"%"+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este autor.");
+            tableBusqueda->clearContents();
 
         }
 
@@ -692,10 +676,11 @@ void Libro::btnBuscar()
         lbTitulo->hide();
         leTitulo->hide();
 
-        query.exec("select * from libros where materia like \""+leBuscar->text()+"%\"");
+        query.exec("select * from libros where materia like \"%"+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
             QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+            tableBusqueda->clearContents();
 
         }
 
@@ -982,7 +967,7 @@ void Libro::inicializar(QWidget *a)
     lbAnhoPublicacion->setText("Año Public.: ");
 
     leAnhoPublicacion = new QLineEdit(a);
-    leAnhoPublicacion->setGeometry(690,220,100,20);
+    leAnhoPublicacion->setGeometry(690,220,70,20);
     leAnhoPublicacion->setVisible(false);
 
     lbLugar = new QLabel(a);
@@ -1004,7 +989,7 @@ void Libro::inicializar(QWidget *a)
     comboAdquisicion->addItem("Comprado");
     comboAdquisicion->addItem("Donado");
     comboAdquisicion->addItem("Canjeado");
-    comboAdquisicion->move(480,270);
+    comboAdquisicion->setGeometry(480,270,80,20);
     comboAdquisicion->setVisible(false);
 
     lbVolumen = new QLabel(a);
@@ -1022,7 +1007,7 @@ void Libro::inicializar(QWidget *a)
     lbEjemplar->setText("Ejemplares: ");
 
     leEjemplar = new QLineEdit(a);
-    leEjemplar->setGeometry(290,320,90,20);
+    leEjemplar->setGeometry(290,320,80,20);
     leEjemplar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
     leEjemplar->setVisible(false);
 
@@ -1037,7 +1022,7 @@ void Libro::inicializar(QWidget *a)
     comboEstado->addItem("Bueno");
     comboEstado->addItem("Regular");
     comboEstado->addItem("Malo");
-    comboEstado->move(480,320);
+    comboEstado->setGeometry(480,320,80,20);
     comboEstado->setVisible(false);
 
     btnAceptar = new QPushButton("Aceptar",a);
@@ -1050,17 +1035,17 @@ void Libro::inicializar(QWidget *a)
 
     lbBuscar = new QLabel(a);
     lbBuscar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbBuscar->move(190,100);
+    lbBuscar->move(190,180);
     lbBuscar->setText("Buscar:");
     lbBuscar->setVisible(false);
 
     leBuscar = new QLineEdit(a);
-    leBuscar->setGeometry(240,100,270,20);
+    leBuscar->setGeometry(240,180,270,20);
     leBuscar->setVisible(false);
 
     lbTipoBusqueda = new QLabel(a);
     lbTipoBusqueda->setFont(QFont("Baskerville Old Face",9,QFont::Bold));
-    lbTipoBusqueda->move(515,80);
+    lbTipoBusqueda->move(515,160);
     lbTipoBusqueda->setText("Tipo de Busqueda");
     lbTipoBusqueda->setVisible(false);
 
@@ -1069,11 +1054,11 @@ void Libro::inicializar(QWidget *a)
     comboTipoBusqueda->addItem("Autor");
     comboTipoBusqueda->addItem("Titulo");
     comboTipoBusqueda->addItem("Materia");
-    comboTipoBusqueda->move(535,100);
+    comboTipoBusqueda->move(535,180);
     comboTipoBusqueda->setVisible(false);
 
     tableBusqueda = new QTableWidget(a);
-    tableBusqueda->setGeometry(170,200,621,321);
+    tableBusqueda->setGeometry(170,230,621,321);
     tableBusqueda->setColumnCount(15);
     QStringList listHeader;
     listHeader << "Cota" << "Autor" << "Titulo" << "Materia" << "Editorial" << "Año Public." << "Lugar"
@@ -1087,78 +1072,179 @@ void Libro::inicializar(QWidget *a)
 
 void Libro::mostrarNuevo(){
 
-    lbCota->move(200,170);
+    lbCota->setText("(*)Cota: ");
+    lbCota->move(200,180);
     lbCota->setVisible(true);
 
-    leCota->move(270,170);
+    leCota->move(270,180);
     leCota->setVisible(true);
 
-    lbAutor->move(400,170);
+    lbAutor->setText("(*)Autor: ");
+    lbAutor->move(400,180);
     lbAutor->setVisible(true);
 
-    leAutor->move(460,170);
+    leAutor->move(460,180);
     leAutor->setVisible(true);
 
-    lbTitulo->move(600,170);
+    lbTitulo->setText("(*)Titulo: ");
+    lbTitulo->move(590,180);
     lbTitulo->setVisible(true);
 
-    leTitulo->move(660,170);
+    leTitulo->move(660,180);
     leTitulo->setVisible(true);
 
-    lbMateria->move(200,220);
+    lbMateria->setText("(*)Materia: ");
+    lbMateria->move(200,230);
     lbMateria->setVisible(true);
 
-    leMateria->move(270,220);
+    leMateria->move(270,230);
     leMateria->setVisible(true);
 
-    lbEditorial->move(400,220);
+    lbEditorial->move(400,230);
     lbEditorial->setVisible(true);
 
-    leEditorial->move(460,220);
+    leEditorial->move(460,230);
     leEditorial->setVisible(true);
 
-    lbAnhoPublicacion->move(600,220);
+    lbAnhoPublicacion->move(590,230);
     lbAnhoPublicacion->setVisible(true);
 
-    leAnhoPublicacion->move(690,220);
+    leAnhoPublicacion->move(690,230);
     leAnhoPublicacion->setVisible(true);
 
-    lbLugar->move(200,270);
+    lbLugar->move(200,280);
     lbLugar->setVisible(true);
 
-    leLugar->move(270,270);
+    leLugar->move(270,280);
     leLugar->setVisible(true);
 
-    lbAdquisicion->move(400,270);
+    lbAdquisicion->move(400,280);
     lbAdquisicion->setVisible(true);
 
+    comboAdquisicion->move(480,275);
+    comboAdquisicion->setCurrentIndex(0);
     comboAdquisicion->setVisible(true);
 
-    lbVolumen->move(600,270);
+    lbVolumen->setText("(*)Volumen: ");
+    lbVolumen->move(590,280);
     lbVolumen->setVisible(true);
 
-    leVolumen->move(670,270);
+    leVolumen->move(670,280);
     leVolumen->setVisible(true);
 
-    lbEjemplar->move(200,320);
+    lbEjemplar->move(200,330);
     lbEjemplar->setVisible(true);
 
-    leEjemplar->move(290,320);
+    leEjemplar->move(290,330);
     leEjemplar->setVisible(true);
 
-    lbEstado->move(400,320);
+    lbEstado->move(400,330);
     lbEstado->setVisible(true);
 
+    comboEstado->move(480,325);
+    comboEstado->setCurrentIndex(0);
     comboEstado->setVisible(true);
 
-    btnAceptar->move(360,390);
+    btnAceptar->move(360,400);
     btnAceptar->setVisible(true);
 
-    btnCancelar->move(490,390);
+    btnCancelar->move(490,400);
     btnCancelar->setText("Cancelar");
     btnCancelar->setEnabled(true);
     btnCancelar->setVisible(true);
 
+
+}
+
+void Libro::mostrarEditar(){
+
+    lbBuscar->setVisible(true);
+
+    leBuscar->setVisible(true);
+
+    lbTipoBusqueda->setVisible(false);
+
+    lbCota->setText("Cota: ");
+    lbCota->move(200,260);
+    lbCota->setVisible(true);
+
+    leCota->move(270,260);
+    leCota->setVisible(true);
+
+    lbAutor->setText("Autor: ");
+    lbAutor->move(400,260);
+    lbAutor->setVisible(true);
+
+    leAutor->move(460,260);
+    leAutor->setVisible(true);
+
+    lbTitulo->setText("Titulo: ");
+    lbTitulo->move(600,260);
+    lbTitulo->setVisible(true);
+
+    leTitulo->move(660,260);
+    leTitulo->setVisible(true);
+
+    lbMateria->setText("Materia: ");
+    lbMateria->move(200,310);
+    lbMateria->setVisible(true);
+
+    leMateria->move(270,310);
+    leMateria->setVisible(true);
+
+    lbEditorial->move(400,310);
+    lbEditorial->setVisible(true);
+
+    leEditorial->move(460,310);
+    leEditorial->setVisible(true);
+
+    lbAnhoPublicacion->move(600,310);
+    lbAnhoPublicacion->setVisible(true);
+
+    leAnhoPublicacion->move(690,310);
+    leAnhoPublicacion->setVisible(true);
+
+    lbLugar->move(200,360);
+    lbLugar->setVisible(true);
+
+    leLugar->move(270,360);
+    leLugar->setVisible(true);
+
+    lbAdquisicion->move(400,360);
+    lbAdquisicion->setVisible(true);
+
+    comboAdquisicion->move(480,355);
+    comboAdquisicion->setCurrentIndex(0);
+    comboAdquisicion->setVisible(true);
+
+    lbVolumen->setText("Volumen: ");
+    lbVolumen->move(600,360);
+    lbVolumen->setVisible(true);
+
+    leVolumen->move(670,360);
+    leVolumen->setVisible(true);
+
+    lbEjemplar->move(200,410);
+    lbEjemplar->setVisible(true);
+
+    leEjemplar->move(290,410);
+    leEjemplar->setVisible(true);
+
+    lbEstado->move(400,410);
+    lbEstado->setVisible(true);
+
+    comboEstado->move(480,405);
+    comboEstado->setCurrentIndex(0);
+    comboEstado->setVisible(true);
+
+    btnAceptar->setText("Buscar");
+    btnAceptar->move(630,180);
+    btnAceptar->setVisible(true);
+
+    btnCancelar->move(380,470);
+    btnCancelar->setText("Editar");
+    btnCancelar->setVisible(true);
+    btnCancelar->setEnabled(false);
 
 }
 

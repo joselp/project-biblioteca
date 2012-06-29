@@ -12,6 +12,7 @@
 #include<QMessageBox>
 #include<QDebug>
 #include<QValidator>
+#include <QKeyEvent>
 
 
 class Usuarios : public QWidget
@@ -21,9 +22,11 @@ class Usuarios : public QWidget
 public:
     explicit Usuarios();
     void inicializar(QWidget *);
+    void mostrarNuevo();
     void limpiar();
     void removeall();
     ~Usuarios();
+
 
 public slots:
     void nuevoUser();
@@ -36,7 +39,7 @@ public slots:
     void cancelar();
     void aceptar();
 
-public:
+private:
 
     QPushButton *btnAceptar;
     QPushButton *btnCancelar;
@@ -52,6 +55,7 @@ public:
     QLineEdit *leCedula;
     QString cedula;
     QString aux;
+
 
 };
 

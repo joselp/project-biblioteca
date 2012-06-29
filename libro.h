@@ -23,6 +23,7 @@ public:
     void inicializar(QWidget *);
     void limpiar();
     void mostrarNuevo();
+    void mostrarEditar();
     void removeAll();
     ~Libro();
 

@@ -12,32 +12,32 @@ void Prestamo::initGUI(QWidget *central)
     lblCota = new QLabel(central);
     lblCota->setText("Cota: ");
     lblCota->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCota->move(QPoint(255,140));
+    lblCota->move(QPoint(255,180));
     lblCota->setVisible(false);
 
     lineEditCota = new QLineEdit(central);
-    lineEditCota->move(QPoint(305,140));
+    lineEditCota->move(QPoint(305,180));
     lineEditCota->setVisible(false);
 
     lblAutor = new QLabel(central);
     lblAutor->setText("Autor: ");
     lblAutor->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblAutor->move(QPoint(245,170));
+    lblAutor->move(QPoint(245,210));
     lblAutor->setVisible(false);
 
     lineEditAutor = new QLineEdit(central);
-    lineEditAutor->move(QPoint(305,170));
+    lineEditAutor->move(QPoint(305,210));
     lineEditAutor->setReadOnly(true);
     lineEditAutor->setVisible(false);
 
     lblTitulo = new QLabel(central);
     lblTitulo->setText("Titulo: ");
     lblTitulo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblTitulo->move(QPoint(242,200));
+    lblTitulo->move(QPoint(242,240));
     lblTitulo->setVisible(false);
 
     lineEditTitulo = new QLineEdit(central);
-    lineEditTitulo->move(QPoint(305,200));
+    lineEditTitulo->move(QPoint(305,240));
     lineEditTitulo->setReadOnly(true);
     lineEditTitulo->setVisible(false);
 
@@ -53,11 +53,11 @@ void Prestamo::initGUI(QWidget *central)
     lblTipoPrestamo = new QLabel(central);
     lblTipoPrestamo->setText("Tipo Préstamo: ");
     lblTipoPrestamo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblTipoPrestamo->move(QPoint(462,140));
+    lblTipoPrestamo->move(QPoint(462,180));
     lblTipoPrestamo->setVisible(false);
 
     comboBoxTipoPrestamo = new QComboBox(central);
-    comboBoxTipoPrestamo->setGeometry(585,140,121,22);
+    comboBoxTipoPrestamo->setGeometry(585,180,121,22);
     comboBoxTipoPrestamo->addItem("Aula");
     comboBoxTipoPrestamo->addItem("Hogar");
     comboBoxTipoPrestamo->setVisible(false);
@@ -66,11 +66,11 @@ void Prestamo::initGUI(QWidget *central)
     lblFechaP = new QLabel(central);
     lblFechaP->setText("Fecha Préstamo: ");
     lblFechaP->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblFechaP->move(QPoint(455,170));
+    lblFechaP->move(QPoint(455,210));
     lblFechaP->setVisible(false);
 
     lineEditFechaP = new QLineEdit(central);
-    lineEditFechaP->move(QPoint(585,170));
+    lineEditFechaP->move(QPoint(585,210));
     lineEditFechaP->setReadOnly(true);
     lineEditFechaP->setToolTip("El formato de la fecha es: DD/MM/AAAA");
     lineEditFechaP->setText(QDate::currentDate().toString("dd/MM/yyyy"));
@@ -79,11 +79,11 @@ void Prestamo::initGUI(QWidget *central)
     lblFechaE = new QLabel(central);
     lblFechaE->setText("Fecha Entrega: ");
     lblFechaE->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblFechaE->move(QPoint(467,200));
+    lblFechaE->move(QPoint(467,240));
     lblFechaE->setVisible(false);
 
     lineEditFechaE = new QLineEdit(central);
-    lineEditFechaE->move(QPoint(585,200));
+    lineEditFechaE->move(QPoint(585,240));
     lineEditFechaE->setToolTip("El formato de la fecha es: DD/MM/AAAA");
 
     QString expDia("([0-2]\\d|[3][0-1])/");
@@ -96,7 +96,7 @@ void Prestamo::initGUI(QWidget *central)
 
     btnCalendar = new QPushButton(central);
     btnCalendar->setIcon(QIcon(":/images/calendar.png"));
-    btnCalendar->setGeometry(726,200,21,21);
+    btnCalendar->setGeometry(726,240,21,21);
     btnCalendar->setVisible(false);
     connect(btnCalendar, SIGNAL(clicked()), this, SLOT(slotCalendar()));
 
@@ -106,11 +106,11 @@ void Prestamo::initGUI(QWidget *central)
     lblResponsable = new QLabel(central);
     lblResponsable->setText("Responsable: ");
     lblResponsable->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblResponsable->move(QPoint(480,230));
+    lblResponsable->move(QPoint(480,270));
     lblResponsable->setVisible(false);
 
     comboBoxResponsable = new QComboBox(central);
-    comboBoxResponsable->setGeometry(585,230,51,22);
+    comboBoxResponsable->setGeometry(585,270,51,22);
     comboBoxResponsable->addItem("01");
     comboBoxResponsable->addItem("02");
     comboBoxResponsable->setVisible(false);
@@ -121,11 +121,11 @@ void Prestamo::initGUI(QWidget *central)
     lblFiltro = new QLabel(central);
     lblFiltro->setText("Filtrar: ");
     lblFiltro->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblFiltro->move(270,140);
+    lblFiltro->move(270,180);
     lblFiltro->setVisible(false);
 
     comboBoxFiltro = new QComboBox(central);
-    comboBoxFiltro->move(340,140);
+    comboBoxFiltro->move(340,180);
     comboBoxFiltro->addItem("Todas");
     comboBoxFiltro->addItem("Cota");
     comboBoxFiltro->addItem("Cédula");
@@ -136,7 +136,7 @@ void Prestamo::initGUI(QWidget *central)
     connect(comboBoxFiltro, SIGNAL(currentIndexChanged(int)), this, SLOT(slotTipoFiltro(int)));
 
     lineEditFiltro = new QLineEdit(central);
-    lineEditFiltro->move(465,140);
+    lineEditFiltro->move(465,180);
     lineEditFiltro->setReadOnly(true);
     lineEditFiltro->setVisible(false);
 
@@ -169,9 +169,9 @@ void Prestamo::showPrestamo()
     lineEditTitulo->setVisible(true);
 
     lblCedula->setVisible(true);
-    lblCedula->move(QPoint(242,230));
+    lblCedula->move(QPoint(242,270));
     lineEditCedula->setVisible(true);
-    lineEditCedula->move(QPoint(305,230));
+    lineEditCedula->move(QPoint(305,270));
     lineEditCedula->setText("");
     connect(lineEditCedula, SIGNAL(editingFinished()), this, SLOT(slotValidateCedula()));
 
@@ -193,7 +193,7 @@ void Prestamo::showPrestamo()
     btnRegistrar->setVisible(true);
     btnRegistrar->setText("&Registrar");
     btnRegistrar->setIcon(QIcon(":/images/book.png"));
-    btnRegistrar->setGeometry(435,300,75,23);
+    btnRegistrar->setGeometry(435,340,75,23);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
 
 }
@@ -204,7 +204,7 @@ void Prestamo::slotCalendar()
     calendarWidget->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     calendarWidget->setWindowIcon(QIcon(":/images/calendar.png"));
     calendarWidget->setWindowTitle("Fecha Entrega");
-    calendarWidget->setGeometry(685, 250, 220, 150);
+    calendarWidget->setGeometry(685, 290, 220, 150);
     calendarWidget->setMinimumDate(QDate::currentDate());
     calendarWidget->setSelectedDate(QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy"));
     connect(calendarWidget, SIGNAL(clicked(QDate)), this, SLOT(slotDate(QDate)));
@@ -362,15 +362,15 @@ void Prestamo::showEntrega()
     connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
 
     lblCedula->setVisible(true);
-    lblCedula->move(465,140);
+    lblCedula->move(465,180);
     lineEditCedula->setVisible(true);
-    lineEditCedula->move(530,140);
+    lineEditCedula->move(530,180);
     lineEditCedula->disconnect(this);
 
     btnRegistrar->setVisible(true);
     btnRegistrar->setText("&Entregar");
     btnRegistrar->setIcon(QIcon(":/images/aceptar.png"));
-    btnRegistrar->setGeometry(435,180,75,23);
+    btnRegistrar->setGeometry(435,220,75,23);
     btnRegistrar->disconnect(this);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotAcceptEntrega()));
 
@@ -444,15 +444,15 @@ void Prestamo::showRenovacion()
     connect(lineEditCota, SIGNAL(editingFinished()), this, SLOT(slotUpperText()));
 
     lblCedula->setVisible(true);
-    lblCedula->move(465,140);
+    lblCedula->move(465,180);
     lineEditCedula->setVisible(true);
-    lineEditCedula->move(530,140);
+    lineEditCedula->move(530,180);
     lineEditCedula->disconnect(this);
 
     btnRegistrar->setVisible(true);
     btnRegistrar->setText("&Renovación");
     btnRegistrar->setIcon(QIcon(":/images/aceptar.png"));
-    btnRegistrar->setGeometry(435,180,95,23);
+    btnRegistrar->setGeometry(435,220,95,23);
     btnRegistrar->disconnect(this);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRenovacion()));
 }
@@ -525,7 +525,7 @@ void Prestamo::showTablePrestamo()
         btnRegistrar->setVisible(true);
         btnRegistrar->setText("&Filtrar");
         btnRegistrar->setIcon(QIcon(":/images/ver.png"));
-        btnRegistrar->setGeometry(620,140,75,21);
+        btnRegistrar->setGeometry(620,180,75,21);
         btnRegistrar->disconnect(this);
         connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotFiltro()));
 
@@ -536,9 +536,9 @@ void Prestamo::showTablePrestamo()
         rowCount = tablePrestamo->rowCount();
 
         if( rowCount < 6 )
-            tablePrestamo->setGeometry(225,170,518,175);
+            tablePrestamo->setGeometry(225,210,518,175);
         else
-            tablePrestamo->setGeometry(212,170,534,173);
+            tablePrestamo->setGeometry(212,210,534,173);
 
         for( int row = rowCount - 1; row < rowCount; row++ ) {
 
@@ -575,9 +575,9 @@ void Prestamo::showTablePrestamo()
             rowCount = tablePrestamo->rowCount();
 
             if( rowCount < 6 )
-                tablePrestamo->setGeometry(225,170,518,175);
+                tablePrestamo->setGeometry(225,210,518,175);
             else
-                tablePrestamo->setGeometry(212,170,534,173);
+                tablePrestamo->setGeometry(212,210,534,173);
 
             for( int row = rowCount - 1; row < rowCount; row++ ) {
 
@@ -788,9 +788,9 @@ void Prestamo::filtroTable(QString strQuery)
         rowCount = tablePrestamo->rowCount();
 
         if( rowCount < 6 )
-            tablePrestamo->setGeometry(225,170,518,175);
+            tablePrestamo->setGeometry(225,210,518,175);
         else
-            tablePrestamo->setGeometry(212,170,534,173);
+            tablePrestamo->setGeometry(212,210,534,173);
 
         for( int row = rowCount - 1; row < rowCount; row++ ) {
 
@@ -827,9 +827,9 @@ void Prestamo::filtroTable(QString strQuery)
             rowCount = tablePrestamo->rowCount();
 
             if( rowCount < 6 )
-                tablePrestamo->setGeometry(225,170,518,175);
+                tablePrestamo->setGeometry(225,210,518,175);
             else
-                tablePrestamo->setGeometry(212,170,534,173);
+                tablePrestamo->setGeometry(212,210,534,173);
 
             for( int row = rowCount - 1; row < rowCount; row++ ) {
 

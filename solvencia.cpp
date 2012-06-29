@@ -11,22 +11,22 @@ void Solvencia::initGUI(QWidget *central)
     lblCedula = new QLabel(central);
     lblCedula->setText("Ingrese Cédula: ");
     lblCedula->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblCedula->move(QPoint(335,140));
+    lblCedula->move(QPoint(335,180));
     lblCedula->setVisible(false);
 
     lineEditCedula = new QLineEdit(central);
     lineEditCedula->setValidator(new QIntValidator(1,99999999,this));
-    lineEditCedula->move(QPoint(465,140));
+    lineEditCedula->move(QPoint(465,180));
     lineEditCedula->setVisible(false);
 
     lblGrado = new QLabel(central);
     lblGrado->setText("Grado: ");
     lblGrado->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblGrado->move(QPoint(245,200));
+    lblGrado->move(QPoint(245,240));
     lblGrado->setVisible(false);
 
     comboBoxGrado = new QComboBox(central);
-    comboBoxGrado->setGeometry(315,200,121,22);
+    comboBoxGrado->setGeometry(315,240,121,22);
     comboBoxGrado->addItem("1º Grado");
     comboBoxGrado->addItem("2º Grado");
     comboBoxGrado->addItem("3º Grado");
@@ -41,16 +41,16 @@ void Solvencia::initGUI(QWidget *central)
     lblPeriodo = new QLabel(central);
     lblPeriodo->setText("Año Escolar: ");
     lblPeriodo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
-    lblPeriodo->move(462,200);
+    lblPeriodo->move(462,240);
     lblPeriodo->setVisible(false);
 
     lineEditPeriodo = new QLineEdit(central);
-    lineEditPeriodo->move(QPoint(585,200));
+    lineEditPeriodo->move(QPoint(585,240));
     lineEditPeriodo->setVisible(false);
 
     btnSolvencia = new QPushButton(central);
     btnSolvencia->setText("&Imprimir");
-    btnSolvencia->move(QPoint(425,350));
+    btnSolvencia->move(QPoint(425,390));
     btnSolvencia->setIcon(QIcon(":images/impresora.png"));
     btnSolvencia->setVisible(false);
     connect(btnSolvencia, SIGNAL(clicked()), this, SLOT(slotGenerateSolvencia()));

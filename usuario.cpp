@@ -8,53 +8,7 @@ Usuarios::Usuarios()
 void Usuarios::nuevoUser()
 {
     limpiar();
-
-    lbApellido->setVisible(true);
-    lbApellido->move(490,140);
-    lbApellido->setText("Apellido: ");
-
-    lbCedula->setVisible(true);
-    lbCedula->move(270,190);
-    lbCedula->setText("Cedula: ");
-
-    leCedula->move(330,190);
-
-    lbNombre->setVisible(true);
-    lbNombre->move(260,140);
-    lbNombre->setText("Nombre: ");
-
-    leNombre->setVisible(true);
-    leNombre->move(330,140);
-
-    leApellido->setVisible(true);
-    leApellido->move(560,140);
-
-    leCedula->setVisible(true);
-
-    btnAceptar->setVisible(true);
-    disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
-    btnAceptar->move(400,280);
-    btnAceptar->setText("Aceptar");
-    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
-    btnAceptar->setIconSize(QSize(15,15));
-    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
-
-    btnCancelar->setVisible(true);
-    btnCancelar->setText("Cancelar");
-    btnCancelar->setIcon(QIcon(":/images/cancel.png"));
-    btnCancelar->setIconSize(QSize(15,15));
-    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
-    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
-    btnCancelar->move(500,280);
-
-    rbEstu->setVisible(true);
-    rbEstu->move(540,220);
-    rbProf->move(540,190);
-    rbProf->setVisible(true);
-
-    lbTipo->setText("Tipo: ");
-    lbTipo->move(490,190);
-    lbTipo->setVisible(true);
+    mostrarNuevo();
 
 }
 
@@ -74,8 +28,9 @@ void Usuarios::aceptar()
         QSqlQuery sql;
         sql.exec("INSERT INTO personas values('"+leCedula->text()+"','"+leNombre->text()+"','"+leApellido->text()+"','"+aux+"')");
 
-
-        limpiar();
+        QMessageBox::information(this,"Correcto","Usuario Creado");
+        //limpiar();
+        mostrarNuevo();
 
     }
 
@@ -91,38 +46,37 @@ void Usuarios::cancelar()
 void Usuarios::editarUsuario()
 {
 
-
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
     disconnect(btnCancelar,SIGNAL(clicked()),0,0);
 
     limpiar();
 
-    leCedula->move(450,130);
-    lbCedula->move(330,130);
+    leCedula->move(450,180);
+    lbCedula->move(330,180);
     lbCedula->setText("Ingrese Cedula: ");
 
-    btnCancelar->move(610,128);
+    btnCancelar->move(610,178);
     btnCancelar->setText("Buscar");
     btnCancelar->setIcon(QIcon(":/images/ver.png"));
     btnCancelar->setIconSize(QSize(15,15));
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
-    btnAceptar->move(450,280);
+    btnAceptar->move(450,330);
     btnAceptar->setText("Editar");
     btnAceptar->setIconSize(QSize(0,0));
     btnAceptar->setEnabled(false);
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEditar()));
 
-    lbNombre->move(280,190);
-    leNombre->move(350,190);
+    lbNombre->move(280,240);
+    leNombre->move(350,240);
 
-    lbApellido->move(510,190);
-    leApellido->move(580,190);
+    lbApellido->move(510,240);
+    leApellido->move(580,240);
 
-    lbTipo->move(300,220);
+    lbTipo->move(300,270);
 
-    rbProf->move(300,240);
-    rbEstu->move(300,260);
+    rbProf->move(300,290);
+    rbEstu->move(300,310);
 
     leCedula->show();
     lbCedula->show();
@@ -139,7 +93,6 @@ void Usuarios::editarUsuario()
 }
 
 void Usuarios::btnEditar(){
-
 
         QSqlQuery query;
         query.exec("select * from personas where cedula='"+cedula+"'");
@@ -174,10 +127,10 @@ void Usuarios::eliminarUsuario()
     limpiar();
 
     lbCedula->setText("Ingrese Cedula: ");
-    leCedula->move(460,130);
-    lbCedula->move(330,130);
+    leCedula->move(460,180);
+    lbCedula->move(330,180);
 
-    btnAceptar->move(430,220);
+    btnAceptar->move(430,270);
     btnAceptar->setText("Eliminar");
     btnAceptar->setIcon(QIcon(":/images/cancel.png"));
     btnAceptar->setIconSize(QSize(15,15));
@@ -189,9 +142,36 @@ void Usuarios::eliminarUsuario()
 
 }
 
-void Usuarios::buscarUsuario()
+void Usuarios::btnEliminar()
 {
 
+    QSqlQuery query;
+
+    query.exec("select * from personas where cedula='"+leCedula->text()+"'");
+
+    if( query.next() ){
+
+        query.exec("delete from personas where cedula='"+leCedula->text()+"'");
+
+        QMessageBox msg;
+        msg.setModal(true);
+        msg.setWindowTitle("Eliminar");
+        msg.setText("Usuario Eliminado");
+        msg.exec();
+        limpiar();
+    }
+
+    else{
+
+        QMessageBox::warning(this,"ATENCION","El usuario no existe");
+        leCedula->setText("");
+
+    }
+
+}
+
+void Usuarios::buscarUsuario()
+{
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
 
@@ -200,23 +180,23 @@ void Usuarios::buscarUsuario()
     leNombre->setReadOnly(true);
     leApellido->setReadOnly(true);
 
-    leCedula->move(450,130);
-    lbCedula->move(330,130);
+    leCedula->move(450,180);
+    lbCedula->move(330,180);
     lbCedula->setText("Ingrese Cedula: ");
 
-    btnAceptar->move(450,280);
+    btnAceptar->move(450,320);
     btnAceptar->setText("Buscar");
     btnAceptar->setIcon(QIcon(":/images/ver.png"));
     btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
 
-    lbNombre->move(280,190);
-    leNombre->move(350,190);
+    lbNombre->move(280,240);
+    leNombre->move(350,240);
 
-    lbApellido->move(510,190);
-    leApellido->move(580,190);
+    lbApellido->move(510,240);
+    leApellido->move(580,240);
 
-    lbTipo->move(300,220);
+    lbTipo->move(300,270);
 
     leCedula->show();
     lbCedula->show();
@@ -232,10 +212,15 @@ void Usuarios::buscarUsuario()
 
 bool Usuarios::btnBuscar()
 {
-    lbTipo2->move(350,220);
+
+    lbTipo2->move(350,270);
 
     QSqlQuery query;
     query.exec("select * from personas where cedula='"+leCedula->text()+"'");
+
+    lbTipo2->setText("");
+    leApellido->setText("");
+    leNombre->setText("");
 
     if( query.next() ){
 
@@ -262,89 +247,121 @@ bool Usuarios::btnBuscar()
 
 }
 
-void Usuarios::btnEliminar()
-{
-
-    QSqlQuery query;
-
-    query.exec("select * from personas where cedula='"+leCedula->text()+"'");
-
-    if( query.next() ){
-
-        query.exec("delete from personas where cedula='"+leCedula->text()+"'");
-
-        QMessageBox msg;
-        msg.setModal(true);
-        msg.setWindowTitle("Eliminar");
-        msg.setText("Usuario Eliminado");
-        msg.exec();
-    }
-
-    else{
-
-        QMessageBox::warning(this,"ATENCION","El usuario no existe");
-
-    }
-}
-
 void Usuarios::inicializar(QWidget *a)
 {
 
     lbNombre = new QLabel(a);
-    lbNombre->move(260,140);
+    lbNombre->move(260,180);
     lbNombre->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbNombre->setVisible(false);
     lbNombre->setText("Nombre: ");
 
     leNombre = new QLineEdit(a);
-    leNombre->move(330,140);
+    leNombre->move(330,180);
     leNombre->setVisible(false);
 
     lbApellido = new QLabel(a);
-    lbApellido->move(480,140);
+    lbApellido->move(480,180);
     lbApellido->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbApellido->setVisible(false);
     lbApellido->setText("Apellido: ");
 
     leApellido = new QLineEdit(a);
-    leApellido->move(550,140);
+    leApellido->move(550,230);
     leApellido->setVisible(false);
 
     lbCedula = new QLabel(a);
-    lbCedula->move(280,190);
+    lbCedula->move(280,180);
     lbCedula->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbCedula->setVisible(false);
     lbCedula->setText("Cedula: ");
 
     leCedula = new QLineEdit(a);
-    leCedula->move(330,190);
+    leCedula->move(330,230);
     leCedula->setVisible(false);
     leCedula->setValidator(new QIntValidator(0,99999999,this));
 
     lbTipo = new QLabel(a);
-    lbTipo->move(480,190);
+    lbTipo->move(480,230);
     lbTipo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbTipo->setVisible(false);
 
     lbTipo2 = new QLabel(a);
     lbTipo2->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
     lbTipo2->setVisible(false);
+    lbTipo2->setGeometry(QRect(QPoint(350,270),QSize(90,18)));
 
     rbProf = new QRadioButton("Profesor",a);
-    rbProf->move(540,190);
+    rbProf->move(540,230);
     rbProf->setVisible(false);
 
     rbEstu = new QRadioButton("Estudiante",a);
-    rbEstu->move(540,220);
+    rbEstu->move(540,260);
     rbEstu->setVisible(false);
 
     btnAceptar = new QPushButton("Aceptar",a);
-    btnAceptar->move(400,280);
+    btnAceptar->move(400,320);
     btnAceptar->setVisible(false);
 
     btnCancelar = new QPushButton("Cancelar",a);
-    btnCancelar->move(500,280);
+    btnCancelar->move(500,320);
     btnCancelar->setVisible(false);
+
+}
+
+void Usuarios::mostrarNuevo(){
+
+    lbApellido->setVisible(true);
+    lbApellido->move(490,180);
+    lbApellido->setText("Apellido: ");
+
+    lbCedula->setVisible(true);
+    lbCedula->move(270,230);
+    lbCedula->setText("Cedula: ");
+
+    leCedula->move(330,230);
+
+    lbNombre->setVisible(true);
+    lbNombre->move(260,180);
+    lbNombre->setText("Nombre: ");
+
+    leNombre->setVisible(true);
+    leNombre->move(330,180);
+    leNombre->setText("");
+
+    leApellido->setVisible(true);
+    leApellido->move(560,180);
+    leApellido->setText("");
+
+    leCedula->setVisible(true);
+    leCedula->setText("");
+
+    btnAceptar->setVisible(true);
+    disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
+    btnAceptar->move(400,320);
+    btnAceptar->setText("Aceptar");
+    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
+    btnAceptar->setIconSize(QSize(15,15));
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
+
+    btnCancelar->setVisible(true);
+    btnCancelar->setText("Cancelar");
+    btnCancelar->setIcon(QIcon(":/images/cancel.png"));
+    btnCancelar->setIconSize(QSize(15,15));
+    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
+    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
+    btnCancelar->move(500,320);
+
+    rbEstu->setVisible(true);
+    rbEstu->move(540,260);
+
+    rbProf->move(540,230);
+    rbProf->setVisible(true);
+
+    lbTipo->setText("Tipo: ");
+    lbTipo->move(490,230);
+    lbTipo->setVisible(true);
+
 
 }
 
@@ -397,5 +414,5 @@ void Usuarios::removeall(){
 Usuarios::~Usuarios()
 {
 
-
 }
+
