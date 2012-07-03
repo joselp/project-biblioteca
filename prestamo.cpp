@@ -156,7 +156,6 @@ void Prestamo::initGUI(QWidget *central)
 
 void Prestamo::showPrestamo()
 {
-
     lblCota->setVisible(true);
     lineEditCota->setVisible(true);
     lineEditCota->disconnect(this);
@@ -503,6 +502,7 @@ void Prestamo::slotRenovacion()
     }
 
     clearWidget();
+
 }
 
 void Prestamo::showTablePrestamo()

@@ -20,6 +20,18 @@ void MainWindow::initGUI()
     geometry.moveCenter(QApplication::desktop()->availableGeometry().center());
     setGeometry(geometry);
 
+    lblTitulo = new QLabel(ui->centralWidget);
+    lblTitulo->setPixmap(QPixmap(":/images/tituloHome.png"));
+    lblTitulo->setGeometry(245,50,468,72);
+
+    lblEscudo = new QLabel(ui->centralWidget);
+    lblEscudo->setPixmap(QPixmap(":/images/escudoHome.png"));
+    lblEscudo->setGeometry(370,160,200,250);
+
+    ui->lblEscudo->setVisible(false);
+    ui->lblTitulo->setVisible(false);
+    ui->lblLibro->setVisible(false);
+
     prestamo = new Prestamo();
     prestamo->initGUI(ui->centralWidget);
 
@@ -39,6 +51,8 @@ void MainWindow::initGUI()
 
 void MainWindow::initConnect()
 {
+    connect(ui->actionInicio, SIGNAL(triggered()), this, SLOT(slotHome()));
+
     connect(ui->btnPrestamo, SIGNAL(clicked()), this, SLOT(slotPrestamo()));
     connect(ui->btnEntrega, SIGNAL(clicked()), this, SLOT(slotEntregaPrestamo()));
     connect(ui->btnRenovacion, SIGNAL(clicked()), this, SLOT(slotRenovacion()));
@@ -59,8 +73,39 @@ void MainWindow::initConnect()
     connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
 }
 
+void MainWindow::includeHome()
+{
+    lblTitulo->setVisible(false);
+    lblEscudo->setVisible(false);
+}
+
+void MainWindow::includeHead()
+{
+    includeHome();
+    ui->lblEscudo->setVisible(true);
+    ui->lblTitulo->setVisible(true);
+    ui->lblLibro->setVisible(true);
+}
+
+void MainWindow::slotHome()
+{
+    ui->lblEscudo->setVisible(false);
+    ui->lblTitulo->setVisible(false);
+    ui->lblLibro->setVisible(false);
+
+    prestamo->clearWidget();
+    user->limpiar();
+    libro->limpiar();
+    solvencia->visibleWidget(false);
+
+    lblTitulo->setVisible(true);
+    lblEscudo->setVisible(true);
+}
+
 void MainWindow::slotPrestamo()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
@@ -71,6 +116,8 @@ void MainWindow::slotPrestamo()
 
 void MainWindow::slotEntregaPrestamo()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
@@ -81,16 +128,21 @@ void MainWindow::slotEntregaPrestamo()
 
 void MainWindow::slotRenovacion()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
     solvencia->visibleWidget(false);
 
     prestamo->showRenovacion();
+
 }
 
 void MainWindow::slotConsultaPrestamo()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();
@@ -101,6 +153,8 @@ void MainWindow::slotConsultaPrestamo()
 
 void MainWindow::slotNewUser()
 {
+    includeHead();
+
     prestamo->clearWidget();
     libro->limpiar();
     solvencia->visibleWidget(false);
@@ -110,6 +164,8 @@ void MainWindow::slotNewUser()
 
 void MainWindow::slotEditUser()
 {
+    includeHead();
+
     prestamo->clearWidget();
     libro->limpiar();
     solvencia->visibleWidget(false);
@@ -119,6 +175,8 @@ void MainWindow::slotEditUser()
 
 void MainWindow::slotSearchUser()
 {
+    includeHead();
+
     prestamo->clearWidget();
     libro->limpiar();
     solvencia->visibleWidget(false);
@@ -128,6 +186,8 @@ void MainWindow::slotSearchUser()
 
 void MainWindow::slotDeleteUser()
 {
+    includeHead();
+
     prestamo->clearWidget();
     libro->limpiar();
     solvencia->visibleWidget(false);
@@ -137,6 +197,8 @@ void MainWindow::slotDeleteUser()
 
 void MainWindow::slotNewBook()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     solvencia->visibleWidget(false);
@@ -146,6 +208,8 @@ void MainWindow::slotNewBook()
 
 void MainWindow::slotSearchBook()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     solvencia->visibleWidget(false);
@@ -155,6 +219,8 @@ void MainWindow::slotSearchBook()
 
 void MainWindow::slotEditBook()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     solvencia->visibleWidget(false);
@@ -164,6 +230,8 @@ void MainWindow::slotEditBook()
 
 void MainWindow::slotDeleteBook()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     solvencia->visibleWidget(false);
@@ -173,6 +241,8 @@ void MainWindow::slotDeleteBook()
 
 void MainWindow::slotSolvencia()
 {
+    includeHead();
+
     prestamo->clearWidget();
     user->limpiar();
     libro->limpiar();

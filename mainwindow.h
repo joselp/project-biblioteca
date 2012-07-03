@@ -24,10 +24,13 @@ public:
 private:
     void initGUI();
     void initConnect();
+    void includeHome();
+    void includeHead();
     void closeEvent(QCloseEvent *);
 
 private slots:
 
+    void slotHome();
     void slotPrestamo();
     void slotEntregaPrestamo();
     void slotConsultaPrestamo();
@@ -46,6 +49,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    QLabel *lblTitulo;
+    QLabel *lblEscudo;
 
     Prestamo *prestamo;
     Usuarios *user;

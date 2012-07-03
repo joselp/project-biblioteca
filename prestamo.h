@@ -90,6 +90,7 @@ private:
     int cantBook;
 
     int rowCount;
+
 };
 
 #endif // PRESTAMO_H

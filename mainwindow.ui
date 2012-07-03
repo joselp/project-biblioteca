@@ -335,7 +335,7 @@
      <string>&amp;Renovación</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="lblEscudo">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -351,7 +351,7 @@
      <pixmap resource="recursos.qrc">:/images/escudoEs.png</pixmap>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="lblTitulo">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -366,7 +366,7 @@
     BIBLIOTECA &quot;INES OTILLA FERNANDEZ&quot;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="lblLibro">
     <property name="geometry">
      <rect>
       <x>610</x>
@@ -435,24 +435,7 @@
  <resources>
   <include location="recursos.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>actionCargar_Lote_libros</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>cargarLibros()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>cargarLibros()</slot>
  </slots>

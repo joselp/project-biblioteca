@@ -10,5 +10,7 @@
         <file>images/impresora.png</file>
         <file>images/escudoEs.png</file>
         <file>images/pilalibros.png</file>
+        <file>images/escudoHome.png</file>
+        <file>images/tituloHome.png</file>
     </qresource>
 </RCC>
