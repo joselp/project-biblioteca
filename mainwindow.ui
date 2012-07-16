@@ -401,7 +401,14 @@
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuAyuda">
+    <property name="title">
+     <string>Ayuda</string>
+    </property>
+    <addaction name="actionAcerca"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuAyuda"/>
   </widget>
   <action name="actionInicio">
    <property name="text">
@@ -419,6 +426,11 @@
   <action name="actionCargar_Lote_libros">
    <property name="text">
     <string>Cargar Lote (libros)</string>
+   </property>
+  </action>
+  <action name="actionAcerca">
+   <property name="text">
+    <string>Acerca de MainWindow</string>
    </property>
   </action>
  </widget>

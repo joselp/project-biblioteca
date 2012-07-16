@@ -46,6 +46,7 @@ private slots:
     void slotDeleteBook();
     void slotEditBook();
     void cargarLibros();
+    void slotAbout();
 
 private:
     Ui::MainWindow *ui;
