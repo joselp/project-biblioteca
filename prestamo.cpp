@@ -190,7 +190,7 @@ void Prestamo::showPrestamo()
 
     btnRegistrar->disconnect(this);
     btnRegistrar->setVisible(true);
-    btnRegistrar->setText("&Registrar");
+    btnRegistrar->setText("&Prestar");
     btnRegistrar->setIcon(QIcon(":/images/book.png"));
     btnRegistrar->setGeometry(435,340,75,23);
     connect(btnRegistrar, SIGNAL(clicked()), this, SLOT(slotRegistrar()));
@@ -449,7 +449,7 @@ void Prestamo::showRenovacion()
     lineEditCedula->disconnect(this);
 
     btnRegistrar->setVisible(true);
-    btnRegistrar->setText("&Renovación");
+    btnRegistrar->setText("&Renovar");
     btnRegistrar->setIcon(QIcon(":/images/aceptar.png"));
     btnRegistrar->setGeometry(435,220,95,23);
     btnRegistrar->disconnect(this);

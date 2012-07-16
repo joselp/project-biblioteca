@@ -53,6 +53,26 @@ void MainWindow::initConnect()
 {
     connect(ui->actionInicio, SIGNAL(triggered()), this, SLOT(slotHome()));
 
+    connect(ui->actionPrestar, SIGNAL(triggered()), this, SLOT(slotPrestamo()));
+    connect(ui->actionEntregar, SIGNAL(triggered()), this, SLOT(slotEntregaPrestamo()));
+    connect(ui->actionRenovar, SIGNAL(triggered()), this, SLOT(slotRenovacion()));
+    connect(ui->actionConsultar, SIGNAL(triggered()), this, SLOT(slotConsultaPrestamo()));
+
+    connect(ui->actionAgregar, SIGNAL(triggered()), this, SLOT(slotNewUser()));
+    connect(ui->actionBuscar, SIGNAL(triggered()), this, SLOT(slotSearchUser()));
+    connect(ui->actionEditar, SIGNAL(triggered()), this, SLOT(slotEditUser()));
+    connect(ui->actionEliminar, SIGNAL(triggered()), this, SLOT(slotDeleteUser()));
+
+    connect(ui->actionAgregar_2, SIGNAL(triggered()), this, SLOT(slotNewBook()));
+    connect(ui->actionBuscar_2, SIGNAL(triggered()), this, SLOT(slotSearchBook()));
+    connect(ui->actionEditar_2, SIGNAL(triggered()), this, SLOT(slotEditBook()));
+    connect(ui->actionEliminar_2, SIGNAL(triggered()), this, SLOT(slotDeleteBook()));
+
+    connect(ui->actionSolvencia, SIGNAL(triggered()), this, SLOT(slotSolvencia()));
+
+    connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
+    connect(ui->actionAcerca, SIGNAL(triggered()), this, SLOT(slotAbout()));
+
     connect(ui->btnPrestamo, SIGNAL(clicked()), this, SLOT(slotPrestamo()));
     connect(ui->btnEntrega, SIGNAL(clicked()), this, SLOT(slotEntregaPrestamo()));
     connect(ui->btnRenovacion, SIGNAL(clicked()), this, SLOT(slotRenovacion()));
@@ -70,8 +90,7 @@ void MainWindow::initConnect()
 
     connect(ui->btnSolvencia, SIGNAL(clicked()), this, SLOT(slotSolvencia()));
 
-    connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
-    connect(ui->actionAcerca, SIGNAL(triggered()), this, SLOT(slotAbout()));
+
 }
 
 void MainWindow::includeHome()

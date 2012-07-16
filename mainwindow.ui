@@ -209,7 +209,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&amp;Prestamo</string>
+     <string>&amp;Prestar</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnConsultar">
@@ -222,7 +222,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&amp;Consulta</string>
+     <string>&amp;Consultar</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnEntrega">
@@ -235,7 +235,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&amp;Entrega</string>
+     <string>&amp;Entregar</string>
     </property>
    </widget>
    <widget class="Line" name="line_4">
@@ -332,7 +332,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&amp;Renovación</string>
+     <string>&amp;Renovar</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblEscudo">
@@ -407,7 +407,44 @@
     </property>
     <addaction name="actionAcerca"/>
    </widget>
+   <widget class="QMenu" name="menu_Operaciones">
+    <property name="title">
+     <string>&amp;Operaciones</string>
+    </property>
+    <widget class="QMenu" name="menuPrestamo">
+     <property name="title">
+      <string>Prestamo</string>
+     </property>
+     <addaction name="actionPrestar"/>
+     <addaction name="actionEntregar"/>
+     <addaction name="actionRenovar"/>
+     <addaction name="actionConsultar"/>
+    </widget>
+    <widget class="QMenu" name="menuUsuario">
+     <property name="title">
+      <string>Usuario</string>
+     </property>
+     <addaction name="actionAgregar"/>
+     <addaction name="actionBuscar"/>
+     <addaction name="actionEditar"/>
+     <addaction name="actionEliminar"/>
+    </widget>
+    <widget class="QMenu" name="menuLibro">
+     <property name="title">
+      <string>Libro</string>
+     </property>
+     <addaction name="actionAgregar_2"/>
+     <addaction name="actionBuscar_2"/>
+     <addaction name="actionEditar_2"/>
+     <addaction name="actionEliminar_2"/>
+    </widget>
+    <addaction name="menuPrestamo"/>
+    <addaction name="menuUsuario"/>
+    <addaction name="menuLibro"/>
+    <addaction name="actionSolvencia"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menu_Operaciones"/>
    <addaction name="menuAyuda"/>
   </widget>
   <action name="actionInicio">
@@ -431,6 +468,71 @@
   <action name="actionAcerca">
    <property name="text">
     <string>Acerca de MainWindow</string>
+   </property>
+  </action>
+  <action name="actionPrestar">
+   <property name="text">
+    <string>Prestar</string>
+   </property>
+  </action>
+  <action name="actionEntregar">
+   <property name="text">
+    <string>Entregar</string>
+   </property>
+  </action>
+  <action name="actionConsultar">
+   <property name="text">
+    <string>Consultar</string>
+   </property>
+  </action>
+  <action name="actionRenovar">
+   <property name="text">
+    <string>Renovar</string>
+   </property>
+  </action>
+  <action name="actionAgregar">
+   <property name="text">
+    <string>Agregar</string>
+   </property>
+  </action>
+  <action name="actionBuscar">
+   <property name="text">
+    <string>Buscar</string>
+   </property>
+  </action>
+  <action name="actionEditar">
+   <property name="text">
+    <string>Editar</string>
+   </property>
+  </action>
+  <action name="actionEliminar">
+   <property name="text">
+    <string>Eliminar</string>
+   </property>
+  </action>
+  <action name="actionAgregar_2">
+   <property name="text">
+    <string>Agregar</string>
+   </property>
+  </action>
+  <action name="actionBuscar_2">
+   <property name="text">
+    <string>Buscar</string>
+   </property>
+  </action>
+  <action name="actionEditar_2">
+   <property name="text">
+    <string>Editar</string>
+   </property>
+  </action>
+  <action name="actionEliminar_2">
+   <property name="text">
+    <string>Eliminar</string>
+   </property>
+  </action>
+  <action name="actionSolvencia">
+   <property name="text">
+    <string>Solvencia</string>
    </property>
   </action>
  </widget>
