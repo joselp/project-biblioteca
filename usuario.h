@@ -13,6 +13,8 @@
 #include<QDebug>
 #include<QValidator>
 #include <QKeyEvent>
+#include <QRegExpValidator>
+#include <QRegExp>
 
 
 class Usuarios : public QWidget

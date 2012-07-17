@@ -21,17 +21,24 @@ void Usuarios::aceptar()
         aux="Profesor";
 
     if( ( leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty()) || (!rbEstu->isChecked() && !rbProf->isChecked())){
-        QMessageBox::warning(this,"Campos Vacios","Por favor inserte todos los campos");
+        QMessageBox::warning(this,"ADVERTENCIA","Por favor inserte todos los campos");
     }
 
     else{
+
         QSqlQuery sql;
-        sql.exec("INSERT INTO personas values('"+leCedula->text()+"','"+leNombre->text()+"','"+leApellido->text()+"','"+aux+"')");
+        sql.exec("select * from personas where cedula='"+leCedula->text()+"'");
 
-        QMessageBox::information(this,"Correcto","Usuario Creado");
-        //limpiar();
-        mostrarNuevo();
+        if( sql.next() ){
+            QMessageBox::warning(this,"ADVERTENCIA","El Usuario ya existe");
+        }
+        else{
+            sql.exec("INSERT INTO personas values('"+leCedula->text()+"','"+leNombre->text()+"','"+leApellido->text()+"','"+aux+"')");
 
+            QMessageBox::information(this,"INFORMACION","Usuario Creado");
+            //limpiar();
+            mostrarNuevo();
+        }
     }
 
 }
@@ -95,31 +102,31 @@ void Usuarios::editarUsuario()
 
 void Usuarios::btnEditar(){
 
-        QSqlQuery query;
-        query.exec("select * from personas where cedula='"+cedula+"'");
+    QSqlQuery query;
+    query.exec("select * from personas where cedula='"+cedula+"'");
 
-        if(rbEstu->isChecked())
-            aux="Estudiante";
-        else
-            aux="Profesor";
+    if(rbEstu->isChecked())
+        aux="Estudiante";
+    else
+        aux="Profesor";
 
-        if( query.next() ){
+    if( query.next() ){
 
-            if((leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty())){
-                QMessageBox::warning(this,"Atencion","No deje Campos vacios");
+        if((leNombre->text().isEmpty() || leApellido->text().isEmpty() || leCedula->text().isEmpty())){
+            QMessageBox::warning(this,"ADVERTENCIA","No deje Campos vacios");
 
-            }
-            else{
+        }
+        else{
 
             query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"',tipo='"+aux+"' where cedula='"+cedula+"'");
-            QMessageBox::about(this,"Correcto","Usuario Actualizado");
+            QMessageBox::information(this,"INFORMACION","Usuario Actualizado");
 
             leCedula->setText("");
             leApellido->setText("");
             leCedula->setText("");
             leNombre->setText("");
-            }
         }
+    }
 }
 
 
@@ -157,17 +164,13 @@ void Usuarios::btnEliminar()
 
         query.exec("delete from personas where cedula='"+leCedula->text()+"'");
 
-        QMessageBox msg;
-        msg.setModal(true);
-        msg.setWindowTitle("Eliminar");
-        msg.setText("Usuario Eliminado");
-        msg.exec();
+        QMessageBox::information(this,"INFORMACION","Usuario Eliminado");
         leCedula->setText("");
     }
 
     else{
 
-        QMessageBox::warning(this,"ATENCION","El usuario no existe");
+        QMessageBox::warning(this,"ADVERTENCIA","El usuario no existe");
         leCedula->setText("");
 
     }
@@ -245,7 +248,7 @@ bool Usuarios::btnBuscar()
 
     else{
 
-        QMessageBox::warning(this,"ATENCION","El usuario no existe");
+        QMessageBox::warning(this,"ADVERTENCIA","El usuario no existe");
         return false;
     }
 
@@ -283,7 +286,7 @@ void Usuarios::inicializar(QWidget *a)
     leCedula = new QLineEdit(a);
     leCedula->move(330,230);
     leCedula->setVisible(false);
-    leCedula->setValidator(new QIntValidator(0,99999999,this));
+    leCedula->setValidator(new QRegExpValidator(QRegExp("([0-9]{11})"),this));
 
     lbTipo = new QLabel(a);
     lbTipo->move(480,230);

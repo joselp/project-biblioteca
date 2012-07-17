@@ -58,7 +58,7 @@ void Libro::aceptar()
         sql.exec("select * from libros where cota='"+leCota->text().toUpper()+"'");
 
         if( sql.next() ){
-            QMessageBox::information(this,"Advertencia","El Libro ya existe");
+            QMessageBox::warning(this,"ADVERTENCIA","El Libro ya existe");
         }
         else{
         sql.exec("INSERT INTO libros values('"+leCota->text().toUpper()+"','"+leAutor->text()+"','"+leTitulo->text()
@@ -66,7 +66,7 @@ void Libro::aceptar()
                  +"','"+leLugar->text()+"','"+canjeado+"','"+donado+"','"+comprado+"','"+leVolumen->text()
                  +"','1','"+bueno+"','"+regular+"','"+malo+"')");
 
-        QMessageBox::information(this,"Correcto","Libro creado");
+        QMessageBox::information(this,"INFORMACION","Libro creado");
 
         leCota->setText("");
         leAutor->setText("");
@@ -123,7 +123,7 @@ void Libro::btnEditar(){
         if( query.next() ){
 
             if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty()){
-                QMessageBox::warning(this,"Campos Vacios","Por favor inserte todos los obligatorios (*)");
+                QMessageBox::warning(this,"ADVERTENCIA","Por favor inserte todos los obligatorios (*)");
             }
             else{
 
@@ -167,7 +167,7 @@ void Libro::btnEditar(){
                        +"\", ejemplar='1', bueno=\""+bueno+"\", regular=\""+regular+"\", malo=\""+malo+"\" where cota=\""+cota.toUpper()+"\"");
 
 
-                QMessageBox::about(this,"Correcto","Libro Actualizado");
+                QMessageBox::information(this,"INFORMACION","Libro Actualizado");
 
                 leCota->setText("");
                 leAutor->setText("");
@@ -282,7 +282,7 @@ void Libro::btnBuscar()
 
         else{
 
-            QMessageBox::about(this,"Advertencia","Cota no Existe");
+            QMessageBox::warning(this,"ADVERTENCIA","Cota no Existe");
             leCota->setText("");
             leAutor->setText("");
             leTitulo->setText("");
@@ -311,7 +311,7 @@ void Libro::btnBuscar()
 
 
         if( !query.next() ) {
-            QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+            QMessageBox::warning(this, "ADVERTENCIA", "No existen libros con este titulo.");
             tableBusqueda->clearContents();
 
         }
@@ -506,7 +506,7 @@ void Libro::btnBuscar()
         query.exec("select * from libros where autor like \"%"+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
-            QMessageBox::warning(this, "Advertencia", "No existen libros con este autor.");
+            QMessageBox::warning(this, "ADVERTENCIA", "No existen libros con este autor.");
             tableBusqueda->clearContents();
 
         }
@@ -702,7 +702,7 @@ void Libro::btnBuscar()
         query.exec("select * from libros where materia like \"%"+leBuscar->text()+"%\"");
 
         if( !query.next() ) {
-            QMessageBox::warning(this, "Advertencia", "No existen libros con este titulo.");
+            QMessageBox::warning(this, "ADVERTENCIA", "No existen libros con este titulo.");
             tableBusqueda->clearContents();
 
         }
@@ -922,16 +922,13 @@ void Libro::btnEliminar()
 
         query.exec("delete from libros where cota='"+leCota->text()+"'");
 
-        QMessageBox msg;
-        msg.setModal(true);
-        msg.setWindowTitle("Eliminar");
-        msg.setText("Libro Eliminado");
-        msg.exec();
+        QMessageBox::information(this,"INFORMACION","Libro Eliminado");
+
     }
 
     else{
 
-        QMessageBox::warning(this,"ATENCION","El libro no existe");
+        QMessageBox::warning(this,"ADVERTENCIA","El libro no existe");
 
     }
     leCota->setText("");
