@@ -15,7 +15,7 @@ void Solvencia::initGUI(QWidget *central)
     lblCedula->setVisible(false);
 
     lineEditCedula = new QLineEdit(central);
-    lineEditCedula->setValidator(new QIntValidator(1,99999999,this));
+    lineEditCedula->setValidator(new QRegExpValidator(QRegExp("([0-9]{11})"),this));
     lineEditCedula->move(QPoint(465,180));
     lineEditCedula->setVisible(false);
 

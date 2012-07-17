@@ -47,7 +47,7 @@ void Prestamo::initGUI(QWidget *central)
     lblCedula->setVisible(false);
 
     lineEditCedula = new QLineEdit(central);
-    lineEditCedula->setValidator(new QIntValidator(0,99999999,this));
+    lineEditCedula->setValidator(new QRegExpValidator(QRegExp("([0-9]{11})"),this));
     lineEditCedula->setVisible(false);
 
     lblTipoPrestamo = new QLabel(central);
@@ -969,4 +969,3 @@ void Prestamo::distroyedCalendar()
 {
     calendarWidget->close();
 }
-
