@@ -431,7 +431,7 @@ void Prestamo::slotAcceptEntrega()
 
     }
 
-    clearWidget();
+    trueWidget();
 }
 
 void Prestamo::showRenovacion()
@@ -501,7 +501,7 @@ void Prestamo::slotRenovacion()
 
     }
 
-    clearWidget();
+    trueWidget();
 
 }
 
@@ -948,6 +948,20 @@ void Prestamo::clearWidget()
 
     tablePrestamo->setVisible(false);
     rowCount = 0;
+
+}
+
+void Prestamo::trueWidget()
+{
+    lblCota->setVisible(true);
+    lineEditCota->setVisible(true);
+    lineEditCota->setText("");
+
+    lblCedula->setVisible(true);
+    lineEditCedula->setVisible(true);
+    lineEditCedula->setText("");
+
+    btnRegistrar->setVisible(true);
 
 }
 

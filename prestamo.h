@@ -24,6 +24,7 @@ public:
     void showTablePrestamo();
     void clearWidget();
     void prestamoWidget();
+    void trueWidget();
     void distroyedCalendar();
 
 private slots:
