@@ -63,6 +63,7 @@ void Usuarios::editarUsuario()
 
     btnAceptar->move(450,330);
     btnAceptar->setText("Editar");
+    btnAceptar->setIcon(QIcon(":/images/useredit.png"));
     btnAceptar->setIconSize(QSize(0,0));
     btnAceptar->setEnabled(false);
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnEditar()));
@@ -113,7 +114,10 @@ void Usuarios::btnEditar(){
             query.exec("update personas set nombre='"+leNombre->text()+"', apellido='"+leApellido->text()+"',cedula='"+leCedula->text()+"',tipo='"+aux+"' where cedula='"+cedula+"'");
             QMessageBox::about(this,"Correcto","Usuario Actualizado");
 
-            limpiar();
+            leCedula->setText("");
+            leApellido->setText("");
+            leCedula->setText("");
+            leNombre->setText("");
             }
         }
 }
@@ -158,7 +162,7 @@ void Usuarios::btnEliminar()
         msg.setWindowTitle("Eliminar");
         msg.setText("Usuario Eliminado");
         msg.exec();
-        limpiar();
+        leCedula->setText("");
     }
 
     else{
@@ -338,19 +342,11 @@ void Usuarios::mostrarNuevo(){
 
     btnAceptar->setVisible(true);
     disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
-    btnAceptar->move(400,320);
+    btnAceptar->move(450,320);
     btnAceptar->setText("Aceptar");
     btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
     btnAceptar->setIconSize(QSize(15,15));
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
-
-    btnCancelar->setVisible(true);
-    btnCancelar->setText("Cancelar");
-    btnCancelar->setIcon(QIcon(":/images/cancel.png"));
-    btnCancelar->setIconSize(QSize(15,15));
-    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
-    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
-    btnCancelar->move(500,320);
 
     rbEstu->setVisible(true);
     rbEstu->move(540,260);
@@ -361,7 +357,6 @@ void Usuarios::mostrarNuevo(){
     lbTipo->setText("Tipo: ");
     lbTipo->move(490,230);
     lbTipo->setVisible(true);
-
 
 }
 
@@ -391,7 +386,6 @@ void Usuarios::limpiar()
     leApellido->setReadOnly(false);
     rbEstu->setChecked(false);
     rbEstu->setChecked(false);
-    //btnAceptar->setIconSize(QSize(0,0));
 
 }
 

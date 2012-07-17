@@ -421,7 +421,7 @@
    <widget class="QLabel" name="lblLibro">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>630</x>
       <y>50</y>
       <width>85</width>
       <height>92</height>

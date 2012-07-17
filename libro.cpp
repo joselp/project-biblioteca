@@ -6,17 +6,8 @@ Libro::Libro()
 
 void Libro::nuevoLibro()
 {
-
     limpiar();
     mostrarNuevo();
-
-    disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
-    btnAceptar->setText("Aceptar");
-    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
-
-    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
-    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
-
     bandera=false;
 }
 
@@ -30,12 +21,12 @@ void Libro::aceptar()
         regular="";
         malo="";
     }
-    if(comboEstado->currentText()=="regular"){
+    if(comboEstado->currentText()=="Regular"){
         bueno="";
         regular="X";
         malo="";
     }
-    if(comboEstado->currentText()=="malo"){
+    if(comboEstado->currentText()=="Malo"){
         bueno="";
         regular="";
         malo="X";
@@ -46,31 +37,50 @@ void Libro::aceptar()
         donado="";
         canjeado="";
     }
-    if(comboAdquisicion->currentText()=="donado"){
+    if(comboAdquisicion->currentText()=="Donado"){
         comprado="";
         donado="X";
         canjeado="";
     }
-    if(comboAdquisicion->currentText()=="canjeado"){
+    if(comboAdquisicion->currentText()=="Canjeado"){
         comprado="";
         donado="";
         canjeado="X";
     }
 
-    if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty() || leEjemplar->text().isEmpty() ){
+    if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty() || leMateria->text().isEmpty()){
         QMessageBox::warning(this,"Campos Vacios","Por favor inserte todos los obligatorios (*)");
     }
 
     else{
         QSqlQuery sql;
+
+        sql.exec("select * from libros where cota='"+leCota->text().toUpper()+"'");
+
+        if( sql.next() ){
+            QMessageBox::information(this,"Advertencia","El Libro ya existe");
+        }
+        else{
         sql.exec("INSERT INTO libros values('"+leCota->text().toUpper()+"','"+leAutor->text()+"','"+leTitulo->text()
                  +"','"+leMateria->text()+"','"+leEditorial->text()+"','"+leAnhoPublicacion->text()
                  +"','"+leLugar->text()+"','"+canjeado+"','"+donado+"','"+comprado+"','"+leVolumen->text()
-                 +"','"+leEjemplar->text()+"','"+bueno+"','"+regular+"','"+malo+"')");
+                 +"','1','"+bueno+"','"+regular+"','"+malo+"')");
 
+        QMessageBox::information(this,"Correcto","Libro creado");
 
-        limpiar();
+        leCota->setText("");
+        leAutor->setText("");
+        leTitulo->setText("");
+        leMateria->setText("");
+        leEditorial->setText("");
+        leAnhoPublicacion->setText("");
+        leLugar->setText("");
+        leVolumen->setText("");
+        leEjemplar->setText("");
+        comboAdquisicion->setCurrentIndex(0);
+        comboEstado->setCurrentIndex(0);
 
+        }
     }
 
 }
@@ -86,6 +96,7 @@ void Libro::editarLibro()
 {
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
+    btnAceptar->setIcon(QIcon(":/images/ver.png"));
     disconnect(btnCancelar,SIGNAL(clicked()),0,0);
 
     limpiar();
@@ -111,7 +122,7 @@ void Libro::btnEditar(){
 
         if( query.next() ){
 
-            if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty() || leEjemplar->text().isEmpty() ){
+            if(  leCota->text().isEmpty() || leTitulo->text().isEmpty() || leAutor->text().isEmpty()){
                 QMessageBox::warning(this,"Campos Vacios","Por favor inserte todos los obligatorios (*)");
             }
             else{
@@ -123,12 +134,12 @@ void Libro::btnEditar(){
                     regular="";
                     malo="";
                 }
-                if(comboEstado->currentText()=="regular"){
+                if(comboEstado->currentText()=="Regular"){
                     bueno="";
                     regular="X";
                     malo="";
                 }
-                if(comboEstado->currentText()=="malo"){
+                if(comboEstado->currentText()=="Malo"){
                     bueno="";
                     regular="";
                     malo="X";
@@ -139,12 +150,12 @@ void Libro::btnEditar(){
                     donado="";
                     canjeado="";
                 }
-                if(comboAdquisicion->currentText()=="donado"){
+                if(comboAdquisicion->currentText()=="Donado"){
                     comprado="";
                     donado="X";
                     canjeado="";
                 }
-                if(comboAdquisicion->currentText()=="canjeado"){
+                if(comboAdquisicion->currentText()=="Canjeado"){
                     comprado="";
                     donado="";
                     canjeado="X";
@@ -153,12 +164,23 @@ void Libro::btnEditar(){
                 query.exec("update libros set cota=\""+leCota->text().toUpper()+"\", autor=\""+leAutor->text()+"\", titulo=\""+leTitulo->text()
                        +"\", materia=\""+leMateria->text()+"\", editorial=\""+leEditorial->text()+"\", anhoPublicacion=\""+leAnhoPublicacion->text()
                        +"\", lugar=\""+leLugar->text()+"\", canjeado=\""+canjeado+"\", donado=\""+donado+"\", comprado=\""+comprado+"\", volumen=\""+leVolumen->text()
-                       +"\", ejemplar=\""+leEjemplar->text()+"\", bueno=\""+bueno+"\", regular=\""+regular+"\", malo=\""+malo+"\" where cota=\""+cota.toUpper()+"\"");
+                       +"\", ejemplar='1', bueno=\""+bueno+"\", regular=\""+regular+"\", malo=\""+malo+"\" where cota=\""+cota.toUpper()+"\"");
 
 
                 QMessageBox::about(this,"Correcto","Libro Actualizado");
 
-            limpiar();
+                leCota->setText("");
+                leAutor->setText("");
+                leTitulo->setText("");
+                leMateria->setText("");
+                leEditorial->setText("");
+                leAnhoPublicacion->setText("");
+                leLugar->setText("");
+                leVolumen->setText("");
+                leEjemplar->setText("");
+                comboAdquisicion->setCurrentIndex(0);
+                comboEstado->setCurrentIndex(0);
+                leBuscar->setText("");
             }
         }
 }
@@ -176,6 +198,7 @@ void Libro::buscarLibro()
     comboTipoBusqueda->setVisible(true);
 
     btnAceptar->setText("Buscar");
+    btnAceptar->setIcon(QIcon(":/images/ver.png"));
     btnAceptar->move(630,180);
     btnAceptar->setVisible(true);
 
@@ -867,6 +890,7 @@ void Libro::eliminarLibro()
 {
 
     disconnect(btnAceptar, SIGNAL(clicked()),0, 0);
+    btnAceptar->setIcon(QIcon(":/images/cancel.png"));
 
     limpiar();
 
@@ -896,12 +920,12 @@ void Libro::btnEliminar()
 
     if( query.next() ){
 
-        query.exec("delete from personas where cedula='"+leCota->text()+"'");
+        query.exec("delete from libros where cota='"+leCota->text()+"'");
 
         QMessageBox msg;
         msg.setModal(true);
         msg.setWindowTitle("Eliminar");
-        msg.setText("Usuario Eliminado");
+        msg.setText("Libro Eliminado");
         msg.exec();
     }
 
@@ -910,6 +934,7 @@ void Libro::btnEliminar()
         QMessageBox::warning(this,"ATENCION","El libro no existe");
 
     }
+    leCota->setText("");
 }
 
 void Libro::inicializar(QWidget *a)
@@ -995,7 +1020,7 @@ void Libro::inicializar(QWidget *a)
     lbVolumen = new QLabel(a);
     lbVolumen->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
     lbVolumen->setVisible(false);
-    lbVolumen->setText("Volumen: ");
+    lbVolumen->setText("Tomo: ");
 
     leVolumen = new QLineEdit(a);
     leVolumen->setGeometry(670,270,90,20);
@@ -1125,34 +1150,41 @@ void Libro::mostrarNuevo(){
     comboAdquisicion->setCurrentIndex(0);
     comboAdquisicion->setVisible(true);
 
-    lbVolumen->setText("(*)Volumen: ");
+    lbVolumen->setText("Tomo: ");
     lbVolumen->move(590,280);
     lbVolumen->setVisible(true);
 
     leVolumen->move(670,280);
     leVolumen->setVisible(true);
 
-    lbEjemplar->move(200,330);
-    lbEjemplar->setVisible(true);
-
-    leEjemplar->move(290,330);
-    leEjemplar->setVisible(true);
-
-    lbEstado->move(400,330);
+    lbEstado->move(200,330);
     lbEstado->setVisible(true);
 
-    comboEstado->move(480,325);
+    comboEstado->move(290,325);
     comboEstado->setCurrentIndex(0);
     comboEstado->setVisible(true);
 
-    btnAceptar->move(360,400);
+    btnAceptar->move(440,400);
     btnAceptar->setVisible(true);
+    btnAceptar->setText("Aceptar");
+    btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
 
-    btnCancelar->move(490,400);
-    btnCancelar->setText("Cancelar");
-    btnCancelar->setEnabled(true);
-    btnCancelar->setVisible(true);
+    comboAdquisicion->setEditable(false);
+    leCota->setReadOnly(false);
+    leAutor->setReadOnly(false);
+    leTitulo->setReadOnly(false);
+    leMateria->setReadOnly(false);
+    leEditorial->setReadOnly(false);
+    leAnhoPublicacion->setReadOnly(false);
+    leLugar->setReadOnly(false);
+    leVolumen->setReadOnly(false);
+    leEjemplar->setReadOnly(false);
 
+    disconnect(btnAceptar, SIGNAL(clicked()), 0, 0);
+    connect(btnAceptar,SIGNAL(clicked()),this,SLOT(aceptar()));
+
+    disconnect(btnCancelar,SIGNAL(clicked()),0,0);
+    connect(btnCancelar,SIGNAL(clicked()),this,SLOT(cancelar()));
 
 }
 
@@ -1217,23 +1249,23 @@ void Libro::mostrarEditar(){
     comboAdquisicion->setCurrentIndex(0);
     comboAdquisicion->setVisible(true);
 
-    lbVolumen->setText("Volumen: ");
+    lbVolumen->setText("Tomo: ");
     lbVolumen->move(600,360);
     lbVolumen->setVisible(true);
 
     leVolumen->move(670,360);
     leVolumen->setVisible(true);
 
-    lbEjemplar->move(200,410);
-    lbEjemplar->setVisible(true);
+    //lbEjemplar->move(200,410);
+    //lbEjemplar->setVisible(true);
 
-    leEjemplar->move(290,410);
-    leEjemplar->setVisible(true);
+    //leEjemplar->move(290,410);
+    //leEjemplar->setVisible(true);
 
-    lbEstado->move(400,410);
+    lbEstado->move(200,410);
     lbEstado->setVisible(true);
 
-    comboEstado->move(480,405);
+    comboEstado->move(290,405);
     comboEstado->setCurrentIndex(0);
     comboEstado->setVisible(true);
 
@@ -1245,6 +1277,7 @@ void Libro::mostrarEditar(){
     btnCancelar->setText("Editar");
     btnCancelar->setVisible(true);
     btnCancelar->setEnabled(false);
+    btnCancelar->setIcon(QIcon(":/images/bookedit.png"));
 
 }
 
