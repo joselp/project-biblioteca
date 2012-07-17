@@ -61,7 +61,7 @@ void Solvencia::slotGenerateSolvencia()
 {
 
     if( lineEditCedula->text().isEmpty() || lineEditPeriodo->text().isEmpty() ) {
-        QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No debe dejar campos vacios.");
         return;
     }
 
@@ -72,14 +72,14 @@ void Solvencia::slotGenerateSolvencia()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this,"Advertencia","La cédula no existe");
+        QMessageBox::warning(this,"ADVERTENCIA","La cédula no existe");
         lineEditCedula->setText("");
         lineEditCedula->setFocus();
 
         return;
     }
     else if( query.value(3).toString() != "Estudiante" ) {
-        QMessageBox::warning(this,"Advertencia","La cédula no pertenece a un estudiante");
+        QMessageBox::warning(this,"ADVERTENCIA","La cédula no pertenece a un estudiante");
         lineEditCedula->setText("");
         lineEditCedula->setFocus();
 
@@ -100,6 +100,8 @@ void Solvencia::slotGenerateSolvencia()
         printer.setOrientation(QPrinter::Portrait);
         printer.setPaperSource(QPrinter::Tractor);
 
+        qApp->processEvents();
+
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle("Imprimir Documento");
 
@@ -108,10 +110,10 @@ void Solvencia::slotGenerateSolvencia()
 
         printDocument(&printer, query);
 
-        visibleWidget(false);
+        visibleWidget(true);
 
     } else {
-        QMessageBox::warning(this, "Advertencia", "El estudiante tiene libros en préstamo.");
+        QMessageBox::warning(this, "ADVERTENCIA", "El estudiante tiene libros en préstamo.");
         return;
     }
 

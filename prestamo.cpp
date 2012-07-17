@@ -224,7 +224,7 @@ void Prestamo::slotValidateCota()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "La cota del Libro no existe");
+        QMessageBox::warning(this, "ADVERTENCIA", "La cota del Libro no existe");
         lineEditCota->setText("");
         lineEditAutor->setText("");
         lineEditTitulo->setText("");
@@ -250,7 +250,7 @@ void Prestamo::slotValidateCedula()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "La cedula del usuario no existe.");
+        QMessageBox::warning(this, "ADVERTENCIA", "La cedula del usuario no existe.");
         lineEditCedula->setText("");
         lineEditCedula->setFocus();
     }else {
@@ -302,7 +302,7 @@ void Prestamo::slotRegistrar()
         || lineEditCedula->text().isEmpty() || lineEditFechaP->text().isEmpty()
         || lineEditFechaE->text().isEmpty() ) {
 
-        QMessageBox::warning(this,"Advertencia - Campos Vacios","No debe dejar campos vacios.");
+        QMessageBox::warning(this,"ADVERTENCIA","No debe dejar campos vacios.");
 
         return;
     }
@@ -311,7 +311,7 @@ void Prestamo::slotRegistrar()
     QDate fechaE = QDate::fromString(lineEditFechaE->text(),"dd/MM/yyyy");
 
     if( fechaE < fechaP ) {
-        QMessageBox::information(this, "Información", "La fecha de entrega no puede ser menor a la fecha de préstamo.");
+        QMessageBox::information(this, "INFORMACIÓN", "La fecha de entrega no puede ser menor a la fecha de préstamo.");
 
         lineEditFechaE->setText("");
         lineEditFechaE->setFocus();
@@ -329,7 +329,7 @@ void Prestamo::slotRegistrar()
         query.exec(strQuery);
     }
     else {
-        QMessageBox::warning(this, "Advertencia", "No hay disponibilidad del libro.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No hay disponibilidad del libro.");
 
         lineEditCota->setText("");
         lineEditAutor->setText("");
@@ -347,7 +347,8 @@ void Prestamo::slotRegistrar()
 
     qDebug() << strQuery;
 
-    query.exec(strQuery);
+    if( query.exec(strQuery) )
+        QMessageBox::information(this, "INFORMACIÓN", "Se ha realizado el prestamo del libro exitosamente.");
 
     prestamoWidget();
 }
@@ -383,7 +384,7 @@ void Prestamo::slotUpperText()
 void Prestamo::slotAcceptEntrega()
 {
     if( lineEditCota->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
-        QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No debe dejar campos vacios.");
         return;
     }
 
@@ -396,7 +397,7 @@ void Prestamo::slotAcceptEntrega()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "Datos no existente en préstamo.");
+        QMessageBox::warning(this, "ADVERTENCIA", "Datos no existente en préstamo.");
         return;
     } else {
 
@@ -426,7 +427,7 @@ void Prestamo::slotAcceptEntrega()
 
         if( query.exec(strQuery) ) {
 
-            QMessageBox::information(this, "Información", "Se ha realizado la entrega exitosa.");
+            QMessageBox::information(this, "INFORMACIÓN", "Se ha realizado la entrega exitosa.");
         }
 
     }
@@ -459,7 +460,7 @@ void Prestamo::showRenovacion()
 void Prestamo::slotRenovacion()
 {
     if( lineEditCota->text().isEmpty() || lineEditCedula->text().isEmpty() ) {
-        QMessageBox::warning(this, "Advertencia", "No debe dejar campos vacios.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No debe dejar campos vacios.");
         return;
     }
 
@@ -472,7 +473,7 @@ void Prestamo::slotRenovacion()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "Datos no existente en préstamo.");
+        QMessageBox::warning(this, "ADVERTENCIA", "Datos no existente en préstamo.");
         return;
     } else {
 
@@ -497,7 +498,7 @@ void Prestamo::slotRenovacion()
         qDebug() << strQuery;
 
         if( query.exec(strQuery) )
-            QMessageBox::information(this, "Información", "Se ha realizado la renovación exitosa.");
+            QMessageBox::information(this, "INFORMACIÓN", "Se ha realizado la renovación exitosa.");
 
     }
 
@@ -514,7 +515,7 @@ void Prestamo::showTablePrestamo()
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "No existe libros en prestamo.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No existe libros en prestamo.");
         return;
     }
     else {
@@ -733,7 +734,7 @@ void Prestamo::slotUpperText(QString str)
 void Prestamo::slotFiltro()
 {
     if( (lineEditFiltro->text().isEmpty()) && (comboBoxFiltro->currentIndex() != 0) ) {
-        QMessageBox::warning(this,"Advertencia","No debe dejar el campo vacio.");
+        QMessageBox::warning(this,"ADVERTENCIA","No debe dejar el campo vacio.");
         lineEditFiltro->setFocus();
         return;
     }
@@ -776,7 +777,7 @@ void Prestamo::filtroTable(QString strQuery)
     query.exec(strQuery);
 
     if( !query.next() ) {
-        QMessageBox::warning(this, "Advertencia", "No existe el filtro realizado.");
+        QMessageBox::warning(this, "ADVERTENCIA", "No existe el filtro realizado.");
         return;
     }
     else {
