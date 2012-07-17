@@ -12,5 +12,24 @@
         <file>images/pilalibros.png</file>
         <file>images/escudoHome.png</file>
         <file>images/tituloHome.png</file>
+        <file>images/useradd.png</file>
+        <file>images/userdelete.png</file>
+        <file>images/useredit.png</file>
+        <file>images/usersearch.png</file>
+        <file>images/user.png</file>
+        <file>images/bookadd.png</file>
+        <file>images/bookdelete.png</file>
+        <file>images/bookedit.png</file>
+        <file>images/booksearch.png</file>
+        <file>images/bookonly.png</file>
+        <file>images/solvencia.png</file>
+        <file>images/csv.png</file>
+        <file>images/home.png</file>
+        <file>images/salir.png</file>
+        <file>images/renovarbook.png</file>
+        <file>images/entregar.png</file>
+        <file>images/prestar.png</file>
+        <file>images/filtrar.png</file>
+        <file>images/prestamo.png</file>
     </qresource>
 </RCC>

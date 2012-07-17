@@ -108,6 +108,10 @@
     <property name="text">
      <string>Agregar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/useradd.png</normaloff>:/images/useradd.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnBuscarP">
     <property name="geometry">
@@ -120,6 +124,10 @@
     </property>
     <property name="text">
      <string>Buscar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/usersearch.png</normaloff>:/images/usersearch.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnEditarP">
@@ -134,6 +142,10 @@
     <property name="text">
      <string>Editar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/useredit.png</normaloff>:/images/useredit.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnEliminarP">
     <property name="geometry">
@@ -146,6 +158,10 @@
     </property>
     <property name="text">
      <string>Eliminar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/userdelete.png</normaloff>:/images/userdelete.png</iconset>
     </property>
    </widget>
    <widget class="Line" name="line_2">
@@ -211,6 +227,10 @@
     <property name="text">
      <string>&amp;Prestar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/prestar.png</normaloff>:/images/prestar.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnConsultar">
     <property name="geometry">
@@ -224,6 +244,10 @@
     <property name="text">
      <string>&amp;Consultar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/filtrar.png</normaloff>:/images/filtrar.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnEntrega">
     <property name="geometry">
@@ -236,6 +260,10 @@
     </property>
     <property name="text">
      <string>&amp;Entregar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/entregar.png</normaloff>:/images/entregar.png</iconset>
     </property>
    </widget>
    <widget class="Line" name="line_4">
@@ -269,6 +297,10 @@
     <property name="text">
      <string>&amp;Solvencia</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/solvencia.png</normaloff>:/images/solvencia.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnBuscarL">
     <property name="geometry">
@@ -281,6 +313,10 @@
     </property>
     <property name="text">
      <string>Buscar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/booksearch.png</normaloff>:/images/booksearch.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnEditarL">
@@ -295,6 +331,10 @@
     <property name="text">
      <string>Editar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/bookedit.png</normaloff>:/images/bookedit.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnAgregarL">
     <property name="geometry">
@@ -307,6 +347,10 @@
     </property>
     <property name="text">
      <string>Agregar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/bookadd.png</normaloff>:/images/bookadd.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="btnEliminarL">
@@ -321,6 +365,10 @@
     <property name="text">
      <string>Eliminar</string>
     </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/bookdelete.png</normaloff>:/images/bookdelete.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnRenovacion">
     <property name="geometry">
@@ -333,6 +381,10 @@
     </property>
     <property name="text">
      <string>&amp;Renovar</string>
+    </property>
+    <property name="icon">
+     <iconset resource="recursos.qrc">
+      <normaloff>:/images/renovarbook.png</normaloff>:/images/renovarbook.png</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="lblEscudo">
@@ -415,6 +467,10 @@
      <property name="title">
       <string>Prestamo</string>
      </property>
+     <property name="icon">
+      <iconset resource="recursos.qrc">
+       <normaloff>:/images/prestamo.png</normaloff>:/images/prestamo.png</iconset>
+     </property>
      <addaction name="actionPrestar"/>
      <addaction name="actionEntregar"/>
      <addaction name="actionRenovar"/>
@@ -424,6 +480,10 @@
      <property name="title">
       <string>Usuario</string>
      </property>
+     <property name="icon">
+      <iconset resource="recursos.qrc">
+       <normaloff>:/images/user.png</normaloff>:/images/user.png</iconset>
+     </property>
      <addaction name="actionAgregar"/>
      <addaction name="actionBuscar"/>
      <addaction name="actionEditar"/>
@@ -432,6 +492,10 @@
     <widget class="QMenu" name="menuLibro">
      <property name="title">
       <string>Libro</string>
+     </property>
+     <property name="icon">
+      <iconset resource="recursos.qrc">
+       <normaloff>:/images/bookonly.png</normaloff>:/images/bookonly.png</iconset>
      </property>
      <addaction name="actionAgregar_2"/>
      <addaction name="actionBuscar_2"/>
@@ -448,11 +512,19 @@
    <addaction name="menuAyuda"/>
   </widget>
   <action name="actionInicio">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/home.png</normaloff>:/images/home.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Inicio</string>
    </property>
   </action>
   <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/salir.png</normaloff>:/images/salir.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Salir</string>
    </property>
@@ -461,6 +533,10 @@
    </property>
   </action>
   <action name="actionCargar_Lote_libros">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/csv.png</normaloff>:/images/csv.png</iconset>
+   </property>
    <property name="text">
     <string>Cargar Lote (libros)</string>
    </property>
@@ -471,66 +547,118 @@
    </property>
   </action>
   <action name="actionPrestar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/prestar.png</normaloff>:/images/prestar.png</iconset>
+   </property>
    <property name="text">
     <string>Prestar</string>
    </property>
   </action>
   <action name="actionEntregar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/entregar.png</normaloff>:/images/entregar.png</iconset>
+   </property>
    <property name="text">
     <string>Entregar</string>
    </property>
   </action>
   <action name="actionConsultar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/filtrar.png</normaloff>:/images/filtrar.png</iconset>
+   </property>
    <property name="text">
     <string>Consultar</string>
    </property>
   </action>
   <action name="actionRenovar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/renovarbook.png</normaloff>:/images/renovarbook.png</iconset>
+   </property>
    <property name="text">
     <string>Renovar</string>
    </property>
   </action>
   <action name="actionAgregar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/useradd.png</normaloff>:/images/useradd.png</iconset>
+   </property>
    <property name="text">
     <string>Agregar</string>
    </property>
   </action>
   <action name="actionBuscar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/usersearch.png</normaloff>:/images/usersearch.png</iconset>
+   </property>
    <property name="text">
     <string>Buscar</string>
    </property>
   </action>
   <action name="actionEditar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/useredit.png</normaloff>:/images/useredit.png</iconset>
+   </property>
    <property name="text">
     <string>Editar</string>
    </property>
   </action>
   <action name="actionEliminar">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/userdelete.png</normaloff>:/images/userdelete.png</iconset>
+   </property>
    <property name="text">
     <string>Eliminar</string>
    </property>
   </action>
   <action name="actionAgregar_2">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/bookadd.png</normaloff>:/images/bookadd.png</iconset>
+   </property>
    <property name="text">
     <string>Agregar</string>
    </property>
   </action>
   <action name="actionBuscar_2">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/booksearch.png</normaloff>:/images/booksearch.png</iconset>
+   </property>
    <property name="text">
     <string>Buscar</string>
    </property>
   </action>
   <action name="actionEditar_2">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/bookedit.png</normaloff>:/images/bookedit.png</iconset>
+   </property>
    <property name="text">
     <string>Editar</string>
    </property>
   </action>
   <action name="actionEliminar_2">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/bookdelete.png</normaloff>:/images/bookdelete.png</iconset>
+   </property>
    <property name="text">
     <string>Eliminar</string>
    </property>
   </action>
   <action name="actionSolvencia">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/solvencia.png</normaloff>:/images/solvencia.png</iconset>
+   </property>
    <property name="text">
     <string>Solvencia</string>
    </property>
