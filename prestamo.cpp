@@ -47,7 +47,7 @@ void Prestamo::initGUI(QWidget *central)
     lblCedula->setVisible(false);
 
     lineEditCedula = new QLineEdit(central);
-    lineEditCedula->setValidator(new QRegExpValidator(QRegExp("([0-9]{11})"),this));
+    lineEditCedula->setValidator(new QRegExpValidator(QRegExp("([0-9]{0,11})"),this));
     lineEditCedula->setVisible(false);
 
     lblTipoPrestamo = new QLabel(central);
@@ -152,6 +152,9 @@ void Prestamo::initGUI(QWidget *central)
 
     tablePrestamo->setVisible(false);
 
+    dialogPrestamo = new DialogPrestamo;
+    dialogPrestamo->setWindowTitle("Información Detallada");
+
 }
 
 void Prestamo::showPrestamo()
@@ -233,9 +236,8 @@ void Prestamo::slotValidateCota()
         lineEditAutor->setText(query.value(0).toString());
         lineEditTitulo->setText(query.value(1).toString());
         cantBook = query.value(2).toInt();
+        lineEditCedula->setFocus();
     }
-
-    lineEditCedula->setFocus();
 
 }
 
@@ -312,6 +314,14 @@ void Prestamo::slotRegistrar()
 
     if( fechaE < fechaP ) {
         QMessageBox::information(this, "INFORMACIÓN", "La fecha de entrega no puede ser menor a la fecha de préstamo.");
+
+        lineEditFechaE->setText("");
+        lineEditFechaE->setFocus();
+
+        return;
+    }
+    else if( fechaE.dayOfWeek() == 6 || fechaE.dayOfWeek() == 7 ){
+        QMessageBox::information(this, "INFORMACIÓN", "La fecha de entrega no puede ser Sábado ni Domingo.");
 
         lineEditFechaE->setText("");
         lineEditFechaE->setFocus();
@@ -635,8 +645,6 @@ void Prestamo::slotRowSelected(int row)
 
     query.exec(strQuery);
     query2.exec(strQuery2);
-
-    dialogPrestamo = new DialogPrestamo;
 
     if( query2.next() ) {
 
@@ -968,5 +976,9 @@ void Prestamo::trueWidget()
 
 void Prestamo::distroyedCalendar()
 {
-    calendarWidget->close();
+    if( calendarWidget->isWindow() )
+        calendarWidget->close();
+
+    if( dialogPrestamo->isWindow() )
+        dialogPrestamo->close();
 }

@@ -31,5 +31,50 @@
         <file>images/prestar.png</file>
         <file>images/filtrar.png</file>
         <file>images/prestamo.png</file>
+        <file>images/help.png</file>
+        <file>images/ula.jpg</file>
+        <file>images/back.png</file>
+        <file>images/forward.png</file>
+        <file>images/homemu.png</file>
+        <file>images/addbook.png</file>
+        <file>images/adduser.png</file>
+        <file>images/deletebook.png</file>
+        <file>images/deleteuser.png</file>
+        <file>images/editbook.png</file>
+        <file>images/edituser.png</file>
+        <file>images/entregarprestamo.png</file>
+        <file>images/infoprestamo.png</file>
+        <file>images/loadlote.png</file>
+        <file>images/lote.png</file>
+        <file>images/menubook.png</file>
+        <file>images/menulote.png</file>
+        <file>images/menuprestamo.png</file>
+        <file>images/menusolvencia.png</file>
+        <file>images/menuuser.png</file>
+        <file>images/renovarprestamo.png</file>
+        <file>images/searchbook.png</file>
+        <file>images/searchprestamo.png</file>
+        <file>images/searchuser.png</file>
+        <file>images/solvenciag.png</file>
+        <file>manual/addbook.html</file>
+        <file>manual/adduser.html</file>
+        <file>manual/consultarp.html</file>
+        <file>manual/csv.html</file>
+        <file>manual/deletebook.html</file>
+        <file>manual/deleteuser.html</file>
+        <file>manual/editbook.html</file>
+        <file>manual/edituser.html</file>
+        <file>manual/entregarp.html</file>
+        <file>manual/home.html</file>
+        <file>manual/index.html</file>
+        <file>manual/infop.html</file>
+        <file>manual/links.html</file>
+        <file>manual/loadlote.html</file>
+        <file>manual/quees.html</file>
+        <file>manual/quienessomos.html</file>
+        <file>manual/renovarp.html</file>
+        <file>manual/searchbook.html</file>
+        <file>manual/searchuser.html</file>
+        <file>manual/solvencia.html</file>
     </qresource>
 </RCC>

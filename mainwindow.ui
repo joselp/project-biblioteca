@@ -457,6 +457,8 @@
     <property name="title">
      <string>Ayuda</string>
     </property>
+    <addaction name="actionManual_de_Usuario"/>
+    <addaction name="separator"/>
     <addaction name="actionAcerca"/>
    </widget>
    <widget class="QMenu" name="menu_Operaciones">
@@ -661,6 +663,15 @@
    </property>
    <property name="text">
     <string>Solvencia</string>
+   </property>
+  </action>
+  <action name="actionManual_de_Usuario">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/help.png</normaloff>:/images/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Manual de Usuario</string>
    </property>
   </action>
  </widget>

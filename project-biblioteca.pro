@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql webkit
 
 TARGET = project-biblioteca
 TEMPLATE = app
@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     dialogprestamo.cpp \
     solvencia.cpp \
     libro.cpp \
-    utils.cpp
+    utils.cpp \
+    manualusuario.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -27,10 +28,12 @@ HEADERS  += \
     dialogprestamo.h \
     solvencia.h \
     libro.h \
-    utils.h
+    utils.h \
+    manualusuario.h
 
 FORMS    += mainwindow.ui \
-    dialogprestamo.ui
+    dialogprestamo.ui \
+    manualusuario.ui
 
 RESOURCES += \
     recursos.qrc

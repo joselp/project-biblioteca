@@ -47,11 +47,14 @@ void MainWindow::initGUI()
     util = new Utils();
    // util->cargarArchivo();
 
+
+
 }
 
 void MainWindow::initConnect()
 {
     connect(ui->actionInicio, SIGNAL(triggered()), this, SLOT(slotHome()));
+    connect(ui->actionCargar_Lote_libros, SIGNAL(triggered()), this, SLOT(slotCargarLibros()));
 
     connect(ui->actionPrestar, SIGNAL(triggered()), this, SLOT(slotPrestamo()));
     connect(ui->actionEntregar, SIGNAL(triggered()), this, SLOT(slotEntregaPrestamo()));
@@ -71,6 +74,7 @@ void MainWindow::initConnect()
     connect(ui->actionSolvencia, SIGNAL(triggered()), this, SLOT(slotSolvencia()));
 
     connect(ui->actionSalir, SIGNAL(triggered()), this, SLOT(slotCloseWindow()));
+    connect(ui->actionManual_de_Usuario, SIGNAL(triggered()), this, SLOT(slotManualUsuario()));
     connect(ui->actionAcerca, SIGNAL(triggered()), this, SLOT(slotAbout()));
 
     connect(ui->btnPrestamo, SIGNAL(clicked()), this, SLOT(slotPrestamo()));
@@ -89,8 +93,6 @@ void MainWindow::initConnect()
     connect(ui->btnEliminarL,SIGNAL(clicked()),this,SLOT(slotDeleteBook()));
 
     connect(ui->btnSolvencia, SIGNAL(clicked()), this, SLOT(slotSolvencia()));
-
-
 }
 
 void MainWindow::includeHome()
@@ -274,25 +276,37 @@ void MainWindow::slotSolvencia()
 void MainWindow::closeEvent(QCloseEvent *)
 {
     prestamo->distroyedCalendar();
+
+    if( manualUsuario->isWindow() )
+        manualUsuario->close();
+
 }
 
 void MainWindow::slotCloseWindow()
 {
     prestamo->distroyedCalendar();
+
+    if( manualUsuario->isWindow() )
+        manualUsuario->close();
+
     close();
 }
 
-void MainWindow::cargarLibros(){
+void MainWindow::slotCargarLibros(){
 
     util->cargarArchivo(ui->centralWidget);
     //util->start();
 
 }
 
+void MainWindow::slotManualUsuario()
+{
+    manualUsuario = new ManualUsuario;
+    manualUsuario->show();
+}
+
 void MainWindow::slotAbout()
 {
-
-
     QString text = "<h2><center> MainWindow </center></h2>\n<center> Version 1.0 </center><br><br><br>"
                    "Es una aplicación. <br><br>"
                    "<center><b>Desarrollado por: </b><br>"
@@ -312,4 +326,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
