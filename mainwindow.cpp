@@ -124,6 +124,18 @@ void MainWindow::slotHome()
     lblEscudo->setVisible(true);
 }
 
+void MainWindow::deletePanel(){
+
+    if(!ui->verticalLayout->isEmpty())
+        delete(ptrWidget);
+}
+
+void MainWindow::changePanel(QWidget *widget){
+
+    deletePanel();
+    ui->verticalLayout->addWidget(widget);
+}
+
 void MainWindow::slotPrestamo()
 {
     includeHead();
@@ -177,11 +189,16 @@ void MainWindow::slotNewUser()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    libro->limpiar();
-    solvencia->visibleWidget(false);
+    FormUsuario *newUs=new FormUsuario(this);
+    changePanel(newUs);
+    ptrWidget=newUs;
 
-    user->nuevoUser();
+
+//    prestamo->clearWidget();
+//    libro->limpiar();
+//    solvencia->visibleWidget(false);
+
+//    user->nuevoUser();
 }
 
 void MainWindow::slotEditUser()
@@ -221,11 +238,15 @@ void MainWindow::slotNewBook()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    user->limpiar();
-    solvencia->visibleWidget(false);
+    FormLibro *uiL = new FormLibro(this);
+    changePanel(uiL);
+    ptrWidget=uiL;
 
-    libro->nuevoLibro();
+//    prestamo->clearWidget();
+//    user->limpiar();
+//    solvencia->visibleWidget(false);
+
+//    libro->nuevoLibro();
 }
 
 void MainWindow::slotSearchBook()

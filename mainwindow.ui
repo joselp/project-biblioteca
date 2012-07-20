@@ -109,7 +109,7 @@
      <string>Agregar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/useradd.png</normaloff>:/images/useradd.png</iconset>
     </property>
    </widget>
@@ -126,7 +126,7 @@
      <string>Buscar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/usersearch.png</normaloff>:/images/usersearch.png</iconset>
     </property>
    </widget>
@@ -143,7 +143,7 @@
      <string>Editar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/useredit.png</normaloff>:/images/useredit.png</iconset>
     </property>
    </widget>
@@ -160,7 +160,7 @@
      <string>Eliminar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/userdelete.png</normaloff>:/images/userdelete.png</iconset>
     </property>
    </widget>
@@ -228,7 +228,7 @@
      <string>&amp;Prestar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/prestar.png</normaloff>:/images/prestar.png</iconset>
     </property>
    </widget>
@@ -245,7 +245,7 @@
      <string>&amp;Consultar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/filtrar.png</normaloff>:/images/filtrar.png</iconset>
     </property>
    </widget>
@@ -262,7 +262,7 @@
      <string>&amp;Entregar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/entregar.png</normaloff>:/images/entregar.png</iconset>
     </property>
    </widget>
@@ -298,7 +298,7 @@
      <string>&amp;Solvencia</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/solvencia.png</normaloff>:/images/solvencia.png</iconset>
     </property>
    </widget>
@@ -315,7 +315,7 @@
      <string>Buscar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/booksearch.png</normaloff>:/images/booksearch.png</iconset>
     </property>
    </widget>
@@ -332,7 +332,7 @@
      <string>Editar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/bookedit.png</normaloff>:/images/bookedit.png</iconset>
     </property>
    </widget>
@@ -349,7 +349,7 @@
      <string>Agregar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/bookadd.png</normaloff>:/images/bookadd.png</iconset>
     </property>
    </widget>
@@ -366,7 +366,7 @@
      <string>Eliminar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/bookdelete.png</normaloff>:/images/bookdelete.png</iconset>
     </property>
    </widget>
@@ -383,7 +383,7 @@
      <string>&amp;Renovar</string>
     </property>
     <property name="icon">
-     <iconset resource="recursos.qrc">
+     <iconset>
       <normaloff>:/images/renovarbook.png</normaloff>:/images/renovarbook.png</iconset>
     </property>
    </widget>
@@ -400,7 +400,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="recursos.qrc">:/images/escudoEs.png</pixmap>
+     <pixmap>:/images/escudoEs.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="lblTitulo">
@@ -431,8 +431,33 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="recursos.qrc">:/images/pilalibros.png</pixmap>
+     <pixmap>:/images/pilalibros.png</pixmap>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>150</y>
+      <width>631</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -470,7 +495,7 @@
       <string>Prestamo</string>
      </property>
      <property name="icon">
-      <iconset resource="recursos.qrc">
+      <iconset>
        <normaloff>:/images/prestamo.png</normaloff>:/images/prestamo.png</iconset>
      </property>
      <addaction name="actionPrestar"/>
@@ -483,7 +508,7 @@
       <string>Usuario</string>
      </property>
      <property name="icon">
-      <iconset resource="recursos.qrc">
+      <iconset>
        <normaloff>:/images/user.png</normaloff>:/images/user.png</iconset>
      </property>
      <addaction name="actionAgregar"/>
@@ -496,7 +521,7 @@
       <string>Libro</string>
      </property>
      <property name="icon">
-      <iconset resource="recursos.qrc">
+      <iconset>
        <normaloff>:/images/bookonly.png</normaloff>:/images/bookonly.png</iconset>
      </property>
      <addaction name="actionAgregar_2"/>
@@ -515,7 +540,7 @@
   </widget>
   <action name="actionInicio">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/home.png</normaloff>:/images/home.png</iconset>
    </property>
    <property name="text">
@@ -524,7 +549,7 @@
   </action>
   <action name="actionSalir">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/salir.png</normaloff>:/images/salir.png</iconset>
    </property>
    <property name="text">
@@ -536,7 +561,7 @@
   </action>
   <action name="actionCargar_Lote_libros">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/csv.png</normaloff>:/images/csv.png</iconset>
    </property>
    <property name="text">
@@ -550,7 +575,7 @@
   </action>
   <action name="actionPrestar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/prestar.png</normaloff>:/images/prestar.png</iconset>
    </property>
    <property name="text">
@@ -559,7 +584,7 @@
   </action>
   <action name="actionEntregar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/entregar.png</normaloff>:/images/entregar.png</iconset>
    </property>
    <property name="text">
@@ -568,7 +593,7 @@
   </action>
   <action name="actionConsultar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/filtrar.png</normaloff>:/images/filtrar.png</iconset>
    </property>
    <property name="text">
@@ -577,7 +602,7 @@
   </action>
   <action name="actionRenovar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/renovarbook.png</normaloff>:/images/renovarbook.png</iconset>
    </property>
    <property name="text">
@@ -586,7 +611,7 @@
   </action>
   <action name="actionAgregar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/useradd.png</normaloff>:/images/useradd.png</iconset>
    </property>
    <property name="text">
@@ -595,7 +620,7 @@
   </action>
   <action name="actionBuscar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/usersearch.png</normaloff>:/images/usersearch.png</iconset>
    </property>
    <property name="text">
@@ -604,7 +629,7 @@
   </action>
   <action name="actionEditar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/useredit.png</normaloff>:/images/useredit.png</iconset>
    </property>
    <property name="text">
@@ -613,7 +638,7 @@
   </action>
   <action name="actionEliminar">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/userdelete.png</normaloff>:/images/userdelete.png</iconset>
    </property>
    <property name="text">
@@ -622,7 +647,7 @@
   </action>
   <action name="actionAgregar_2">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/bookadd.png</normaloff>:/images/bookadd.png</iconset>
    </property>
    <property name="text">
@@ -631,7 +656,7 @@
   </action>
   <action name="actionBuscar_2">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/booksearch.png</normaloff>:/images/booksearch.png</iconset>
    </property>
    <property name="text">
@@ -640,7 +665,7 @@
   </action>
   <action name="actionEditar_2">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/bookedit.png</normaloff>:/images/bookedit.png</iconset>
    </property>
    <property name="text">
@@ -649,7 +674,7 @@
   </action>
   <action name="actionEliminar_2">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/bookdelete.png</normaloff>:/images/bookdelete.png</iconset>
    </property>
    <property name="text">
@@ -658,7 +683,7 @@
   </action>
   <action name="actionSolvencia">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/solvencia.png</normaloff>:/images/solvencia.png</iconset>
    </property>
    <property name="text">
@@ -667,7 +692,7 @@
   </action>
   <action name="actionManual_de_Usuario">
    <property name="icon">
-    <iconset resource="recursos.qrc">
+    <iconset>
      <normaloff>:/images/help.png</normaloff>:/images/help.png</iconset>
    </property>
    <property name="text">
@@ -685,9 +710,7 @@
   <tabstop>btnEditarP</tabstop>
   <tabstop>btnEliminarP</tabstop>
  </tabstops>
- <resources>
-  <include location="recursos.qrc"/>
- </resources>
+ <resources/>
  <connections/>
  <slots>
   <slot>cargarLibros()</slot>

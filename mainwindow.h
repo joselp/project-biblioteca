@@ -9,6 +9,8 @@
 #include <libro.h>
 #include <utils.h>
 #include <manualusuario.h>
+#include <formusuario.h>
+#include <formlibro.h>
 
 namespace Ui {
     class MainWindow;
@@ -27,6 +29,8 @@ private:
     void initConnect();
     void includeHome();
     void includeHead();
+    void deletePanel();
+    void changePanel(QWidget *);
     void closeEvent(QCloseEvent *);
 
 private slots:
@@ -50,8 +54,12 @@ private slots:
     void slotManualUsuario();
     void slotAbout();
 
+
 private:
     Ui::MainWindow *ui;
+
+
+    QWidget * ptrWidget;
 
     QLabel *lblTitulo;
     QLabel *lblEscudo;
