@@ -16,7 +16,6 @@
 #include <QRegExpValidator>
 #include <QRegExp>
 
-
 class Usuarios : public QWidget
 {
     Q_OBJECT

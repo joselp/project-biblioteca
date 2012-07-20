@@ -9,8 +9,14 @@
 #include <libro.h>
 #include <utils.h>
 #include <manualusuario.h>
-#include <formusuario.h>
-#include <formlibro.h>
+#include <formadduser.h>
+#include <formsearchuser.h>
+#include <formedituser.h>
+#include <formdeleteuser.h>
+#include <formaddbook.h>
+#include <formsearchbook.h>
+#include <formeditbook.h>
+#include <formdeletebook.h>
 
 namespace Ui {
     class MainWindow;

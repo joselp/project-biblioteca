@@ -35,19 +35,11 @@ void MainWindow::initGUI()
     prestamo = new Prestamo();
     prestamo->initGUI(ui->centralWidget);
 
-    user = new Usuarios();
-    user->inicializar(ui->centralWidget);
-
     solvencia = new Solvencia();
     solvencia->initGUI(ui->centralWidget);
 
-    libro = new Libro();
-    libro->inicializar(ui->centralWidget);
-
     util = new Utils();
    // util->cargarArchivo();
-
-
 
 }
 
@@ -116,8 +108,8 @@ void MainWindow::slotHome()
     ui->lblLibro->setVisible(false);
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
     solvencia->visibleWidget(false);
 
     lblTitulo->setVisible(true);
@@ -141,8 +133,8 @@ void MainWindow::slotPrestamo()
     includeHead();
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
     solvencia->visibleWidget(false);
 
     prestamo->showPrestamo();
@@ -153,8 +145,8 @@ void MainWindow::slotEntregaPrestamo()
     includeHead();
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
     solvencia->visibleWidget(false);
 
     prestamo->showEntrega();
@@ -165,8 +157,8 @@ void MainWindow::slotRenovacion()
     includeHead();
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
     solvencia->visibleWidget(false);
 
     prestamo->showRenovacion();
@@ -178,8 +170,8 @@ void MainWindow::slotConsultaPrestamo()
     includeHead();
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
     solvencia->visibleWidget(false);
 
     prestamo->showTablePrestamo();
@@ -189,97 +181,78 @@ void MainWindow::slotNewUser()
 {
     includeHead();
 
-    FormUsuario *newUs=new FormUsuario(this);
-    changePanel(newUs);
-    ptrWidget=newUs;
+    FormAddUser *NewUser=new FormAddUser(this);
+    changePanel(NewUser);
+    ptrWidget=NewUser;
 
-
-//    prestamo->clearWidget();
-//    libro->limpiar();
-//    solvencia->visibleWidget(false);
-
-//    user->nuevoUser();
 }
 
 void MainWindow::slotEditUser()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    user->editarUsuario();
+    FormEditUser *editUser = new FormEditUser(this);
+    changePanel(editUser);
+    ptrWidget=editUser;
 }
 
 void MainWindow::slotSearchUser()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    libro->limpiar();
-    solvencia->visibleWidget(false);
+    FormSearchUser *searchUser = new FormSearchUser(this);
+    changePanel(searchUser);
+    ptrWidget=searchUser;
 
-    user->buscarUsuario();
 }
 
 void MainWindow::slotDeleteUser()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    user->eliminarUsuario();
+    FormDeleteUser *deleteUser = new FormDeleteUser(this);
+    changePanel(deleteUser);
+    ptrWidget=deleteUser;
 }
 
 void MainWindow::slotNewBook()
 {
     includeHead();
 
-    FormLibro *uiL = new FormLibro(this);
-    changePanel(uiL);
-    ptrWidget=uiL;
+    FormAddBook *addBook = new FormAddBook(this);
+    changePanel(addBook);
+    ptrWidget=addBook;
 
-//    prestamo->clearWidget();
-//    user->limpiar();
-//    solvencia->visibleWidget(false);
-
-//    libro->nuevoLibro();
 }
 
 void MainWindow::slotSearchBook()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    user->limpiar();
-    solvencia->visibleWidget(false);
+    FormSearchBook *searchBook = new FormSearchBook(this);
+    changePanel(searchBook);
+    ptrWidget=searchBook;
 
-    libro->buscarLibro();
 }
 
 void MainWindow::slotEditBook()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    user->limpiar();
-    solvencia->visibleWidget(false);
+    FormEditBook *editBook = new FormEditBook(this);
+    changePanel(editBook);
+    ptrWidget=editBook;
 
-    libro->editarLibro();
 }
 
 void MainWindow::slotDeleteBook()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    user->limpiar();
-    solvencia->visibleWidget(false);
+    FormDeleteBook *deleteBook = new FormDeleteBook(this);
+    changePanel(deleteBook);
+    ptrWidget=deleteBook;
 
-    libro->eliminarLibro();
 }
 
 void MainWindow::slotSolvencia()
@@ -287,8 +260,8 @@ void MainWindow::slotSolvencia()
     includeHead();
 
     prestamo->clearWidget();
-    user->limpiar();
-    libro->limpiar();
+    deletePanel();
+    //libro->limpiar();
 
     solvencia->visibleWidget(true);
 

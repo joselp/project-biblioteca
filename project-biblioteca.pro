@@ -18,7 +18,16 @@ SOURCES += main.cpp\
     solvencia.cpp \
     libro.cpp \
     utils.cpp \
-    manualusuario.cpp
+    manualusuario.cpp \
+    formlibro.cpp \
+    formadduser.cpp \
+    formsearchuser.cpp \
+    formedituser.cpp \
+    formdeleteuser.cpp \
+    formaddbook.cpp \
+    formsearchbook.cpp \
+    formdeletebook.cpp \
+    formeditbook.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -29,11 +38,29 @@ HEADERS  += \
     solvencia.h \
     libro.h \
     utils.h \
-    manualusuario.h
+    manualusuario.h \
+    formlibro.h \
+    formadduser.h \
+    formsearchuser.h \
+    formedituser.h \
+    formdeleteuser.h \
+    formaddbook.h \
+    formsearchbook.h \
+    formdeletebook.h \
+    formeditbook.h
 
 FORMS    += mainwindow.ui \
     dialogprestamo.ui \
-    manualusuario.ui
+    manualusuario.ui \
+    formlibro.ui \
+    formadduser.ui \
+    formsearchuser.ui \
+    formedituser.ui \
+    formdeleteuser.ui \
+    formaddbook.ui \
+    formsearchbook.ui \
+    formdeletebook.ui \
+    formeditbook.ui
 
 RESOURCES += \
     recursos.qrc
