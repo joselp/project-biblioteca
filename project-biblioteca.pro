@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     libro.cpp \
     utils.cpp \
     manualusuario.cpp \
-    formlibro.cpp \
     formadduser.cpp \
     formsearchuser.cpp \
     formedituser.cpp \
@@ -39,7 +38,6 @@ HEADERS  += \
     libro.h \
     utils.h \
     manualusuario.h \
-    formlibro.h \
     formadduser.h \
     formsearchuser.h \
     formedituser.h \
@@ -52,7 +50,6 @@ HEADERS  += \
 FORMS    += mainwindow.ui \
     dialogprestamo.ui \
     manualusuario.ui \
-    formlibro.ui \
     formadduser.ui \
     formsearchuser.ui \
     formedituser.ui \

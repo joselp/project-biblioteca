@@ -168,71 +168,55 @@ void FormEditBook::inicializar()
 
     lbCota = new QLabel(this);
     lbCota->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbCota->setVisible(false);
     lbCota->setText("Cota: ");
 
     leCota = new QLineEdit(this);
     leCota->setGeometry(10,10,100,20);
 
-    leCota->setVisible(false);
-
     lbAutor = new QLabel(this);
     lbAutor->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbAutor->setVisible(false);
     lbAutor->setText("Autor: ");
 
     leAutor = new QLineEdit(this);
     leAutor->setGeometry(10,10,100,20);
-    leAutor->setVisible(false);
 
     lbTitulo = new QLabel(this);
     lbTitulo->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbTitulo->setVisible(false);
     lbTitulo->setText("Titulo: ");
 
     leTitulo = new QLineEdit(this);
     leTitulo->setGeometry(10,10,100,20);
-    leTitulo->setVisible(false);
 
     lbMateria = new QLabel(this);
     lbMateria->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbMateria->setVisible(false);
     lbMateria->setText("Materia: ");
 
     leMateria = new QLineEdit(this);
     leMateria->setGeometry(270,220,100,20);
-    leMateria->setVisible(false);
 
     lbEditorial = new QLabel(this);
     lbEditorial->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbEditorial->setVisible(false);
     lbEditorial->setText("Editorial: ");
 
     leEditorial = new QLineEdit(this);
     leEditorial->setGeometry(460,220,100,20);
-    leEditorial->setVisible(false);
 
     lbAnhoPublicacion = new QLabel(this);
     lbAnhoPublicacion->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbAnhoPublicacion->setVisible(false);
     lbAnhoPublicacion->setText("Año Public.: ");
 
     leAnhoPublicacion = new QLineEdit(this);
     leAnhoPublicacion->setGeometry(690,220,70,20);
-    leAnhoPublicacion->setVisible(false);
 
     lbLugar = new QLabel(this);
     lbLugar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbLugar->setVisible(false);
     lbLugar->setText("Lugar: ");
 
     leLugar = new QLineEdit(this);
     leLugar->setGeometry(270,270,100,20);
-    leLugar->setVisible(false);
 
     lbAdquisicion = new QLabel(this);
     lbAdquisicion->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbAdquisicion->setVisible(false);
     lbAdquisicion->setText("Adquisición: ");
 
     comboAdquisicion = new QComboBox(this);
@@ -241,31 +225,24 @@ void FormEditBook::inicializar()
     comboAdquisicion->addItem("Donado");
     comboAdquisicion->addItem("Canjeado");
     comboAdquisicion->setGeometry(480,270,80,20);
-    comboAdquisicion->setVisible(false);
 
     lbVolumen = new QLabel(this);
     lbVolumen->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbVolumen->setVisible(false);
     lbVolumen->setText("Tomo: ");
 
     leVolumen = new QLineEdit(this);
     leVolumen->setGeometry(670,270,90,20);
-    leVolumen->setVisible(false);
 
     lbEjemplar = new QLabel(this);
     lbEjemplar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbEjemplar->setVisible(false);
     lbEjemplar->setText("Ejemplares: ");
 
     leEjemplar = new QLineEdit(this);
     leEjemplar->setGeometry(290,320,80,20);
     leEjemplar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    leEjemplar->setVisible(false);
-
 
     lbEstado = new QLabel(this);
     lbEstado->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
-    lbEstado->setVisible(false);
     lbEstado->setText("Estado: ");
 
     comboEstado = new QComboBox(this);
@@ -274,21 +251,17 @@ void FormEditBook::inicializar()
     comboEstado->addItem("Regular");
     comboEstado->addItem("Malo");
     comboEstado->setGeometry(480,320,80,20);
-    comboEstado->setVisible(false);
 
     btnAceptar = new QPushButton("Aceptar",this);
     btnAceptar->move(180,90);
-    btnAceptar->setVisible(false);
 
     lbBuscar = new QLabel(this);
     lbBuscar->setFont(QFont("Baskerville Old Face",10,QFont::Bold));
     lbBuscar->move(60,15);
     lbBuscar->setText("Buscar:");
-    lbBuscar->setVisible(false);
 
     leBuscar = new QLineEdit(this);
     leBuscar->setGeometry(110,15,270,20);
-    leBuscar->setVisible(false);
 
     btnCancelar = new QPushButton("Editar",this);
     connect(btnCancelar,SIGNAL(clicked()),this,SLOT(btnEditar()));
@@ -298,7 +271,6 @@ void FormEditBook::inicializar()
 void FormEditBook::mostrarEditar(){
 
     lbBuscar->setVisible(true);
-
     leBuscar->setVisible(true);
 
     lbCota->setText("Cota: ");
