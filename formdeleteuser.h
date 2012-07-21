@@ -10,6 +10,7 @@
 #include<QValidator>
 #include <QRegExpValidator>
 #include <QRegExp>
+#include <QKeyEvent>
 
 namespace Ui {
     class FormDeleteUser;
@@ -23,6 +24,7 @@ public:
     explicit FormDeleteUser(QWidget *parent = 0);
     void clear();
     void init();
+    void keyPressEvent(QKeyEvent *event);
     ~FormDeleteUser();
 
 private slots:

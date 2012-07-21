@@ -16,10 +16,6 @@ void FormSearchUser::acept(){
     QSqlQuery query;
     query.exec("select * from personas where cedula='"+ui->leCedula->text()+"'");
 
-//    ui->lbTipo2->setText("");
-//    ui->leApellido->setText("");
-//    ui->leNombre->setText("");
-
     if( query.next() ){
 
         ui->leNombre->setText(query.value(1).toString());
@@ -48,6 +44,14 @@ void FormSearchUser::init(){
     ui->lbTipo2->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
 
     ui->btnAceptar->setIcon(QIcon(":/images/usersearch.png"));
+
+}
+
+void FormSearchUser::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        acept();
+    }
 
 }
 

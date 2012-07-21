@@ -37,6 +37,13 @@ void FormDeleteUser::init(){
 
 }
 
+void FormDeleteUser::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        acept();
+    }
+}
+
 void FormDeleteUser::clear(){
 
     ui->leCedula->setText("");

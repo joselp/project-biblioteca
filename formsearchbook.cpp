@@ -987,6 +987,14 @@ void FormSearchBook::limpiar()
 
 }
 
+void FormSearchBook::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        btnBuscar();
+    }
+
+}
+
 FormSearchBook::~FormSearchBook()
 {
     delete ui;

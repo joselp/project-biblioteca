@@ -43,6 +43,13 @@ void FormDeleteBook::init(){
 
 }
 
+void FormDeleteBook::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        deleteBook();
+    }
+}
+
 FormDeleteBook::~FormDeleteBook()
 {
     delete ui;

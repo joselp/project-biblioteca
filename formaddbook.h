@@ -13,6 +13,7 @@
 #include<QWidgetItem>
 #include<QTableView>
 #include<QDebug>
+#include<QKeyEvent>
 
 namespace Ui {
     class FormAddBook;
@@ -26,6 +27,7 @@ public:
     explicit FormAddBook(QWidget *parent = 0);
     void init();
     void clear();
+    void keyPressEvent(QKeyEvent *event);
     ~FormAddBook();
 
 private slots:

@@ -11,6 +11,7 @@
 #include<QValidator>
 #include <QRegExpValidator>
 #include <QRegExp>
+#include<QKeyEvent>
 
 namespace Ui {
     class FormSearchUser;
@@ -23,6 +24,7 @@ class FormSearchUser : public QWidget
 public:
     explicit FormSearchUser(QWidget *parent = 0);
     void init();
+    void keyPressEvent(QKeyEvent *event);
     ~FormSearchUser();
 
 private slots:

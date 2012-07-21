@@ -13,6 +13,7 @@
 #include<QWidgetItem>
 #include<QTableView>
 #include<QDebug>
+#include<QKeyEvent>
 
 
 namespace Ui {
@@ -28,6 +29,7 @@ public:
     void inicializar();
     void limpiar();
     void mostrarEditar();
+    void keyPressEvent(QKeyEvent *event);
     ~FormEditBook();
 
 public slots:

@@ -23,7 +23,7 @@ void FormEditBook::buscarLibro()
 
     btnAceptar->setText("Buscar");
     btnAceptar->setIcon(QIcon(":/images/booksearch.png"));
-    btnAceptar->move(510,12);
+    btnAceptar->move(420,12);
     btnAceptar->setVisible(true);
 
     connect(btnAceptar,SIGNAL(clicked()),this,SLOT(btnBuscar()));
@@ -393,6 +393,13 @@ void FormEditBook::limpiar()
     btnCancelar->setVisible(false);
 
 
+}
+
+void FormEditBook::keyPressEvent(QKeyEvent *event){
+
+        if(event->key()== 16777220){
+            btnBuscar();
+        }
 }
 
 FormEditBook::~FormEditBook()

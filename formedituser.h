@@ -10,6 +10,7 @@
 #include<QValidator>
 #include <QRegExpValidator>
 #include <QRegExp>
+#include<QKeyEvent>
 
 namespace Ui {
     class FormEditUser;
@@ -23,6 +24,7 @@ public:
     explicit FormEditUser(QWidget *parent = 0);
     void clear();
     void init();
+    void keyPressEvent(QKeyEvent *event);
     ~FormEditUser();
 
 private slots:

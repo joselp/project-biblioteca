@@ -94,7 +94,16 @@ void FormAddBook::init(){
     ui->comboEstado->addItem("Regular");
     ui->comboEstado->addItem("Malo");
 
+    ui->btnAceptar->setIcon(QIcon(":/images/bookadd.png"));
 
+
+}
+
+void FormAddBook::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        slotAcept();
+    }
 }
 
 void FormAddBook::clear(){

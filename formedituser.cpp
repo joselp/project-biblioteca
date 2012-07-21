@@ -84,6 +84,14 @@ void FormEditUser::init(){
 
 }
 
+void FormEditUser::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        buscar();
+    }
+
+}
+
 FormEditUser::~FormEditUser()
 {
     delete ui;

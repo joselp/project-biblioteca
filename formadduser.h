@@ -10,6 +10,8 @@
 #include<QValidator>
 #include <QRegExpValidator>
 #include <QRegExp>
+#include <QKeyEvent>
+#include <QFrame>
 
 namespace Ui {
     class FormAddUser;
@@ -24,6 +26,9 @@ public:
     void clear();
     void init();
     ~FormAddUser();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void acept();

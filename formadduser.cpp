@@ -2,8 +2,8 @@
 #include "ui_formadduser.h"
 
 FormAddUser::FormAddUser(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FormAddUser)
+        QWidget(parent),
+        ui(new Ui::FormAddUser)
 {
 
     ui->setupUi(this);
@@ -55,6 +55,13 @@ void FormAddUser::init(){
     ui->lbTipo->setFont(QFont("Baskerville Old Face",12,QFont::Bold));
 
     ui->btnAceptar->setIcon(QIcon(":/images/aceptar.png"));
+}
+
+void FormAddUser::keyPressEvent(QKeyEvent *event){
+
+    if(event->key()== 16777220){
+        acept();
+    }
 }
 
 void FormAddUser::clear(){
