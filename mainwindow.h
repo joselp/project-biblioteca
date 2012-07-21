@@ -3,12 +3,10 @@
 
 #include <QMainWindow>
 #include <QtGui>
-#include <prestamo.h>
-#include <usuario.h>
-#include <solvencia.h>
-#include <libro.h>
-#include <utils.h>
-#include <manualusuario.h>
+#include <formhome.h>
+#include <formprestamo.h>
+#include <formerprestamo.h>
+#include <formsearchprestamo.h>
 #include <formadduser.h>
 #include <formsearchuser.h>
 #include <formedituser.h>
@@ -17,6 +15,14 @@
 #include <formsearchbook.h>
 #include <formeditbook.h>
 #include <formdeletebook.h>
+#include <formsolvencia.h>
+#include <manualusuario.h>
+//#include <prestamo.h>
+//#include <usuario.h>
+//#include <solvencia.h>
+//#include <libro.h>
+#include <utils.h>
+
 
 namespace Ui {
     class MainWindow;
@@ -33,7 +39,6 @@ public:
 private:
     void initGUI();
     void initConnect();
-    void includeHome();
     void includeHead();
     void deletePanel();
     void changePanel(QWidget *);
@@ -44,8 +49,8 @@ private slots:
     void slotHome();
     void slotPrestamo();
     void slotEntregaPrestamo();
-    void slotConsultaPrestamo();
     void slotRenovacion();
+    void slotConsultaPrestamo();
     void slotNewUser();
     void slotEditUser();
     void slotSearchUser();
@@ -64,20 +69,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-
     QWidget * ptrWidget;
 
-    QLabel *lblTitulo;
-    QLabel *lblEscudo;
-
-    Prestamo *prestamo;
-    Usuarios *user;
-    Solvencia *solvencia;
-    Libro *libro;
-    Utils *util;
-
     ManualUsuario *manualUsuario;
-
 
 };
 

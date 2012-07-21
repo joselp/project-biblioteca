@@ -12,9 +12,10 @@ DialogPrestamo::DialogPrestamo(QWidget *parent) :
 
 void DialogPrestamo::initGUI()
 {
-
+    setWindowTitle("Información Detallada");
     setWindowIcon(QIcon(":/images/logo.png"));
     setWindowFlags(Qt::WindowMaximizeButtonHint);
+
 
     QRect geometry = this->geometry();
     geometry.moveCenter(QApplication::desktop()->availableGeometry().center());
@@ -86,9 +87,16 @@ void DialogPrestamo::setEstado(QString estado)
 void DialogPrestamo::slotAceptar()
 {
     close();
+    delete ui;
 }
 
 DialogPrestamo::~DialogPrestamo()
 {
     delete ui;
+}
+
+void DialogPrestamo::keyPressEvent(QKeyEvent *event)
+{
+    if( event->key() == 16777220 )
+        slotAceptar();
 }

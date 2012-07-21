@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>DialogPrestamo</class>
  <widget class="QWidget" name="DialogPrestamo">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -408,7 +411,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>245</x>
+     <x>240</x>
      <y>300</y>
      <width>75</width>
      <height>23</height>

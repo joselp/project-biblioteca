@@ -20,26 +20,13 @@ void MainWindow::initGUI()
     geometry.moveCenter(QApplication::desktop()->availableGeometry().center());
     setGeometry(geometry);
 
-    lblTitulo = new QLabel(ui->centralWidget);
-    lblTitulo->setPixmap(QPixmap(":/images/tituloHome.png"));
-    lblTitulo->setGeometry(245,50,468,72);
-
-    lblEscudo = new QLabel(ui->centralWidget);
-    lblEscudo->setPixmap(QPixmap(":/images/escudoHome.png"));
-    lblEscudo->setGeometry(370,160,200,250);
-
     ui->lblEscudo->setVisible(false);
     ui->lblTitulo->setVisible(false);
     ui->lblLibro->setVisible(false);
 
-    prestamo = new Prestamo();
-    prestamo->initGUI(ui->centralWidget);
-
-    solvencia = new Solvencia();
-    solvencia->initGUI(ui->centralWidget);
-
-    util = new Utils();
-   // util->cargarArchivo();
+    FormHome *formHome = new FormHome(this);
+    ui->horizontalLayout->addWidget(formHome);
+    ptrWidget = formHome;
 
 }
 
@@ -87,15 +74,8 @@ void MainWindow::initConnect()
     connect(ui->btnSolvencia, SIGNAL(clicked()), this, SLOT(slotSolvencia()));
 }
 
-void MainWindow::includeHome()
-{
-    lblTitulo->setVisible(false);
-    lblEscudo->setVisible(false);
-}
-
 void MainWindow::includeHead()
 {
-    includeHome();
     ui->lblEscudo->setVisible(true);
     ui->lblTitulo->setVisible(true);
     ui->lblLibro->setVisible(true);
@@ -107,18 +87,19 @@ void MainWindow::slotHome()
     ui->lblTitulo->setVisible(false);
     ui->lblLibro->setVisible(false);
 
-    prestamo->clearWidget();
+    FormHome *formHome = new FormHome(this);
     deletePanel();
-    //libro->limpiar();
-    solvencia->visibleWidget(false);
+    ui->horizontalLayout->addWidget(formHome);
+    ptrWidget = formHome;
 
-    lblTitulo->setVisible(true);
-    lblEscudo->setVisible(true);
 }
 
 void MainWindow::deletePanel(){
 
     if(!ui->verticalLayout->isEmpty())
+        delete(ptrWidget);
+
+    if( !ui->horizontalLayout->isEmpty() )
         delete(ptrWidget);
 }
 
@@ -132,49 +113,38 @@ void MainWindow::slotPrestamo()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    deletePanel();
-    //libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    prestamo->showPrestamo();
+    FormPrestamo *formPrestamo = new FormPrestamo(this);
+    changePanel(formPrestamo);
+    ptrWidget = formPrestamo;
 }
 
 void MainWindow::slotEntregaPrestamo()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    deletePanel();
-    //libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    prestamo->showEntrega();
+    FormERPrestamo *formERPrestamo = new FormERPrestamo(this);
+    formERPrestamo->setTipoBoton(0);
+    changePanel(formERPrestamo);
+    ptrWidget = formERPrestamo;
 }
 
 void MainWindow::slotRenovacion()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    deletePanel();
-    //libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    prestamo->showRenovacion();
-
+    FormERPrestamo *formERPrestamo = new FormERPrestamo(this);
+    formERPrestamo->setTipoBoton(1);
+    changePanel(formERPrestamo);
+    ptrWidget = formERPrestamo;
 }
 
 void MainWindow::slotConsultaPrestamo()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    deletePanel();
-    //libro->limpiar();
-    solvencia->visibleWidget(false);
-
-    prestamo->showTablePrestamo();
+    FormSearchPrestamo *formSearchPrestamo = new FormSearchPrestamo(this);
+    changePanel(formSearchPrestamo);
+    ptrWidget = formSearchPrestamo;
 }
 
 void MainWindow::slotNewUser()
@@ -222,7 +192,6 @@ void MainWindow::slotNewBook()
     FormAddBook *addBook = new FormAddBook(this);
     changePanel(addBook);
     ptrWidget=addBook;
-
 }
 
 void MainWindow::slotSearchBook()
@@ -252,25 +221,19 @@ void MainWindow::slotDeleteBook()
     FormDeleteBook *deleteBook = new FormDeleteBook(this);
     changePanel(deleteBook);
     ptrWidget=deleteBook;
-
 }
 
 void MainWindow::slotSolvencia()
 {
     includeHead();
 
-    prestamo->clearWidget();
-    deletePanel();
-    //libro->limpiar();
-
-    solvencia->visibleWidget(true);
-
+    FormSolvencia *formSolvencia = new FormSolvencia(this);
+    changePanel(formSolvencia);
+    ptrWidget = formSolvencia;
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
 {
-    prestamo->distroyedCalendar();
-
     if( manualUsuario->isWindow() )
         manualUsuario->close();
 
@@ -278,19 +241,16 @@ void MainWindow::closeEvent(QCloseEvent *)
 
 void MainWindow::slotCloseWindow()
 {
-    prestamo->distroyedCalendar();
-
     if( manualUsuario->isWindow() )
         manualUsuario->close();
 
     close();
 }
 
-void MainWindow::slotCargarLibros(){
-
+void MainWindow::slotCargarLibros()
+{
+    Utils * util = new Utils;
     util->cargarArchivo(ui->centralWidget);
-    //util->start();
-
 }
 
 void MainWindow::slotManualUsuario()
@@ -310,11 +270,9 @@ void MainWindow::slotAbout()
                    "...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> antoniol@ula.ve<br> </center>"
                    "<font color = blue><center> Universidad de los Andes </center></font>";
 
-
     QMessageBox::about(this,"Acerca de MainWindow",text);
 
 }
-
 
 MainWindow::~MainWindow()
 {

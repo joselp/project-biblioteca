@@ -7,15 +7,12 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
-#include <QDebug>
 
 bool crearConexion(){
 
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("biblioteca.db3");
-
-    qDebug() << QSqlDatabase::drivers();
 
     if (!db.open())
     {

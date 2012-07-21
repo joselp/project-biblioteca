@@ -10,54 +10,73 @@ TARGET = project-biblioteca
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-    mainwindow.cpp \
-    usuario.cpp \
-    prestamo.cpp \
-    dialogprestamo.cpp \
-    solvencia.cpp \
-    libro.cpp \
+SOURCES += \
     utils.cpp \
+    usuario.cpp \
+    solvencia.cpp \
+    prestamo.cpp \
     manualusuario.cpp \
-    formadduser.cpp \
+    mainwindow.cpp \
+    main.cpp \
+    libro.cpp \
+    formsolvencia.cpp \
     formsearchuser.cpp \
-    formedituser.cpp \
-    formdeleteuser.cpp \
-    formaddbook.cpp \
+    formsearchprestamo.cpp \
     formsearchbook.cpp \
+    formprestamo.cpp \
+    formerprestamo.cpp \
+    formedituser.cpp \
+    formeditbook.cpp \
+    formdeleteuser.cpp \
     formdeletebook.cpp \
-    formeditbook.cpp
+    formadduser.cpp \
+    formaddbook.cpp \
+    dialogprestamo.cpp \
+    formhome.cpp
 
 HEADERS  += \
-    mainwindow.h \
-    usuario.h \
-    conexion.h \
-    prestamo.h \
-    dialogprestamo.h \
-    solvencia.h \
-    libro.h \
     utils.h \
+    usuario.h \
+    solvencia.h \
+    prestamo.h \
     manualusuario.h \
-    formadduser.h \
+    mainwindow.h \
+    libro.h \
+    formsolvencia.h \
     formsearchuser.h \
-    formedituser.h \
-    formdeleteuser.h \
-    formaddbook.h \
+    formsearchprestamo.h \
     formsearchbook.h \
+    formprestamo.h \
+    formerprestamo.h \
+    formedituser.h \
+    formeditbook.h \
+    formdeleteuser.h \
     formdeletebook.h \
-    formeditbook.h
+    formadduser.h \
+    formaddbook.h \
+    dialogprestamo.h \
+    conexion.h \
+    formhome.h
 
-FORMS    += mainwindow.ui \
-    dialogprestamo.ui \
+FORMS    += \
     manualusuario.ui \
-    formadduser.ui \
+    mainwindow.ui \
+    formsolvencia.ui \
     formsearchuser.ui \
-    formedituser.ui \
-    formdeleteuser.ui \
-    formaddbook.ui \
+    formsearchprestamo.ui \
     formsearchbook.ui \
+    formprestamo.ui \
+    formerprestamo.ui \
+    formedituser.ui \
+    formeditbook.ui \
+    formdeleteuser.ui \
     formdeletebook.ui \
-    formeditbook.ui
+    formadduser.ui \
+    formaddbook.ui \
+    dialogprestamo.ui \
+    formhome.ui
 
 RESOURCES += \
     recursos.qrc
+
+OTHER_FILES +=

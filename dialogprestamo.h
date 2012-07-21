@@ -30,6 +30,7 @@ public:
 
 private:
     void initGUI();
+    void keyPressEvent(QKeyEvent *);
 
 private slots:
     void slotAceptar();
