@@ -56,6 +56,7 @@
         <file>images/searchprestamo.png</file>
         <file>images/searchuser.png</file>
         <file>images/solvenciag.png</file>
+        <file>images/hacerprestamo.png</file>
         <file>manual/addbook.html</file>
         <file>manual/adduser.html</file>
         <file>manual/consultarp.html</file>
@@ -65,6 +66,7 @@
         <file>manual/editbook.html</file>
         <file>manual/edituser.html</file>
         <file>manual/entregarp.html</file>
+        <file>manual/hacerp.html</file>
         <file>manual/home.html</file>
         <file>manual/index.html</file>
         <file>manual/infop.html</file>
