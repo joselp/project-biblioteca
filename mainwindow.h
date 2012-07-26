@@ -17,6 +17,7 @@
 #include <formdeletebook.h>
 #include <formsolvencia.h>
 #include <manualusuario.h>
+#include <dialogprestamo.h>
 //#include <prestamo.h>
 //#include <usuario.h>
 //#include <solvencia.h>

@@ -350,6 +350,7 @@ void FormSearchPrestamo::slotRowSelected(int row)
     query2.exec(strQuery2);
 
     dialogPrestamo = new DialogPrestamo;
+    ptr=dialogPrestamo;
 
     if( query2.next() ) {
 
@@ -394,14 +395,6 @@ void FormSearchPrestamo::slotRowSelected(int row)
 
     dialogPrestamo->show();
 
-}
-
-void FormSearchPrestamo::closedDialog()
-{
-    if( dialogPrestamo->isWindow() ) {
-        dialogPrestamo->close();
-        delete dialogPrestamo;
-    }
 }
 
 void FormSearchPrestamo::keyPressEvent(QKeyEvent *event)

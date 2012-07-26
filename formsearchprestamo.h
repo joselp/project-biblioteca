@@ -20,7 +20,7 @@ class FormSearchPrestamo : public QWidget
     
 public:
     explicit FormSearchPrestamo(QWidget *parent = 0);
-    void closedDialog();
+    void closedDialog(QWidget *);
     ~FormSearchPrestamo();
     
 private:
@@ -40,6 +40,8 @@ private:
 
     QTableWidget * tablePrestamo;
     QTableWidgetItem * item;
+
+    QWidget *ptr;
 
     DialogPrestamo * dialogPrestamo;
 };

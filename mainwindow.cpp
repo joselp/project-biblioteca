@@ -245,6 +245,7 @@ void MainWindow::slotCloseWindow()
         manualUsuario->close();
 
     close();
+    exit(0);
 }
 
 void MainWindow::slotCargarLibros()
