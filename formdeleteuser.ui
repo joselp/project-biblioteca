@@ -29,7 +29,7 @@
   <widget class="QLineEdit" name="leCedula">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>280</x>
      <y>10</y>
      <width>141</width>
      <height>20</height>
@@ -39,7 +39,7 @@
   <widget class="QPushButton" name="btnAceptar">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>240</x>
      <y>80</y>
      <width>75</width>
      <height>23</height>

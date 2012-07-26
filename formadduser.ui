@@ -98,7 +98,7 @@
   <widget class="QRadioButton" name="rbProf">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>410</x>
      <y>60</y>
      <width>93</width>
      <height>17</height>
@@ -111,7 +111,7 @@
   <widget class="QRadioButton" name="rbEstu">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>410</x>
      <y>90</y>
      <width>93</width>
      <height>17</height>

@@ -42,6 +42,16 @@ void FormEditBook::btnBuscar()
 
     if(query.next()){
 
+        leCota->setReadOnly(false);
+        leAutor->setReadOnly(false);
+        leTitulo->setReadOnly(false);
+        leMateria->setReadOnly(false);
+        leEditorial->setReadOnly(false);
+        leAnhoPublicacion->setReadOnly(false);
+        leLugar->setReadOnly(false);
+        leVolumen->setReadOnly(false);
+        leEjemplar->setReadOnly(false);
+
 
         btnCancelar->setVisible(true);
         btnCancelar->setEnabled(true);
@@ -87,6 +97,15 @@ void FormEditBook::btnBuscar()
         leLugar->setText("");
         leVolumen->setText("");
         leEjemplar->setText("");
+        leCota->setReadOnly(true);
+        leAutor->setReadOnly(true);
+        leTitulo->setReadOnly(true);
+        leMateria->setReadOnly(true);
+        leEditorial->setReadOnly(true);
+        leAnhoPublicacion->setReadOnly(true);
+        leLugar->setReadOnly(true);
+        leVolumen->setReadOnly(true);
+        leEjemplar->setReadOnly(true);
     }
 
 }

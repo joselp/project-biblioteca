@@ -114,6 +114,16 @@ void FormSearchBook::btnBuscar()
             leLugar->setText("");
             leVolumen->setText("");
             leEjemplar->setText("");
+            comboAdquisicion->setEditable(false);
+            leCota->setReadOnly(true);
+            leAutor->setReadOnly(true);
+            leTitulo->setReadOnly(true);
+            leMateria->setReadOnly(true);
+            leEditorial->setReadOnly(true);
+            leAnhoPublicacion->setReadOnly(true);
+            leLugar->setReadOnly(true);
+            leVolumen->setReadOnly(true);
+            leEjemplar->setReadOnly(true);
         }
 
     }
