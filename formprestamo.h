@@ -5,7 +5,6 @@
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QKeyEvent>
-#include <QDebug>
 
 namespace Ui {
 class FormPrestamo;

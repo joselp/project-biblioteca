@@ -43,7 +43,6 @@ void FormPrestamo::slotValidateCota()
     ui->lineEditCota->setText(ui->lineEditCota->text().toUpper());
 
     QString strQuery = "SELECT autor, titulo, ejemplar FROM libros WHERE cota = '" + ui->lineEditCota->text().toUpper() +"'";
-    qDebug() << strQuery;
 
     query.exec(strQuery);
 
@@ -67,7 +66,6 @@ void FormPrestamo::slotValidateCedula()
         return;
 
     QString strQuery = "SELECT tipo FROM personas WHERE cedula = "+ ui->lineEditCedula->text();
-    qDebug() << strQuery;
 
     query.exec(strQuery);
 
@@ -118,19 +116,10 @@ void FormPrestamo::slotPrestar()
         return;
     }
 
-    QDate fechaP = QDate::fromString(ui->lineEditFechaP->text(),"dd/MM/yyyy");
     QDate fechaE = ui->lineEditFechaE->date();
     fechaE.toString("dd/MM/yyyy");
 
- /*   if( fechaE < fechaP ) {
-        QMessageBox::information(this, "INFORMACIÓN", "La fecha de entrega no puede ser menor a la fecha de préstamo.");
-
-        ui->lineEditFechaE->setText("");
-        ui->lineEditFechaE->setFocus();
-
-        return;
-    }
-    else */if( fechaE.dayOfWeek() == 6 || fechaE.dayOfWeek() == 7 ){
+    if( fechaE.dayOfWeek() == 6 || fechaE.dayOfWeek() == 7 ){
         QMessageBox::information(this, "INFORMACIÓN", "La fecha de entrega no puede ser Sábado ni Domingo.");
 
         ui->lineEditFechaE->setFocus();
@@ -143,7 +132,6 @@ void FormPrestamo::slotPrestar()
     if( cantBook > 0 ) {
         strQuery = "UPDATE libros SET ejemplar = " + QString::number(cantBook - 1)
                 + " WHERE cota = '" + ui->lineEditCota->text() + "'";
-        qDebug() << strQuery;
 
         query.exec(strQuery);
     }
@@ -163,8 +151,6 @@ void FormPrestamo::slotPrestar()
                + "', '" + ui->lineEditCedula->text() + "', '" + ui->lineEditFechaP->text()
                + "', '" + ui->lineEditFechaE->text() + "', '"
                + ui->comboBoxResponsable->currentText()+ "' )";
-
-    qDebug() << strQuery;
 
     if( query.exec(strQuery) )
         QMessageBox::information(this, "INFORMACIÓN", "Se ha realizado el prestamo del libro exitosamente.");

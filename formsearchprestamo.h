@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include <dialogprestamo.h>
 #include <QKeyEvent>
-#include <QDebug>
 
 namespace Ui {
 class FormSearchPrestamo;
@@ -40,8 +39,6 @@ private:
 
     QTableWidget * tablePrestamo;
     QTableWidgetItem * item;
-
-    QWidget *ptr;
 
     DialogPrestamo * dialogPrestamo;
 };

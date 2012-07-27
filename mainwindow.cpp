@@ -234,17 +234,11 @@ void MainWindow::slotSolvencia()
 
 void MainWindow::closeEvent(QCloseEvent *)
 {
-    if( manualUsuario->isWindow() )
-        manualUsuario->close();
-
+    exit(0);
 }
 
 void MainWindow::slotCloseWindow()
 {
-    if( manualUsuario->isWindow() )
-        manualUsuario->close();
-
-    close();
     exit(0);
 }
 

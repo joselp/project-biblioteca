@@ -34,7 +34,6 @@ void FormSearchPrestamo::initGUI()
     connect(tablePrestamo, SIGNAL(cellClicked(int,int)), this, SLOT(slotRowSelected(int)));
 
     QString strQuery = "SELECT * FROM libroPersona";
-    qDebug() << strQuery;
 
     QSqlQuery query;
     query.exec(strQuery);
@@ -234,8 +233,6 @@ void FormSearchPrestamo::filtroTable(QString strQuery)
 {
     int rowCount = 0;
 
-    qDebug() << strQuery;
-
     QSqlQuery query;
     query.exec(strQuery);
 
@@ -337,20 +334,15 @@ void FormSearchPrestamo::slotRowSelected(int row)
     QString strQuery = "SELECT * FROM libros WHERE cota = '"
                        + item->text() + "'";
 
-    qDebug() << strQuery;
-
     item = new QTableWidgetItem;
     item = tablePrestamo->item(row,1);
 
     QString strQuery2 = "SELECT * FROM personas WHERE cedula = " + item->text();
 
-    qDebug() << strQuery2;
-
     QSqlQuery query2;
     query2.exec(strQuery2);
 
     dialogPrestamo = new DialogPrestamo;
-    ptr=dialogPrestamo;
 
     if( query2.next() ) {
 
