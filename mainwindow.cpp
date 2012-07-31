@@ -279,7 +279,7 @@ void MainWindow::slotAbout()
                    "Rossy Mayoral <br> Jose Pérez <br> Jonathan Monsalve <br>"
                    "Ana Calderon <br> Julio Muchacho <br> Antonio López <br><br>"
                    "Dirección electronica: <br>"
-                   "...@ula.ve <br> joseperez@ula.ve <br> j.jmonsalveg@mail.com <br> ...@ula.ve <br> juliomuchacho@ula.ve <br> antoniol@ula.ve<br> </center>"
+                   "mayoralrossy@gmail.com <br> joseperez@ula.ve <br> j.jmonsalveg@mail.com <br> Sofiacm89@hotmail.com <br> juliomuchacho@ula.ve <br> antoniol@ula.ve<br> </center>"
                    "<font color = blue><center> Universidad de los Andes </center></font>";
 
     QMessageBox::about(this,"Acerca de Biblioteca",text);
