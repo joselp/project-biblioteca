@@ -165,7 +165,7 @@ void Utils::guardarUsuarios(QWidget *a){
 
     archivo.write("Cedula;Nombre;Apellido;Tipo\n");
 
-     //qApp->processEvents();
+     qApp->processEvents();
 
     while(sql.next()){
 
