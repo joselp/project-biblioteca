@@ -470,6 +470,8 @@
     </property>
     <addaction name="actionInicio"/>
     <addaction name="actionCargar_Lote_libros"/>
+    <addaction name="actionCargar_Usuarios"/>
+    <addaction name="actionGuardar_Usuarios"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
@@ -692,6 +694,16 @@
    </property>
    <property name="text">
     <string>Manual de Usuario</string>
+   </property>
+  </action>
+  <action name="actionGuardar_Usuarios">
+   <property name="text">
+    <string>Guardar Usuarios</string>
+   </property>
+  </action>
+  <action name="actionCargar_Usuarios">
+   <property name="text">
+    <string>Cargar Usuarios</string>
    </property>
   </action>
  </widget>

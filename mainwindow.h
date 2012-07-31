@@ -50,6 +50,8 @@ private slots:
     void slotHome();
     void slotPrestamo();
     void slotEntregaPrestamo();
+    void slotGuardarUsuarios();
+    void slotCargarUsuarios();
     void slotRenovacion();
     void slotConsultaPrestamo();
     void slotNewUser();

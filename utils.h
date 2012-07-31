@@ -19,6 +19,8 @@ class Utils : public QThread
 public:
     explicit Utils();
     void cargarArchivo(QWidget *);
+    void cargarUsuarios(QWidget *);
+    void guardarUsuarios(QWidget *);
     void run();
 
 private:

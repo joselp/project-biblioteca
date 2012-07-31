@@ -20,6 +20,7 @@ void FormEditUser::buscar(){
 
     if( query.next() ){
 
+        ui->btnAceptar->setEnabled(true);
         ui->leNombre->setText(query.value(1).toString());
         ui->leApellido->setText(query.value(2).toString());
         ui->btnAceptar->setEnabled(true);
@@ -30,10 +31,13 @@ void FormEditUser::buscar(){
         else
             ui->rbEstu->setChecked(true);
 
-
     }
-    else
+    else{
         QMessageBox::warning(this,"ADVERTENCIA","El usuario no existe");
+        ui->leCedula->setFocus();
+        ui->btnAceptar->setEnabled(false);
+        clear();
+    }
 }
 
 void FormEditUser::acept(){
@@ -81,6 +85,8 @@ void FormEditUser::init(){
 
     ui->btnCancelar->setIcon(QIcon(":/images/usersearch.png"));
     ui->btnAceptar->setIcon(QIcon(":/images/useredit.png"));
+
+    ui->btnAceptar->setEnabled(false);
 
 }
 

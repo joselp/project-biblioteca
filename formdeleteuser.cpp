@@ -26,6 +26,7 @@ void FormDeleteUser::acept(){
     else{
 
         QMessageBox::warning(this,"ADVERTENCIA","El usuario no existe");
+        ui->leCedula->setText("");
 
     }
 }

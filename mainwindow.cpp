@@ -35,6 +35,8 @@ void MainWindow::initConnect()
 {
     connect(ui->actionInicio, SIGNAL(triggered()), this, SLOT(slotHome()));
     connect(ui->actionCargar_Lote_libros, SIGNAL(triggered()), this, SLOT(slotCargarLibros()));
+    connect(ui->actionGuardar_Usuarios,SIGNAL(triggered()),this,SLOT(slotGuardarUsuarios()));
+    connect(ui->actionCargar_Usuarios,SIGNAL(triggered()),this,SLOT(slotCargarUsuarios()));
 
     connect(ui->actionPrestar, SIGNAL(triggered()), this, SLOT(slotPrestamo()));
     connect(ui->actionEntregar, SIGNAL(triggered()), this, SLOT(slotEntregaPrestamo()));
@@ -247,6 +249,20 @@ void MainWindow::slotCargarLibros()
 {
     Utils * util = new Utils;
     util->cargarArchivo(ui->centralWidget);
+}
+
+void MainWindow::slotGuardarUsuarios(){
+
+    Utils * util = new Utils;
+    util->guardarUsuarios(ui->centralWidget);
+
+}
+
+void MainWindow::slotCargarUsuarios(){
+
+    Utils * util = new Utils;
+    util->cargarUsuarios(ui->centralWidget);
+
 }
 
 void MainWindow::slotManualUsuario()

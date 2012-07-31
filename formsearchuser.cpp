@@ -28,6 +28,11 @@ void FormSearchUser::acept(){
 
     else{
         QMessageBox::warning(this,"ADVERTENCIA","El usuario no existe");
+        ui->leCedula->setFocus();
+        ui->leCedula->setText("");
+        ui->leNombre->setText("");
+        ui->leApellido->setText("");
+        ui->lbTipo2->setText("");
     }
 }
 
