@@ -69,7 +69,6 @@
         <file>manual/home.html</file>
         <file>manual/index.html</file>
         <file>manual/infop.html</file>
-        <file>manual/links.html</file>
         <file>manual/loadlote.html</file>
         <file>manual/quees.html</file>
         <file>manual/quienessomos.html</file>
@@ -78,5 +77,9 @@
         <file>manual/searchuser.html</file>
         <file>manual/solvencia.html</file>
         <file>images/homemu.png</file>
+        <file>images/usersave.png</file>
+        <file>images/menuloaduser.png</file>
+        <file>manual/links.html</file>
+        <file>manual/loadUser.html</file>
     </qresource>
 </RCC>

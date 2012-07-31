@@ -470,8 +470,9 @@
     </property>
     <addaction name="actionInicio"/>
     <addaction name="actionCargar_Lote_libros"/>
-    <addaction name="actionCargar_Usuarios"/>
+    <addaction name="separator"/>
     <addaction name="actionGuardar_Usuarios"/>
+    <addaction name="actionCargar_Usuarios"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
@@ -697,11 +698,19 @@
    </property>
   </action>
   <action name="actionGuardar_Usuarios">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/usersave.png</normaloff>:/images/usersave.png</iconset>
+   </property>
    <property name="text">
     <string>Guardar Usuarios</string>
    </property>
   </action>
   <action name="actionCargar_Usuarios">
+   <property name="icon">
+    <iconset resource="recursos.qrc">
+     <normaloff>:/images/csv.png</normaloff>:/images/csv.png</iconset>
+   </property>
    <property name="text">
     <string>Cargar Usuarios</string>
    </property>
