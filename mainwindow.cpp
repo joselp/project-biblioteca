@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::initGUI()
 {
+    setWindowTitle("Biblioteca");
     setWindowIcon(QIcon(":/images/logo.png"));
     setWindowFlags(Qt::WindowMinimizeButtonHint);
 
@@ -256,16 +257,16 @@ void MainWindow::slotManualUsuario()
 
 void MainWindow::slotAbout()
 {
-    QString text = "<h2><center> MainWindow </center></h2>\n<center> Version 1.0 </center><br><br><br>"
-                   "Es una aplicación. <br><br>"
+    QString text = "<h2><center> Biblioteca </center></h2>\n<center> Version 1.0 </center><br>"
+                   "<center>Es una aplicación para la gestión de la Biblioteca \"INES OTILLA FERNANDEZ\".</center> <br>"
                    "<center><b>Desarrollado por: </b><br>"
                    "Rossy Mayoral <br> Jose Pérez <br> Jonathan Monsalve <br>"
                    "Ana Calderon <br> Julio Muchacho <br> Antonio López <br><br>"
                    "Dirección electronica: <br>"
-                   "...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> ...@ula.ve <br> antoniol@ula.ve<br> </center>"
+                   "...@ula.ve <br> joseperez@ula.ve <br> j.jmonsalveg@mail.com <br> ...@ula.ve <br> juliomuchacho@ula.ve <br> antoniol@ula.ve<br> </center>"
                    "<font color = blue><center> Universidad de los Andes </center></font>";
 
-    QMessageBox::about(this,"Acerca de MainWindow",text);
+    QMessageBox::about(this,"Acerca de Biblioteca",text);
 
 }
 

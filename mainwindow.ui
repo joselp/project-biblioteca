@@ -565,7 +565,7 @@
   </action>
   <action name="actionAcerca">
    <property name="text">
-    <string>Acerca de MainWindow</string>
+    <string>Acerca de Biblioteca</string>
    </property>
   </action>
   <action name="actionPrestar">
