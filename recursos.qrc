@@ -35,7 +35,6 @@
         <file>images/ula.jpg</file>
         <file>images/back.png</file>
         <file>images/forward.png</file>
-        <file>images/homemu.png</file>
         <file>images/addbook.png</file>
         <file>images/adduser.png</file>
         <file>images/deletebook.png</file>
@@ -78,5 +77,6 @@
         <file>manual/searchbook.html</file>
         <file>manual/searchuser.html</file>
         <file>manual/solvencia.html</file>
+        <file>images/homemu.png</file>
     </qresource>
 </RCC>
