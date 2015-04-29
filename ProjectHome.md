@@ -1,0 +1,1 @@
+Es una aplicación de gestión para una biblioteca.
